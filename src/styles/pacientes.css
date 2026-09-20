@@ -1,0 +1,1196 @@
+/* =========================================================
+   CLÍNICA MILÁN
+   COMPONENTES DE PACIENTES
+   ========================================================= */
+
+:root {
+  --milan-blue: #002855;
+  --milan-blue-light: #164777;
+
+  --milan-purple: #9063A6;
+  --milan-purple-dark: #754B8B;
+  --milan-purple-light: #F0EAF4;
+
+  --milan-fuchsia: #C6006F;
+  --milan-fuchsia-dark: #A5005D;
+  --milan-fuchsia-light: #F9E5F0;
+
+  --milan-turquoise: #00A89C;
+  --milan-turquoise-dark: #00877D;
+  --milan-turquoise-light: #E2F6F4;
+
+  --milan-yellow: #F2C100;
+  --milan-yellow-light: #FFF7D6;
+
+  --milan-white: #FFFFFF;
+  --milan-background: #F6F8FC;
+
+  --milan-gray-100: #F1F3F7;
+  --milan-gray-200: #E3E7EE;
+  --milan-gray-300: #D1D7E0;
+  --milan-gray: #B2B2B2;
+  --milan-gray-dark: #687386;
+
+  --milan-text: #26364A;
+
+  --milan-shadow:
+    0 5px 20px rgba(0, 40, 85, 0.08);
+
+  --milan-shadow-lg:
+    0 15px 45px rgba(0, 40, 85, 0.16);
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.pacientes-header {
+  margin-bottom: 28px;
+}
+
+.pacientes-header-icon {
+  width: 58px;
+  height: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 15px;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--milan-purple),
+      var(--milan-fuchsia)
+    );
+
+  font-size: 25px;
+
+  box-shadow:
+    0 7px 18px rgba(144, 99, 166, 0.25);
+}
+
+.pacientes-title {
+  color: var(--milan-blue);
+
+  font-size: 28px;
+
+  font-weight: 700;
+
+  letter-spacing: -0.4px;
+}
+
+.pacientes-subtitle {
+  color: var(--milan-gray-dark);
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   BOTÓN PRINCIPAL
+   ========================================================= */
+
+.btn-milan-primary {
+  border: none !important;
+
+  color: white !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--milan-fuchsia),
+      var(--milan-purple)
+    ) !important;
+
+  border-radius: 10px !important;
+
+  padding: 11px 18px !important;
+
+  font-weight: 600 !important;
+
+  box-shadow:
+    0 5px 15px rgba(198, 0, 111, 0.20);
+
+  transition: 0.2s ease;
+}
+
+.btn-milan-primary:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 20px rgba(198, 0, 111, 0.28);
+}
+
+
+/* =========================================================
+   FILTROS
+   ========================================================= */
+
+.pacientes-filtros {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 17px;
+
+  background: white;
+
+  border-bottom:
+    1px solid var(--milan-gray-200);
+}
+
+.pacientes-search {
+  position: relative;
+
+  flex: 1;
+}
+
+.pacientes-search-icon {
+  position: absolute;
+
+  left: 14px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: var(--milan-gray-dark);
+
+  z-index: 2;
+}
+
+.pacientes-search .form-control {
+  height: 43px;
+
+  padding-left: 42px;
+
+  border-radius: 9px;
+
+  border-color:
+    var(--milan-gray-200);
+}
+
+.pacientes-search .form-control:focus {
+  border-color:
+    var(--milan-purple);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(144, 99, 166, 0.12);
+}
+
+.pacientes-filter-select {
+  min-width: 190px;
+}
+
+.pacientes-filter-select .form-select {
+  height: 43px;
+
+  border-radius: 9px;
+
+  border-color:
+    var(--milan-gray-200);
+}
+
+.pacientes-clear-btn {
+  height: 43px;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   TABLA
+   ========================================================= */
+
+.pacientes-table-wrapper {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+.pacientes-table {
+  min-width: 900px;
+}
+
+.pacientes-table thead th {
+  padding: 15px 16px;
+
+  background: #F8F9FC;
+
+  color: var(--milan-blue);
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.4px;
+
+  border-bottom:
+    1px solid var(--milan-gray-200);
+
+  white-space: nowrap;
+}
+
+.pacientes-table tbody td {
+  padding: 15px 16px;
+
+  color: var(--milan-text);
+
+  font-size: 14px;
+
+  border-bottom:
+    1px solid var(--milan-gray-100);
+}
+
+.pacientes-table tbody tr {
+  transition: 0.15s ease;
+}
+
+.pacientes-table tbody tr:hover {
+  background: #FBFAFD;
+}
+
+
+/* =========================================================
+   PACIENTE
+   ========================================================= */
+
+.paciente-avatar {
+  width: 42px;
+  height: 42px;
+
+  min-width: 42px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--milan-purple),
+      var(--milan-fuchsia)
+    );
+
+  color: white;
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+.paciente-name {
+  color: var(--milan-blue);
+
+  font-weight: 600;
+
+  font-size: 14px;
+}
+
+.paciente-id {
+  color: var(--milan-gray-dark);
+
+  font-size: 11px;
+}
+
+.paciente-expediente {
+  color: var(--milan-purple-dark);
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+.paciente-age {
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   ESTADO
+   ========================================================= */
+
+.paciente-status {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 6px 10px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+.paciente-status::before {
+  content: "";
+
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: currentColor;
+}
+
+.paciente-status.activo {
+  color: #16803B;
+
+  background: #E6F7EC;
+}
+
+.paciente-status.inactivo {
+  color: #8A5A00;
+
+  background: var(--milan-yellow-light);
+}
+
+
+/* =========================================================
+   ACCIONES
+   ========================================================= */
+
+.paciente-action-btn {
+  width: 35px;
+  height: 35px;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: transparent;
+
+  color: var(--milan-blue);
+
+  transition: 0.2s ease;
+}
+
+.paciente-action-btn:hover {
+  background:
+    var(--milan-purple-light);
+
+  color:
+    var(--milan-purple-dark);
+}
+
+
+/* =========================================================
+   ESTADO VACÍO
+   ========================================================= */
+
+.pacientes-empty {
+  padding: 20px;
+
+  text-align: center;
+
+  color: var(--milan-gray-dark);
+}
+
+.pacientes-empty-icon {
+  width: 55px;
+  height: 55px;
+
+  margin: auto;
+
+  margin-bottom: 12px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    var(--milan-purple-light);
+
+  color:
+    var(--milan-purple);
+
+  font-size: 22px;
+}
+
+.pacientes-empty h5 {
+  color: var(--milan-blue);
+
+  font-weight: 700;
+
+  margin-bottom: 5px;
+}
+
+.pacientes-empty p {
+  margin: 0;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   CARD MÓVIL
+   ========================================================= */
+
+.paciente-mobile-card {
+  padding: 16px;
+
+  background: white;
+
+  border:
+    1px solid var(--milan-gray-200);
+
+  border-radius: 13px;
+
+  box-shadow:
+    0 3px 12px
+    rgba(0, 40, 85, 0.06);
+
+  margin-bottom: 12px;
+}
+
+.paciente-mobile-info {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 10px;
+
+  margin-top: 17px;
+
+  padding-top: 14px;
+
+  border-top:
+    1px solid var(--milan-gray-200);
+}
+
+.paciente-mobile-info div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.paciente-mobile-info strong {
+  color: var(--milan-gray-dark);
+
+  font-size: 10px;
+
+  text-transform: uppercase;
+}
+
+.paciente-mobile-info span {
+  color: var(--milan-text);
+
+  font-size: 12px;
+}
+
+.paciente-mobile-actions {
+  display: flex;
+
+  gap: 7px;
+
+  margin-top: 15px;
+}
+
+.paciente-mobile-actions button {
+  flex: 1;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   FORMULARIO
+   ========================================================= */
+
+.paciente-form-section {
+  padding: 20px;
+
+  margin-bottom: 18px;
+
+  background: white;
+
+  border:
+    1px solid var(--milan-gray-200);
+
+  border-radius: 12px;
+}
+
+.paciente-form-section-title {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 20px;
+}
+
+.paciente-form-section-icon {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background:
+    var(--milan-purple-light);
+
+  color:
+    var(--milan-purple);
+
+  flex-shrink: 0;
+}
+
+.paciente-form-section-icon.turquoise {
+  background:
+    var(--milan-turquoise-light);
+
+  color:
+    var(--milan-turquoise);
+}
+
+.paciente-form-section-icon.yellow {
+  background:
+    var(--milan-yellow-light);
+
+  color:
+    #A47F00;
+}
+
+.paciente-form-section-icon.purple {
+  background:
+    var(--milan-purple-light);
+
+  color:
+    var(--milan-purple);
+}
+
+.paciente-form-section-title h5 {
+  margin: 0;
+
+  color: var(--milan-blue);
+
+  font-size: 16px;
+
+  font-weight: 700;
+}
+
+.paciente-form-section-title small {
+  color: var(--milan-gray-dark);
+
+  font-size: 12px;
+}
+
+.paciente-form .form-label {
+  color: var(--milan-blue);
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  margin-bottom: 6px;
+}
+
+.paciente-form .form-control,
+.paciente-form .form-select {
+  min-height: 44px;
+
+  border-radius: 9px;
+
+  border-color:
+    var(--milan-gray-200);
+
+  font-size: 14px;
+}
+
+.paciente-form .form-control:focus,
+.paciente-form .form-select:focus {
+  border-color:
+    var(--milan-purple);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(144, 99, 166, 0.12);
+}
+
+.paciente-form textarea {
+  resize: vertical;
+}
+
+
+/* =========================================================
+   SECCIÓN TUTOR
+   ========================================================= */
+
+.paciente-tutor-section {
+  border-left:
+    4px solid var(--milan-yellow);
+}
+
+
+/* =========================================================
+   BOTONES FORMULARIO
+   ========================================================= */
+
+.paciente-form-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  padding-top: 5px;
+}
+
+.btn-paciente-cancelar {
+  min-height: 43px;
+
+  padding: 9px 20px;
+
+  border:
+    1px solid var(--milan-gray-300);
+
+  border-radius: 9px;
+
+  color: var(--milan-gray-dark);
+
+  background: white;
+
+  font-weight: 600;
+}
+
+.btn-paciente-guardar {
+  min-height: 43px;
+
+  padding: 9px 20px;
+
+  border: none;
+
+  border-radius: 9px;
+
+  color: white;
+
+  background:
+    var(--milan-fuchsia);
+
+  font-weight: 600;
+
+  box-shadow:
+    0 5px 12px
+    rgba(198, 0, 111, 0.18);
+}
+
+.btn-paciente-guardar:hover {
+  background:
+    var(--milan-fuchsia-dark);
+
+  color: white;
+}
+
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.paciente-modal-backdrop {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 1055;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background:
+    rgba(0, 40, 85, 0.58);
+
+  backdrop-filter:
+    blur(3px);
+
+  overflow-y: auto;
+}
+
+.paciente-modal-container {
+  width: 100%;
+
+  max-width: 900px;
+
+  max-height: 94vh;
+
+  display: flex;
+
+  flex-direction: column;
+
+  background: white;
+
+  border-radius: 17px;
+
+  overflow: hidden;
+
+  box-shadow:
+    var(--milan-shadow-lg);
+}
+
+.paciente-modal-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 18px 22px;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--milan-blue),
+      var(--milan-purple)
+    );
+}
+
+.paciente-modal-icon {
+  width: 45px;
+  height: 45px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  background:
+    rgba(255, 255, 255, 0.15);
+
+  font-size: 20px;
+}
+
+.paciente-modal-header h4 {
+  margin: 0;
+
+  font-size: 18px;
+
+  font-weight: 700;
+}
+
+.paciente-modal-header p {
+  margin: 3px 0 0;
+
+  font-size: 12px;
+
+  opacity: 0.82;
+}
+
+.paciente-modal-close {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background:
+    rgba(255, 255, 255, 0.12);
+
+  color: white;
+
+  transition: 0.2s ease;
+}
+
+.paciente-modal-close:hover {
+  background:
+    rgba(255, 255, 255, 0.22);
+}
+
+.paciente-modal-body {
+  padding: 22px;
+
+  overflow-y: auto;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (min-width: 769px) {
+
+  .paciente-mobile-card {
+    display: none;
+  }
+
+}
+
+
+@media (max-width: 768px) {
+
+  .pacientes-header {
+    margin-bottom: 20px;
+  }
+
+  .pacientes-header-icon {
+    width: 48px;
+    height: 48px;
+
+    font-size: 21px;
+  }
+
+  .pacientes-title {
+    font-size: 22px;
+  }
+
+  .pacientes-subtitle {
+    font-size: 12px;
+  }
+
+  .btn-milan-primary {
+    width: 100%;
+  }
+
+  .pacientes-filtros {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 9px;
+  }
+
+  .pacientes-filter-select {
+    width: 100%;
+  }
+
+  .pacientes-clear-btn {
+    width: 100%;
+  }
+
+  .pacientes-table-wrapper {
+    display: none;
+  }
+
+  .paciente-mobile-card {
+    display: block;
+  }
+
+  .paciente-form-section {
+    padding: 16px;
+  }
+
+  .paciente-modal-backdrop {
+    padding: 0;
+  }
+
+  .paciente-modal-container {
+    max-height: 100vh;
+
+    min-height: 100vh;
+
+    border-radius: 0;
+  }
+
+  .paciente-modal-header {
+    padding: 15px;
+  }
+
+  .paciente-modal-body {
+    padding: 14px;
+  }
+
+  .paciente-form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .btn-paciente-cancelar,
+  .btn-paciente-guardar {
+    width: 100%;
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .paciente-mobile-info {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .paciente-mobile-info div:last-child {
+    grid-column: span 2;
+  }
+
+  .paciente-mobile-actions {
+    flex-wrap: wrap;
+  }
+
+  .paciente-mobile-actions button {
+    min-width: 30%;
+  }
+
+}
+/* =========================================================
+   VIEW PACIENTES
+   ========================================================= */
+
+.pacientes-page {
+  min-height: calc(100vh - 70px);
+  background: var(--milan-background);
+}
+
+
+/* =========================================================
+   TARJETAS DE ESTADÍSTICAS
+   ========================================================= */
+
+.paciente-stat-card {
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  padding: 17px;
+
+  background: white;
+
+  border: 1px solid var(--milan-gray-200);
+
+  border-radius: 13px;
+
+  box-shadow:
+    0 3px 12px rgba(0, 40, 85, 0.05);
+}
+
+.paciente-stat-card small {
+  display: block;
+
+  color: var(--milan-gray-dark);
+
+  font-size: 11px;
+
+  margin-bottom: 3px;
+}
+
+.paciente-stat-card h3 {
+  margin: 0;
+
+  color: var(--milan-blue);
+
+  font-size: 23px;
+
+  font-weight: 700;
+}
+
+.paciente-stat-icon {
+  width: 43px;
+  height: 43px;
+
+  min-width: 43px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  font-size: 17px;
+
+  font-weight: 700;
+}
+
+.paciente-stat-icon.purple {
+  color: var(--milan-purple);
+
+  background:
+    var(--milan-purple-light);
+}
+
+.paciente-stat-icon.turquoise {
+  color: var(--milan-turquoise);
+
+  background:
+    var(--milan-turquoise-light);
+}
+
+.paciente-stat-icon.yellow {
+  color: #9B7900;
+
+  background:
+    var(--milan-yellow-light);
+}
+
+.paciente-stat-icon.fuchsia {
+  color: var(--milan-fuchsia);
+
+  background:
+    var(--milan-fuchsia-light);
+}
+
+
+/* =========================================================
+   TARJETA PRINCIPAL
+   ========================================================= */
+
+.pacientes-main-card {
+  overflow: hidden;
+
+  background: white;
+
+  border:
+    1px solid var(--milan-gray-200);
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 4px 16px
+    rgba(0, 40, 85, 0.05);
+}
+
+.pacientes-section-title {
+  color: var(--milan-blue);
+
+  font-size: 16px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.pacientes-loading {
+  min-height: 300px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  color: var(--milan-purple);
+}
+
+.pacientes-loading p {
+  margin: 0;
+
+  color: var(--milan-gray-dark);
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   LISTA MÓVIL
+   ========================================================= */
+
+.pacientes-mobile-list {
+  display: none;
+
+  padding: 0 15px 15px;
+}
+
+.pacientes-mobile-empty {
+  padding: 45px 20px;
+
+  text-align: center;
+
+  color: var(--milan-gray-dark);
+}
+
+.pacientes-mobile-empty > svg {
+  margin-bottom: 12px;
+
+  font-size: 35px;
+
+  color: var(--milan-purple);
+}
+
+.pacientes-mobile-empty h5 {
+  margin-bottom: 5px;
+
+  color: var(--milan-blue);
+}
+
+.pacientes-mobile-empty p {
+  margin: 0;
+
+  font-size: 13px;
+}
+
+
+@media (max-width: 768px) {
+
+  .pacientes-page {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  .paciente-stat-card {
+    padding: 13px;
+
+    gap: 9px;
+  }
+
+  .paciente-stat-icon {
+    width: 37px;
+    height: 37px;
+
+    min-width: 37px;
+
+    font-size: 14px;
+  }
+
+  .paciente-stat-card small {
+    font-size: 10px;
+  }
+
+  .paciente-stat-card h3 {
+    font-size: 19px;
+  }
+
+  .pacientes-mobile-list {
+    display: block;
+  }
+
+}

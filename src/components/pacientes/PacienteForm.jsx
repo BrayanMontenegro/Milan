@@ -1,0 +1,592 @@
+import React from "react";
+import {
+  FaUser,
+  FaPhone,
+  FaMapMarkerAlt,
+  FaBirthdayCake,
+  FaUsers
+} from "react-icons/fa";
+
+const calcularEdad = (fechaNacimiento) => {
+
+  if (!fechaNacimiento) {
+    return null;
+  }
+
+  const nacimiento =
+    new Date(fechaNacimiento);
+
+  const hoy =
+    new Date();
+
+  let edad =
+    hoy.getFullYear() -
+    nacimiento.getFullYear();
+
+  const mes =
+    hoy.getMonth() -
+    nacimiento.getMonth();
+
+  if (
+    mes < 0 ||
+    (
+      mes === 0 &&
+      hoy.getDate() < nacimiento.getDate()
+    )
+  ) {
+    edad--;
+  }
+
+  return edad;
+};
+
+const PacienteForm = ({
+  formulario,
+  setFormulario,
+  onSubmit,
+  onCancelar,
+  guardando = false,
+  modoEdicion = false,
+  procedencias = []
+}) => {
+
+  const edad =
+    calcularEdad(
+      formulario.fecha_nacimiento
+    );
+
+  const esMenor =
+    edad !== null &&
+    edad < 18;
+
+  const manejarCambio = (e) => {
+
+    const {
+      name,
+      value
+    } = e.target;
+
+    setFormulario((actual) => ({
+      ...actual,
+      [name]: value
+    }));
+  };
+
+  return (
+    <form
+      onSubmit={onSubmit}
+      className="paciente-form"
+    >
+
+      {/* =========================================
+          INFORMACIÓN PERSONAL
+      ========================================== */}
+
+      <div className="paciente-form-section">
+
+        <div className="paciente-form-section-title">
+
+          <div className="paciente-form-section-icon">
+            <FaUser />
+          </div>
+
+          <div>
+            <h5>
+              Información personal
+            </h5>
+
+            <small>
+              Datos básicos del paciente
+            </small>
+          </div>
+
+        </div>
+
+        <div className="row g-3">
+
+          {/* Nombres */}
+          <div className="col-12 col-md-6">
+
+            <label className="form-label">
+              Nombres
+              <span className="text-danger"> *</span>
+            </label>
+
+            <input
+              type="text"
+              name="nombres"
+              className="form-control"
+              value={formulario.nombres}
+              onChange={manejarCambio}
+              placeholder="Ingrese los nombres"
+              required
+            />
+
+          </div>
+
+          {/* Apellidos */}
+          <div className="col-12 col-md-6">
+
+            <label className="form-label">
+              Apellidos
+              <span className="text-danger"> *</span>
+            </label>
+
+            <input
+              type="text"
+              name="apellidos"
+              className="form-control"
+              value={formulario.apellidos}
+              onChange={manejarCambio}
+              placeholder="Ingrese los apellidos"
+              required
+            />
+
+          </div>
+
+          {/* Fecha nacimiento */}
+          <div className="col-12 col-md-4">
+
+            <label className="form-label">
+              <FaBirthdayCake className="me-1" />
+              Fecha de nacimiento
+              <span className="text-danger"> *</span>
+            </label>
+
+            <input
+              type="date"
+              name="fecha_nacimiento"
+              className="form-control"
+              value={formulario.fecha_nacimiento}
+              onChange={manejarCambio}
+              required
+            />
+
+            {edad !== null && (
+              <small className="text-muted">
+                Edad: {edad} años
+              </small>
+            )}
+
+          </div>
+
+          {/* Sexo */}
+          <div className="col-12 col-md-4">
+
+            <label className="form-label">
+              Sexo
+              <span className="text-danger"> *</span>
+            </label>
+
+            <select
+              name="sexo"
+              className="form-select"
+              value={formulario.sexo}
+              onChange={manejarCambio}
+              required
+            >
+              <option value="">
+                Seleccione
+              </option>
+
+              <option value="Masculino">
+                Masculino
+              </option>
+
+              <option value="Femenino">
+                Femenino
+            </option>
+
+              <option value="Otro">
+                Otro
+              </option>
+
+            </select>
+
+          </div>
+
+          {/* Estado civil */}
+          <div className="col-12 col-md-4">
+
+            <label className="form-label">
+              Estado civil
+            </label>
+
+            <select
+              name="estado_civil"
+              className="form-select"
+              value={formulario.estado_civil}
+              onChange={manejarCambio}
+            >
+              <option value="">
+                Seleccione
+              </option>
+
+              <option value="SOLTERO">
+                Soltero/a
+              </option>
+
+              <option value="CASADO">
+                Casado/a
+              </option>
+
+              <option value="UNION_LIBRE">
+                Unión libre
+              </option>
+
+              <option value="DIVORCIADO">
+                Divorciado/a
+              </option>
+
+              <option value="VIUDO">
+                Viudo/a
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      {/* =========================================
+          CONTACTO
+      ========================================== */}
+
+      <div className="paciente-form-section">
+
+        <div className="paciente-form-section-title">
+
+          <div className="paciente-form-section-icon turquoise">
+            <FaPhone />
+          </div>
+
+          <div>
+            <h5>
+              Información de contacto
+            </h5>
+
+            <small>
+              Datos para comunicación y ubicación
+            </small>
+          </div>
+
+        </div>
+
+        <div className="row g-3">
+
+          {/* Teléfono */}
+          <div className="col-12 col-md-6">
+
+            <label className="form-label">
+              Teléfono
+            </label>
+
+            <input
+              type="tel"
+              name="telefono"
+              className="form-control"
+              value={formulario.telefono}
+              onChange={manejarCambio}
+              placeholder="8888-8888"
+            />
+
+          </div>
+
+          {/* Correo */}
+          <div className="col-12 col-md-6">
+
+            <label className="form-label">
+              Correo electrónico
+            </label>
+
+            <input
+              type="email"
+              name="correo"
+              className="form-control"
+              value={formulario.correo}
+              onChange={manejarCambio}
+              placeholder="correo@ejemplo.com"
+            />
+
+          </div>
+
+          {/* Procedencia */}
+          <div className="col-12 col-md-6">
+
+            <label className="form-label">
+              <FaMapMarkerAlt className="me-1" />
+              Procedencia
+              <span className="text-danger"> *</span>
+            </label>
+
+            <select
+              name="procedencia"
+              className="form-select"
+              value={formulario.procedencia}
+              onChange={manejarCambio}
+              required
+            >
+
+              <option value="">
+                Seleccione procedencia
+              </option>
+
+            <option value="Santo tomás">
+                Santo tomás
+              </option>
+
+              {procedencias.map(
+                (procedencia, index) => (
+                  <option
+                    key={index}
+                    value={procedencia}
+                  >
+                    {procedencia}
+                  </option>
+                )
+              )}
+
+            </select>
+
+          </div>
+
+          {/* Dirección */}
+          <div className="col-12 col-md-6">
+
+            <label className="form-label">
+              Dirección
+            </label>
+
+            <input
+              type="text"
+              name="direccion"
+              className="form-control"
+              value={formulario.direccion}
+              onChange={manejarCambio}
+              placeholder="Dirección del paciente"
+            />
+
+          </div>
+
+          {/* Ocupación */}
+          <div className="col-12 col-md-6">
+
+            <label className="form-label">
+              Ocupación
+            </label>
+
+            <input
+              type="text"
+              name="ocupacion"
+              className="form-control"
+              value={formulario.ocupacion}
+              onChange={manejarCambio}
+              placeholder="Ocupación"
+            />
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      {/* =========================================
+          TUTOR
+      ========================================== */}
+
+      {esMenor && (
+
+        <div className="paciente-form-section paciente-tutor-section">
+
+          <div className="paciente-form-section-title">
+
+            <div className="paciente-form-section-icon yellow">
+              <FaUsers />
+            </div>
+
+            <div>
+              <h5>
+                Información del tutor
+              </h5>
+
+              <small>
+                Información del responsable del menor
+              </small>
+            </div>
+
+          </div>
+
+          <div className="row g-3">
+
+            {/* Nombre tutor */}
+            <div className="col-12 col-md-6">
+
+              <label className="form-label">
+                Nombre completo del tutor
+                <span className="text-danger"> *</span>
+              </label>
+
+              <input
+                type="text"
+                name="tutor_nombres"
+                className="form-control"
+                value={formulario.tutor_nombres}
+                onChange={manejarCambio}
+                placeholder="Nombre del tutor"
+                required={esMenor}
+              />
+
+            </div>
+
+            {/* Parentesco */}
+            <div className="col-12 col-md-3">
+
+              <label className="form-label">
+                Parentesco
+                <span className="text-danger"> *</span>
+              </label>
+
+              <select
+                name="tutor_parentesco"
+                className="form-select"
+                value={formulario.tutor_parentesco}
+                onChange={manejarCambio}
+                required={esMenor}
+              >
+
+                <option value="">
+                  Seleccione
+                </option>
+
+                <option value="MADRE">
+                  Madre
+                </option>
+
+                <option value="PADRE">
+                  Padre
+                </option>
+
+                <option value="TUTOR">
+                  Tutor
+                </option>
+
+                <option value="OTRO">
+                  Otro
+                </option>
+
+              </select>
+
+            </div>
+
+            {/* Teléfono tutor */}
+            <div className="col-12 col-md-3">
+
+              <label className="form-label">
+                Teléfono
+                <span className="text-danger"> *</span>
+              </label>
+
+              <input
+                type="tel"
+                name="tutor_telefono"
+                className="form-control"
+                value={formulario.tutor_telefono}
+                onChange={manejarCambio}
+                placeholder="8888-8888"
+                required={esMenor}
+              />
+
+            </div>
+
+          </div>
+
+        </div>
+
+      )}
+
+
+      {/* =========================================
+          OBSERVACIONES
+      ========================================== */}
+
+      <div className="paciente-form-section">
+
+        <div className="paciente-form-section-title">
+
+          <div className="paciente-form-section-icon purple">
+            <FaUser />
+          </div>
+
+          <div>
+            <h5>
+              Observaciones
+            </h5>
+
+            <small>
+              Información adicional del paciente
+            </small>
+          </div>
+
+        </div>
+
+        <textarea
+          name="observaciones"
+          className="form-control"
+          rows="4"
+          value={formulario.observaciones}
+          onChange={manejarCambio}
+          placeholder="Escriba cualquier información adicional..."
+        />
+
+      </div>
+
+
+      {/* =========================================
+          BOTONES
+      ========================================== */}
+
+      <div className="paciente-form-actions">
+
+        <button
+          type="button"
+          className="btn btn-paciente-cancelar"
+          onClick={onCancelar}
+          disabled={guardando}
+        >
+          Cancelar
+        </button>
+
+        <button
+          type="submit"
+          className="btn btn-paciente-guardar"
+          disabled={guardando}
+        >
+
+          {guardando ? (
+            <>
+              <span
+                className="spinner-border spinner-border-sm me-2"
+                role="status"
+              />
+
+              Guardando...
+            </>
+          ) : (
+            modoEdicion
+              ? "Actualizar paciente"
+              : "Registrar paciente"
+          )}
+
+        </button>
+
+      </div>
+
+    </form>
+  );
+};
+
+export default PacienteForm;

@@ -1,0 +1,1444 @@
+/* =========================================================
+   CLÍNICA MILÁN
+   SISTEMA DE GESTIÓN CLÍNICA
+   Diseño responsive - Bootstrap compatible
+   ========================================================= */
+
+
+/* =========================================================
+   VARIABLES DE DISEÑO
+   ========================================================= */
+
+:root {
+  /* Colores institucionales */
+  --milan-blue: #002855;
+  --milan-blue-light: #164777;
+
+  --milan-purple: #9063A6;
+  --milan-purple-dark: #754B8B;
+  --milan-purple-light: #F0EAF4;
+
+  --milan-fuchsia: #C6006F;
+  --milan-fuchsia-dark: #A5005D;
+  --milan-fuchsia-light: #F9E5F0;
+
+  --milan-turquoise: #00A89C;
+  --milan-turquoise-dark: #00877D;
+  --milan-turquoise-light: #E2F6F4;
+
+  --milan-yellow: #F2C100;
+  --milan-yellow-dark: #C89F00;
+  --milan-yellow-light: #FFF7D6;
+
+  /* Neutros */
+  --milan-white: #FFFFFF;
+  --milan-background: #F6F8FC;
+  --milan-gray-50: #FAFBFD;
+  --milan-gray-100: #F1F3F7;
+  --milan-gray-200: #E3E7EE;
+  --milan-gray-300: #D1D7E0;
+  --milan-gray: #B2B2B2;
+  --milan-gray-dark: #687386;
+  --milan-text: #26364A;
+
+  /* Sombras */
+  --milan-shadow-sm: 0 2px 8px rgba(0, 40, 85, 0.06);
+  --milan-shadow: 0 5px 20px rgba(0, 40, 85, 0.08);
+  --milan-shadow-lg: 0 10px 35px rgba(0, 40, 85, 0.12);
+
+  /* Bordes */
+  --milan-radius-sm: 8px;
+  --milan-radius: 12px;
+  --milan-radius-lg: 16px;
+}
+
+
+/* =========================================================
+   CONTENEDOR PRINCIPAL
+   ========================================================= */
+
+.usuarios-page {
+  min-height: calc(100vh - 70px);
+  background: var(--milan-background);
+  padding: 28px;
+  color: var(--milan-text);
+}
+
+
+/* =========================================================
+   ENCABEZADO
+   ========================================================= */
+
+.usuarios-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.usuarios-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.usuarios-header-icon {
+  width: 58px;
+  height: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 15px;
+
+  color: var(--milan-white);
+
+  background: linear-gradient(
+    135deg,
+    var(--milan-purple),
+    var(--milan-fuchsia)
+  );
+
+  font-size: 27px;
+
+  box-shadow: 0 7px 18px rgba(144, 99, 166, 0.25);
+}
+
+.usuarios-title {
+  margin: 0;
+  color: var(--milan-blue);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+}
+
+.usuarios-subtitle {
+  margin: 4px 0 0;
+  color: var(--milan-gray-dark);
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   BOTÓN PRINCIPAL
+   ========================================================= */
+
+.btn-primary-custom {
+  border: none !important;
+
+  color: var(--milan-white) !important;
+
+  background: linear-gradient(
+    135deg,
+    var(--milan-fuchsia),
+    var(--milan-purple)
+  ) !important;
+
+  border-radius: 10px !important;
+
+  padding: 11px 18px !important;
+
+  font-weight: 600 !important;
+
+  box-shadow: 0 5px 15px rgba(198, 0, 111, 0.20);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.btn-primary-custom:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 20px rgba(198, 0, 111, 0.28);
+}
+
+.btn-primary-custom:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   TARJETAS DE ESTADÍSTICAS
+   ========================================================= */
+
+.usuario-stat-card {
+  position: relative;
+
+  height: 100%;
+
+  background: var(--milan-white);
+
+  border: 1px solid var(--milan-gray-200);
+
+  border-radius: var(--milan-radius);
+
+  padding: 20px;
+
+  box-shadow: var(--milan-shadow-sm);
+
+  overflow: hidden;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.usuario-stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--milan-shadow);
+}
+
+.usuario-stat-card::after {
+  content: "";
+
+  position: absolute;
+
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  height: 4px;
+
+  background: var(--milan-purple);
+}
+
+.usuario-stat-card .card-body {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.usuario-stat-content {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  line-height: 1.3;
+}
+
+.usuario-stat-content span {
+  color: var(--milan-gray-dark);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.usuario-stat-content strong {
+  color: var(--milan-blue);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.usuario-stat-card.fuchsia::after {
+  background: var(--milan-fuchsia);
+}
+
+.usuario-stat-card.turquoise::after {
+  background: var(--milan-turquoise);
+}
+
+.usuario-stat-card.yellow::after {
+  background: var(--milan-yellow);
+}
+
+.usuario-stat-card.blue::after {
+  background: var(--milan-blue);
+}
+
+
+/* =========================================================
+   ICONOS DE ESTADÍSTICAS
+   ========================================================= */
+
+.usuario-stat-icon {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  font-size: 21px;
+
+  color: var(--milan-white);
+
+  background: var(--milan-purple);
+}
+
+.usuario-stat-icon.fuchsia {
+  background: var(--milan-fuchsia);
+}
+
+.usuario-stat-icon.turquoise {
+  background: var(--milan-turquoise);
+}
+
+.usuario-stat-icon.yellow {
+  background: var(--milan-yellow);
+}
+
+.usuario-stat-icon.blue {
+  background: var(--milan-blue);
+}
+
+
+/* =========================================================
+   NÚMEROS DE ESTADÍSTICAS
+   ========================================================= */
+
+.usuario-stat-number {
+  margin-top: 15px;
+
+  color: var(--milan-blue);
+
+  font-size: 27px;
+  font-weight: 700;
+
+  line-height: 1;
+}
+
+.usuario-stat-label {
+  margin-top: 7px;
+
+  color: var(--milan-gray-dark);
+
+  font-size: 13px;
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   CONTENEDOR PRINCIPAL DE USUARIOS
+   ========================================================= */
+
+.usuarios-main-card {
+  background: var(--milan-white);
+
+  border: 1px solid var(--milan-gray-200);
+
+  border-radius: var(--milan-radius-lg);
+
+  box-shadow: var(--milan-shadow);
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   BARRA DE FILTROS
+   ========================================================= */
+
+.usuarios-filters,
+.usuarios-filtros {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 18px;
+
+  border-bottom: 1px solid var(--milan-gray-200);
+
+  background: var(--milan-gray-50);
+}
+
+.usuarios-search {
+  position: relative;
+
+  flex: 1 1 260px;
+}
+
+.usuarios-filtros .usuarios-search {
+  flex: 1 1 280px;
+}
+
+.usuarios-filtros .form-select {
+  flex: 0 0 190px;
+
+  min-width: 170px;
+
+  height: 42px;
+
+  border-radius: 9px;
+
+  border-color: var(--milan-gray-200);
+
+  color: var(--milan-text);
+
+  font-size: 14px;
+}
+
+
+.usuarios-search-icon {
+  position: absolute;
+
+  left: 14px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: var(--milan-gray-dark);
+
+  pointer-events: none;
+}
+
+.usuarios-search input {
+  width: 100%;
+
+  height: 42px;
+
+  padding: 0 15px 0 42px;
+
+  border: 1px solid var(--milan-gray-200);
+
+  border-radius: 9px;
+
+  outline: none;
+
+  background: var(--milan-white);
+
+  color: var(--milan-text);
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.usuarios-search input:focus {
+  border-color: var(--milan-purple);
+
+  box-shadow:
+    0 0 0 3px rgba(144, 99, 166, 0.12);
+}
+
+
+/* =========================================================
+   SELECTS
+   ========================================================= */
+
+.usuarios-filters .form-select,
+.usuarios-filtros .form-select {
+  min-width: 165px;
+
+  height: 42px;
+
+  border-radius: 9px;
+
+  border-color: var(--milan-gray-200);
+
+  color: var(--milan-text);
+
+  font-size: 14px;
+}
+
+.usuarios-filters .form-select:focus,
+.usuarios-filtros .form-select:focus {
+  border-color: var(--milan-purple);
+
+  box-shadow:
+    0 0 0 3px rgba(144, 99, 166, 0.12);
+}
+
+
+/* =========================================================
+   TABLA
+   ========================================================= */
+
+.usuarios-table-wrapper {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+.usuarios-table {
+  width: 100%;
+
+  margin: 0;
+
+  border-collapse: separate;
+
+  border-spacing: 0;
+
+  min-width: 850px;
+}
+
+.usuarios-table thead th {
+  padding: 15px 16px;
+
+  background: #F8F9FC;
+
+  color: var(--milan-blue);
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.4px;
+
+  border-bottom: 1px solid var(--milan-gray-200);
+
+  white-space: nowrap;
+}
+
+.usuarios-table tbody td {
+  padding: 15px 16px;
+
+  vertical-align: middle;
+
+  color: var(--milan-text);
+
+  font-size: 14px;
+
+  border-bottom: 1px solid var(--milan-gray-100);
+}
+
+.usuarios-table tbody tr {
+  transition: background 0.15s ease;
+}
+
+.usuarios-table tbody tr:hover {
+  background: #FBFAFD;
+}
+
+.usuarios-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* =========================================================
+   AVATAR
+   ========================================================= */
+
+.usuario-avatar {
+  width: 40px;
+  height: 40px;
+
+  min-width: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: linear-gradient(
+    135deg,
+    var(--milan-purple),
+    var(--milan-fuchsia)
+  );
+
+  color: var(--milan-white);
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+.usuario-avatar.blue {
+  background: var(--milan-blue);
+}
+
+.usuario-avatar.turquoise {
+  background: var(--milan-turquoise);
+}
+
+
+/* =========================================================
+   INFORMACIÓN DEL USUARIO
+   ========================================================= */
+
+.usuario-name {
+  color: var(--milan-blue);
+
+  font-weight: 600;
+
+  font-size: 14px;
+}
+
+.usuario-id {
+  display: block;
+
+  margin-top: 3px;
+
+  color: var(--milan-gray-dark);
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   BADGES DE ROL
+   ========================================================= */
+
+.usuario-role-badge {
+  display: inline-flex;
+
+  align-items: center;
+
+  padding: 6px 11px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+
+  background: var(--milan-purple-light);
+
+  color: var(--milan-purple-dark);
+}
+
+.usuario-role-badge.admin {
+  background: var(--milan-fuchsia-light);
+  color: var(--milan-fuchsia-dark);
+}
+
+.usuario-role-badge.recepcion {
+  background: var(--milan-yellow-light);
+  color: #876900;
+}
+
+.usuario-role-badge.enfermeria {
+  background: var(--milan-turquoise-light);
+  color: var(--milan-turquoise-dark);
+}
+
+.usuario-role-badge.especialista {
+  background: var(--milan-purple-light);
+  color: var(--milan-purple-dark);
+}
+
+
+/* =========================================================
+   ESTADOS
+   ========================================================= */
+
+.usuario-status {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 6px 10px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+.usuario-status::before {
+  content: "";
+
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: currentColor;
+}
+
+.usuario-status.activo {
+  color: #16803B;
+
+  background: #E6F7EC;
+}
+
+.usuario-status.inactivo {
+  color: #8A5A00;
+
+  background: var(--milan-yellow-light);
+}
+
+
+/* =========================================================
+   BOTONES DE ACCIONES
+   ========================================================= */
+
+.usuario-action-btn {
+  width: 35px;
+  height: 35px;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: transparent;
+
+  color: var(--milan-blue);
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.usuario-action-btn:hover {
+  background: var(--milan-purple-light);
+
+  color: var(--milan-purple-dark);
+
+  transform: translateY(-1px);
+}
+
+.usuario-action-btn.delete:hover {
+  background: var(--milan-fuchsia-light);
+
+  color: var(--milan-fuchsia);
+}
+
+
+/* =========================================================
+   PIE DE TABLA / PAGINACIÓN
+   ========================================================= */
+
+.usuarios-table-footer {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 15px 18px;
+
+  border-top: 1px solid var(--milan-gray-200);
+
+  color: var(--milan-gray-dark);
+
+  font-size: 13px;
+}
+
+.usuarios-pagination {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+}
+
+.usuarios-pagination button {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--milan-gray-200);
+
+  border-radius: 8px;
+
+  background: var(--milan-white);
+
+  color: var(--milan-blue);
+
+  transition: all 0.2s ease;
+}
+
+.usuarios-pagination button:hover {
+  border-color: var(--milan-purple);
+
+  color: var(--milan-purple);
+}
+
+.usuarios-pagination button.active {
+  border-color: var(--milan-blue);
+
+  background: var(--milan-blue);
+
+  color: var(--milan-white);
+}
+
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.usuarios-modal .modal-content {
+  border: none;
+
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  box-shadow: var(--milan-shadow-lg);
+}
+
+.usuarios-modal .modal-header {
+  padding: 18px 22px;
+
+  border: none;
+
+  background: linear-gradient(
+    135deg,
+    var(--milan-blue),
+    var(--milan-purple)
+  );
+
+  color: var(--milan-white);
+}
+
+.usuarios-modal .modal-title {
+  font-size: 19px;
+
+  font-weight: 700;
+}
+
+.usuarios-modal .modal-body {
+  padding: 24px;
+}
+
+.usuarios-modal .modal-footer {
+  padding: 18px 24px;
+
+  border-top: 1px solid var(--milan-gray-200);
+}
+
+
+/* =========================================================
+   FORMULARIOS
+   ========================================================= */
+
+.usuario-form-group {
+  margin-bottom: 18px;
+}
+
+.usuario-form-label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: var(--milan-blue);
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+.usuario-form-label .required {
+  color: var(--milan-fuchsia);
+}
+
+.usuario-form-control {
+  width: 100%;
+
+  min-height: 44px;
+
+  padding: 9px 13px;
+
+  border: 1px solid var(--milan-gray-200);
+
+  border-radius: 9px;
+
+  outline: none;
+
+  background: var(--milan-white);
+
+  color: var(--milan-text);
+
+  font-size: 14px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.usuario-form-control::placeholder {
+  color: #A2A9B5;
+}
+
+.usuario-form-control:focus {
+  border-color: var(--milan-purple);
+
+  box-shadow:
+    0 0 0 3px rgba(144, 99, 166, 0.12);
+}
+
+
+/* Bootstrap inputs dentro del modal */
+
+.usuarios-modal .form-control,
+.usuarios-modal .form-select {
+  min-height: 44px;
+
+  border-radius: 9px;
+
+  border-color: var(--milan-gray-200);
+
+  font-size: 14px;
+}
+
+.usuarios-modal .form-control:focus,
+.usuarios-modal .form-select:focus {
+  border-color: var(--milan-purple);
+
+  box-shadow:
+    0 0 0 3px rgba(144, 99, 166, 0.12);
+}
+
+
+/* =========================================================
+   BOTONES DEL MODAL
+   ========================================================= */
+
+.btn-cancelar {
+  min-height: 42px;
+
+  padding: 9px 18px;
+
+  border: 1px solid var(--milan-gray-300);
+
+  border-radius: 9px;
+
+  background: var(--milan-white);
+
+  color: var(--milan-gray-dark);
+
+  font-weight: 600;
+
+  transition: all 0.2s ease;
+}
+
+.btn-cancelar:hover {
+  border-color: var(--milan-blue);
+
+  color: var(--milan-blue);
+
+  background: var(--milan-gray-50);
+}
+
+.btn-guardar {
+  min-height: 42px;
+
+  padding: 9px 20px;
+
+  border: none;
+
+  border-radius: 9px;
+
+  background: var(--milan-fuchsia);
+
+  color: var(--milan-white);
+
+  font-weight: 600;
+
+  box-shadow:
+    0 5px 12px rgba(198, 0, 111, 0.18);
+
+  transition: all 0.2s ease;
+}
+
+.btn-guardar:hover {
+  background: var(--milan-fuchsia-dark);
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   ALERTAS
+   ========================================================= */
+
+.usuarios-alert {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 10px;
+
+  padding: 13px 15px;
+
+  margin-bottom: 18px;
+
+  border-radius: 10px;
+
+  font-size: 13px;
+}
+
+.usuarios-alert.success {
+  background: var(--milan-turquoise-light);
+
+  color: var(--milan-turquoise-dark);
+
+  border: 1px solid #B7E8E3;
+}
+
+.usuarios-alert.warning {
+  background: var(--milan-yellow-light);
+
+  color: #806300;
+
+  border: 1px solid #F1D77B;
+}
+
+.usuarios-alert.error {
+  background: var(--milan-fuchsia-light);
+
+  color: var(--milan-fuchsia-dark);
+
+  border: 1px solid #EAB5CF;
+}
+
+
+/* =========================================================
+   ESTADO VACÍO
+   ========================================================= */
+
+.usuarios-empty {
+  text-align: center;
+
+  padding: 55px 20px;
+
+  color: var(--milan-gray-dark);
+}
+
+.usuarios-empty-icon {
+  width: 65px;
+  height: 65px;
+
+  margin: 0 auto 15px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: var(--milan-purple-light);
+
+  color: var(--milan-purple);
+
+  font-size: 27px;
+}
+
+.usuarios-empty h5 {
+  margin-bottom: 7px;
+
+  color: var(--milan-blue);
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.usuarios-loading {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-height: 300px;
+
+  color: var(--milan-gray-dark);
+}
+
+.usuarios-loading .spinner-border {
+  color: var(--milan-purple) !important;
+}
+
+
+/* =========================================================
+   DETALLES DEL USUARIO
+   ========================================================= */
+
+.usuario-detail-card {
+  padding: 20px;
+
+  border-radius: 12px;
+
+  background: var(--milan-gray-50);
+
+  border: 1px solid var(--milan-gray-200);
+}
+
+.usuario-detail-label {
+  margin-bottom: 3px;
+
+  color: var(--milan-gray-dark);
+
+  font-size: 11px;
+
+  text-transform: uppercase;
+
+  font-weight: 700;
+
+  letter-spacing: 0.4px;
+}
+
+.usuario-detail-value {
+  color: var(--milan-blue);
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+.usuarios-table-wrapper::-webkit-scrollbar {
+  height: 7px;
+}
+
+.usuarios-table-wrapper::-webkit-scrollbar-track {
+  background: var(--milan-gray-100);
+}
+
+.usuarios-table-wrapper::-webkit-scrollbar-thumb {
+  background: var(--milan-gray);
+
+  border-radius: 10px;
+}
+
+.usuarios-table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: var(--milan-purple);
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLETS
+   ========================================================= */
+
+@media (max-width: 992px) {
+
+  .usuarios-page {
+    padding: 22px;
+  }
+
+  .usuarios-title {
+    font-size: 24px;
+  }
+
+  .usuarios-header-icon {
+    width: 52px;
+    height: 52px;
+
+    font-size: 23px;
+  }
+
+  .usuario-stat-card {
+    padding: 17px;
+  }
+
+  .usuario-stat-number {
+    font-size: 24px;
+  }
+
+  .usuarios-filters {
+    flex-wrap: wrap;
+  }
+
+  .usuarios-search {
+    flex-basis: 100%;
+  }
+
+  .usuarios-filters .form-select {
+    flex: 1;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE - TELÉFONOS
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .usuarios-page {
+    min-height: calc(100vh - 60px);
+
+    padding: 16px 12px;
+  }
+
+  /* Header */
+
+  .usuarios-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    margin-bottom: 20px;
+
+    gap: 15px;
+  }
+
+  .usuarios-header-left {
+    width: 100%;
+  }
+
+  .usuarios-header-icon {
+    width: 48px;
+    height: 48px;
+
+    min-width: 48px;
+
+    border-radius: 12px;
+
+    font-size: 21px;
+  }
+
+  .usuarios-title {
+    font-size: 22px;
+  }
+
+  .usuarios-subtitle {
+    font-size: 12px;
+  }
+
+  .usuarios-header .btn-primary-custom {
+    width: 100%;
+  }
+
+
+  /* Estadísticas */
+
+  .usuario-stat-card {
+    padding: 15px;
+
+    border-radius: 11px;
+  }
+
+  .usuario-stat-icon {
+    width: 42px;
+    height: 42px;
+
+    font-size: 18px;
+  }
+
+  .usuario-stat-number {
+    font-size: 22px;
+  }
+
+  .usuario-stat-label {
+    font-size: 12px;
+  }
+
+
+  /* Filtros */
+
+  .usuarios-filters {
+    padding: 13px;
+
+    gap: 9px;
+  }
+
+  .usuarios-search {
+    flex-basis: 100%;
+  }
+
+  .usuarios-filters .form-select {
+    width: 100%;
+
+    min-width: 0;
+
+    flex-basis: 100%;
+  }
+
+
+  /* Tabla */
+
+  .usuarios-main-card {
+    border-radius: 12px;
+  }
+
+  .usuarios-table {
+    min-width: 780px;
+  }
+
+  .usuarios-table thead th {
+    padding: 12px;
+  }
+
+  .usuarios-table tbody td {
+    padding: 12px;
+  }
+
+
+  /* Footer */
+
+  .usuarios-table-footer {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 12px;
+  }
+
+  .usuarios-pagination {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+
+  /* Modal */
+
+  .usuarios-modal .modal-body {
+    padding: 18px;
+  }
+
+  .usuarios-modal .modal-footer {
+    padding: 14px 18px;
+
+    flex-direction: column-reverse;
+
+    gap: 8px;
+  }
+
+  .usuarios-modal .modal-footer button {
+    width: 100%;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE - TELÉFONOS PEQUEÑOS
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  .usuarios-page {
+    padding: 12px 8px;
+  }
+
+  .usuarios-title {
+    font-size: 20px;
+  }
+
+  .usuarios-subtitle {
+    font-size: 11px;
+  }
+
+  .usuarios-header-icon {
+    width: 44px;
+    height: 44px;
+
+    min-width: 44px;
+
+    font-size: 19px;
+  }
+
+  .usuario-stat-card {
+    padding: 13px;
+  }
+
+  .usuario-stat-number {
+    font-size: 20px;
+  }
+
+  .usuario-stat-label {
+    font-size: 11px;
+  }
+
+  .usuarios-filters {
+    padding: 10px;
+  }
+
+  .usuarios-search input {
+    height: 40px;
+
+    font-size: 13px;
+  }
+
+  .usuarios-table {
+    min-width: 720px;
+  }
+
+  .usuario-avatar {
+    width: 36px;
+    height: 36px;
+
+    min-width: 36px;
+  }
+}
+
+
+/* =========================================================
+   ANIMACIONES
+   ========================================================= */
+
+@keyframes milanFadeIn {
+  from {
+    opacity: 0;
+
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+.usuarios-page {
+  animation: milanFadeIn 0.35s ease;
+}
+
+
+/* =========================================================
+   ACCESIBILIDAD
+   ========================================================= */
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--milan-purple);
+
+  outline-offset: 2px;
+}
+
+
+/* =========================================================
+   IMPRESIÓN
+   ========================================================= */
+
+@media print {
+
+  .usuarios-page {
+    padding: 0;
+
+    background: white;
+  }
+
+  .btn-primary-custom,
+  .usuarios-filters,
+  .usuario-action-btn,
+  .usuarios-pagination {
+    display: none !important;
+  }
+
+  .usuarios-main-card {
+    box-shadow: none;
+
+    border: 1px solid #ddd;
+  }
+}
