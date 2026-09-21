@@ -3,6 +3,7 @@ import { FaUserInjured } from "react-icons/fa";
 import { toast } from "react-toastify";
 
 import { supabase } from "../database/supabase";
+import departamentosData from "../database/Departamentos.json";
 
 import PacienteHeader from "../components/pacientes/PacienteHeader";
 import PacienteFiltros from "../components/pacientes/PacienteFilters";
@@ -12,11 +13,6 @@ import PacienteModal from "../components/pacientes/PacienteModal";
 import PacienteDetalle from "../components/pacientes/PacienteDetalle";
 
 import "../styles/pacientes.css";
-
-
-/* =========================================================
-   FORMULARIO INICIAL
-========================================================= */
 
 const formularioInicial = {
   nombres: "",
@@ -37,11 +33,6 @@ const formularioInicial = {
 
   observaciones: ""
 };
-
-
-/* =========================================================
-   CALCULAR EDAD
-========================================================= */
 
 const calcularEdad = (fechaNacimiento) => {
 
@@ -80,16 +71,18 @@ const calcularEdad = (fechaNacimiento) => {
   return edad;
 };
 
-
-/* =========================================================
-   COMPONENTE
-========================================================= */
+const procedenciasNicaragua = [
+  ...new Set(
+    (departamentosData.departamentos || []).flatMap(
+      (departamento) => [
+        departamento.nombre,
+        ...(departamento.municipios || [])
+      ]
+    )
+  )
+].sort((a, b) => a.localeCompare(b));
 
 const Pacientes = () => {
-
-  /* =======================================================
-     ESTADOS
-  ======================================================= */
 
   const [
     pacienteSeleccionado,
@@ -116,11 +109,6 @@ const Pacientes = () => {
     setGuardando
   ] = useState(false);
 
-
-  /* =======================================================
-     VER PACIENTE
-  ======================================================= */
-
   const verPaciente = (paciente) => {
 
     setPacienteSeleccionado(
@@ -138,11 +126,6 @@ const Pacientes = () => {
     setPacienteSeleccionado(null);
   };
 
-
-  /* =======================================================
-     MODAL
-  ======================================================= */
-
   const [
     mostrarModal,
     setMostrarModal
@@ -153,22 +136,12 @@ const Pacientes = () => {
     setModoEdicion
   ] = useState(false);
 
-
-  /* =======================================================
-     FORMULARIO
-  ======================================================= */
-
   const [
     formulario,
     setFormulario
   ] = useState({
     ...formularioInicial
   });
-
-
-  /* =======================================================
-     FILTROS
-  ======================================================= */
 
   const [
     busqueda,
@@ -189,11 +162,6 @@ const Pacientes = () => {
     procedencias,
     setProcedencias
   ] = useState([]);
-
-
-  /* =======================================================
-     CARGAR PACIENTES
-  ======================================================= */
 
   const cargarPacientes = async () => {
 
@@ -272,11 +240,6 @@ const Pacientes = () => {
     }
   };
 
-
-  /* =======================================================
-     CARGAR PROCEDENCIAS
-  ======================================================= */
-
   const cargarProcedencias = async () => {
 
     try {
@@ -297,7 +260,7 @@ const Pacientes = () => {
         throw error;
       }
 
-      const valoresUnicos = [
+      const procedenciasExistentes = [
         ...new Set(
           (data || [])
             .map(
@@ -305,6 +268,15 @@ const Pacientes = () => {
                 item.procedencia?.trim()
             )
             .filter(Boolean)
+        )
+      ];
+
+      const valoresUnicos = [
+        ...new Set(
+          [
+            ...procedenciasNicaragua,
+            ...procedenciasExistentes
+          ]
         )
       ].sort(
         (a, b) =>
@@ -325,22 +297,10 @@ const Pacientes = () => {
     }
   };
 
-
-  /* =======================================================
-     CARGA INICIAL
-  ======================================================= */
-
   useEffect(() => {
-
     cargarPacientes();
     cargarProcedencias();
-
   }, []);
-
-
-  /* =======================================================
-     GENERAR CÓDIGO DE EXPEDIENTE
-  ======================================================= */
 
   const generarCodigoExpediente = async () => {
 
@@ -422,11 +382,6 @@ const Pacientes = () => {
     }
   };
 
-
-  /* =======================================================
-     LIMPIAR FORMULARIO
-  ======================================================= */
-
   const limpiarFormulario = () => {
 
     setFormulario({
@@ -440,22 +395,12 @@ const Pacientes = () => {
     setModoEdicion(false);
   };
 
-
-  /* =======================================================
-     NUEVO PACIENTE
-  ======================================================= */
-
   const nuevoPaciente = () => {
 
     limpiarFormulario();
 
     setMostrarModal(true);
   };
-
-
-  /* =======================================================
-     EDITAR PACIENTE
-  ======================================================= */
 
   const editarPaciente = (paciente) => {
 
@@ -519,11 +464,6 @@ const Pacientes = () => {
     setMostrarModal(true);
   };
 
-
-  /* =======================================================
-     VALIDAR FORMULARIO
-  ======================================================= */
-
   const validarFormulario = () => {
 
     const {
@@ -536,11 +476,6 @@ const Pacientes = () => {
       parentesco_tutor,
       telefono_tutor
     } = formulario;
-
-
-    /* -----------------------------------------------
-       DATOS OBLIGATORIOS
-    ------------------------------------------------ */
 
     if (!nombres.trim()) {
 
@@ -591,11 +526,6 @@ const Pacientes = () => {
       return false;
     }
 
-
-    /* -----------------------------------------------
-       VALIDAR FECHA
-    ------------------------------------------------ */
-
     const fechaNacimiento =
       new Date(
         `${fecha_nacimiento}T00:00:00`
@@ -629,11 +559,6 @@ const Pacientes = () => {
       return false;
     }
 
-
-    /* -----------------------------------------------
-       EDAD
-    ------------------------------------------------ */
-
     const edad =
       calcularEdad(
         fecha_nacimiento
@@ -642,11 +567,6 @@ const Pacientes = () => {
     const esMenor =
       edad !== null &&
       edad < 18;
-
-
-    /* -----------------------------------------------
-       TUTOR
-    ------------------------------------------------ */
 
     if (esMenor) {
 
@@ -683,11 +603,6 @@ const Pacientes = () => {
 
     return true;
   };
-
-
-  /* =======================================================
-     PREPARAR DATOS
-  ======================================================= */
 
   const prepararDatosPaciente = (
     codigo = null
@@ -748,10 +663,6 @@ const Pacientes = () => {
       es_menor_edad:
         esMenor,
 
-      /* -----------------------------------------------
-         TUTOR
-      ------------------------------------------------ */
-
       nombre_tutor:
         esMenor
           ? formulario.nombre_tutor.trim()
@@ -774,11 +685,6 @@ const Pacientes = () => {
       activo: true
     };
   };
-
-
-  /* =======================================================
-     REGISTRAR PACIENTE
-  ======================================================= */
 
   const registrarPaciente = async () => {
 
@@ -868,11 +774,6 @@ const Pacientes = () => {
 
     }
   };
-
-
-  /* =======================================================
-     ACTUALIZAR PACIENTE
-  ======================================================= */
 
   const actualizarPaciente = async () => {
 
@@ -979,11 +880,6 @@ const Pacientes = () => {
     }
   };
 
-
-  /* =======================================================
-     GUARDAR
-  ======================================================= */
-
   const guardarPaciente = async (e) => {
 
     e.preventDefault();
@@ -998,11 +894,6 @@ const Pacientes = () => {
 
     }
   };
-
-
-  /* =======================================================
-     CAMBIAR ESTADO
-  ======================================================= */
 
   const cambiarEstado = async (paciente) => {
 
@@ -1092,11 +983,6 @@ const Pacientes = () => {
     }
   };
 
-
-  /* =======================================================
-     FILTROS
-  ======================================================= */
-
   const pacientesFiltrados =
     useMemo(() => {
 
@@ -1174,11 +1060,6 @@ const Pacientes = () => {
       estado
     ]);
 
-
-  /* =======================================================
-     LIMPIAR FILTROS
-  ======================================================= */
-
   const limpiarFiltros = () => {
 
     setBusqueda("");
@@ -1187,11 +1068,6 @@ const Pacientes = () => {
 
     setEstado("");
   };
-
-
-  /* =======================================================
-     ESTADÍSTICAS
-  ======================================================= */
 
   const totalPacientes =
     pacientes.length;
@@ -1222,11 +1098,6 @@ const Pacientes = () => {
         )
     ).length;
 
-
-  /* =======================================================
-     RENDER
-  ======================================================= */
-
   return (
     <div className="pacientes-page container-fluid px-3 px-md-4 py-3">
 
@@ -1235,11 +1106,6 @@ const Pacientes = () => {
           nuevoPaciente
         }
       />
-
-
-      {/* =================================================
-          ESTADÍSTICAS
-      ================================================= */}
 
       <div className="row g-3 mb-4">
 
@@ -1344,13 +1210,7 @@ const Pacientes = () => {
 
       </div>
 
-
-      {/* =================================================
-          CONTENIDO
-      ================================================= */}
-
       <div className="pacientes-main-card">
-
         <PacienteFiltros
           busqueda={busqueda}
           setBusqueda={setBusqueda}
@@ -1361,8 +1221,6 @@ const Pacientes = () => {
           procedencias={procedencias}
           onLimpiar={limpiarFiltros}
         />
-
-
         <div className="px-3 px-md-4 py-3">
 
           <div className="d-flex justify-content-between align-items-center">
@@ -1387,11 +1245,6 @@ const Pacientes = () => {
           </div>
 
         </div>
-
-
-        {/* =================================================
-            LOADING
-        ================================================= */}
 
         {cargando ? (
 
@@ -1425,11 +1278,6 @@ const Pacientes = () => {
               mostrar={mostrarPaciente}
               onCerrar={cerrarPaciente}
             />
-
-
-            {/* =================================================
-                MÓVIL
-            ================================================= */}
 
             <div className="pacientes-mobile-list">
 
@@ -1489,11 +1337,6 @@ const Pacientes = () => {
         )}
 
       </div>
-
-
-      {/* =================================================
-          MODAL
-      ================================================= */}
 
       <PacienteModal
         mostrar={

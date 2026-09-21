@@ -85,10 +85,6 @@ const ProcedenciaSelector = ({
 
   return (
     <>
-      {/* =========================================
-          CAMPO DE PROCEDENCIA
-      ========================================== */}
-
       <div className="procedencia-selector">
 
         <div className="d-flex gap-2">
@@ -126,11 +122,6 @@ const ProcedenciaSelector = ({
 
       </div>
 
-
-      {/* =========================================
-          MODAL
-      ========================================== */}
-
       {mostrarModal && (
 
         <div
@@ -157,8 +148,8 @@ const ProcedenciaSelector = ({
 
                 <small>
                   {mostrarAgregar
-                    ? "Escriba el lugar de procedencia"
-                    : "Busque y seleccione el lugar de procedencia"}
+                    ? "Escriba la localidad o comarca"
+                    : "Busque y seleccione la localidad o comarca"}
                 </small>
 
               </div>
@@ -173,11 +164,6 @@ const ProcedenciaSelector = ({
 
             </div>
 
-
-            {/* =====================================
-                AGREGAR NUEVA
-            ====================================== */}
-
             {mostrarAgregar ? (
 
               <div className="procedencia-agregar-container">
@@ -187,7 +173,7 @@ const ProcedenciaSelector = ({
                 </div>
 
                 <label className="form-label">
-                  Nueva procedencia
+                  Nueva procedencia o comarca
                 </label>
 
                 <input
@@ -197,7 +183,7 @@ const ProcedenciaSelector = ({
                   onChange={(e) =>
                     setNuevaProcedencia(e.target.value)
                   }
-                  placeholder="Ej. Nueva Guinea"
+                  placeholder="Ej. Nueva Guinea o comarca"
                   autoFocus
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {

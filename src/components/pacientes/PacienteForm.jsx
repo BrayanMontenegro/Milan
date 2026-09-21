@@ -79,10 +79,6 @@ const PacienteForm = ({
       className="paciente-form"
     >
 
-      {/* =========================================
-          INFORMACIÓN PERSONAL
-      ========================================== */}
-
       <div className="paciente-form-section">
 
         <div className="paciente-form-section-title">
@@ -251,11 +247,6 @@ const PacienteForm = ({
 
       </div>
 
-
-      {/* =========================================
-          CONTACTO
-      ========================================== */}
-
       <div className="paciente-form-section">
 
         <div className="paciente-form-section-title">
@@ -389,10 +380,6 @@ const PacienteForm = ({
 
       </div>
 
-{/* =========================================================
-    INFORMACIÓN DEL TUTOR
-========================================================= */}
-
         {edad !== null && edad < 18 && (
           <div className="paciente-form-section paciente-tutor-section">
 
@@ -507,10 +494,6 @@ const PacienteForm = ({
           </div>
         )}
 
-      {/* =========================================
-          OBSERVACIONES
-      ========================================== */}
-
       <div className="paciente-form-section">
 
         <div className="paciente-form-section-title">
@@ -541,11 +524,6 @@ const PacienteForm = ({
         />
 
       </div>
-
-
-      {/* =========================================
-          BOTONES
-      ========================================== */}
 
       <div className="paciente-form-actions">
 

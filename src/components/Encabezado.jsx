@@ -47,26 +47,15 @@ const Encabezado = () => {
   const rolUsuario =
     perfil?.roles?.nombre;
 
-  // ==========================================
-  // CERRAR SESIÓN
-  // ==========================================
-
   const manejarCerrarSesion = async () => {
     await cerrarSesion();
     navigate("/");
   };
 
-  // ==========================================
-  // CERRAR MENÚ MÓVIL
-  // ==========================================
 
   const cerrarMenu = () => {
     setMostrarMenu(false);
   };
-
-  // ==========================================
-  // VERIFICAR ROL
-  // ==========================================
 
   const esAdministrador =
     rolUsuario === "ADMINISTRADOR";
@@ -79,10 +68,6 @@ const Encabezado = () => {
 
   const esEspecialista =
     rolUsuario === "ESPECIALISTA";
-
-  // ==========================================
-  // NOMBRE DEL USUARIO
-  // ==========================================
 
   const nombreUsuario =
     perfil?.nombres ||
@@ -97,17 +82,9 @@ const Encabezado = () => {
   const nombreCompleto =
     `${nombreUsuario} ${apellidosUsuario}`.trim();
 
-  // ==========================================
-  // INICIALES
-  // ==========================================
-
   const iniciales =
     `${nombreUsuario.charAt(0)}${apellidosUsuario.charAt(0)}`
       .toUpperCase();
-
-  // ==========================================
-  // MENÚ
-  // ==========================================
 
   const menuPrincipal = [
     {
@@ -175,16 +152,8 @@ const Encabezado = () => {
     },
   ];
 
-  // ==========================================
-  // MENÚ CONFIGURACIÓN
-  // ==========================================
-
   const mostrarConfiguracion =
     esAdministrador;
-
-  // ==========================================
-  // OCULTAR ENCABEZADO EN LOGIN
-  // ==========================================
 
   if (location.pathname === "/") {
     return null;
@@ -197,10 +166,6 @@ const Encabezado = () => {
       sticky="top"
     >
       <Container fluid className="px-3 px-lg-4">
-
-        {/* ======================================
-            LOGO
-        ====================================== */}
 
         <Navbar.Brand
           as={Link}
@@ -222,10 +187,6 @@ const Encabezado = () => {
           </div>
         </Navbar.Brand>
 
-        {/* ======================================
-            BOTÓN MÓVIL
-        ====================================== */}
-
         <Navbar.Toggle
           aria-controls="menu-clinica"
           onClick={() =>
@@ -235,10 +196,6 @@ const Encabezado = () => {
         >
           <FiMenu />
         </Navbar.Toggle>
-
-        {/* ======================================
-            MENÚ DESKTOP
-        ====================================== */}
 
         <Navbar.Collapse
           id="menu-clinica"
@@ -322,10 +279,6 @@ const Encabezado = () => {
 
           </Nav>
         </Navbar.Collapse>
-
-        {/* ======================================
-            USUARIO
-        ====================================== */}
 
         <Dropdown className="usuario-dropdown">
 
@@ -421,10 +374,6 @@ const Encabezado = () => {
           </Dropdown.Menu>
 
         </Dropdown>
-
-        {/* ======================================
-            MENÚ MÓVIL
-        ====================================== */}
 
         <Offcanvas
           show={mostrarMenu}
