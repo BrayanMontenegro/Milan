@@ -389,121 +389,123 @@ const PacienteForm = ({
 
       </div>
 
+{/* =========================================================
+    INFORMACIÓN DEL TUTOR
+========================================================= */}
 
-      {/* =========================================
-          TUTOR
-      ========================================== */}
+        {edad !== null && edad < 18 && (
+          <div className="paciente-form-section paciente-tutor-section">
 
-      {esMenor && (
+            <div className="paciente-form-section-title">
 
-        <div className="paciente-form-section paciente-tutor-section">
+              <div className="paciente-form-section-icon yellow">
+                <FaUsers />
+              </div>
 
-          <div className="paciente-form-section-title">
+              <div>
+                <h5>Información del tutor</h5>
+                <small>
+                  Los datos del tutor son obligatorios para pacientes menores de edad.
+                </small>
+              </div>
 
-            <div className="paciente-form-section-icon yellow">
-              <FaUsers />
             </div>
 
-            <div>
-              <h5>
-                Información del tutor
-              </h5>
+            <div className="row g-3">
 
-              <small>
-                Información del responsable del menor
-              </small>
+              {/* Nombre del tutor */}
+              <div className="col-md-6">
+
+                <label className="form-label">
+                  Nombre completo del tutor
+                  <span className="text-danger ms-1">*</span>
+                </label>
+
+                <input
+                  type="text"
+                  name="nombre_tutor"
+                  className="form-control"
+                  value={formulario.nombre_tutor || ""}
+                  onChange={manejarCambio}
+                  placeholder="Ingrese el nombre del tutor"
+                  required
+                />
+
+              </div>
+
+
+              {/* Parentesco */}
+              <div className="col-md-3">
+
+                <label className="form-label">
+                  Parentesco
+                  <span className="text-danger ms-1">*</span>
+                </label>
+
+                <select
+                  name="parentesco_tutor"
+                  className="form-select"
+                  value={formulario.parentesco_tutor || ""}
+                  onChange={manejarCambio}
+                  required
+                >
+                  <option value="">
+                    Seleccione
+                  </option>
+
+                  <option value="Padre">
+                    Padre
+                  </option>
+
+                  <option value="Madre">
+                    Madre
+                  </option>
+
+                  <option value="Tutor">
+                    Tutor
+                  </option>
+
+                  <option value="Abuelo">
+                    Abuelo
+                  </option>
+
+                  <option value="Abuela">
+                    Abuela
+                  </option>
+
+                  <option value="Otro">
+                    Otro
+                  </option>
+
+                </select>
+
+              </div>
+
+
+              {/* Teléfono */}
+              <div className="col-md-3">
+
+                <label className="form-label">
+                  Teléfono del tutor
+                  <span className="text-danger ms-1">*</span>
+                </label>
+
+                <input
+                  type="tel"
+                  name="telefono_tutor"
+                  className="form-control"
+                  value={formulario.telefono_tutor || ""}
+                  onChange={manejarCambio}
+                  placeholder="8888-8888"
+                  required
+                />
+
+              </div>
+
             </div>
 
           </div>
-
-          <div className="row g-3">
-
-            {/* Nombre tutor */}
-            <div className="col-12 col-md-6">
-
-              <label className="form-label">
-                Nombre completo del tutor
-                <span className="text-danger"> *</span>
-              </label>
-
-              <input
-                type="text"
-                name="tutor_nombres"
-                className="form-control"
-                value={formulario.tutor_nombres}
-                onChange={manejarCambio}
-                placeholder="Nombre del tutor"
-                required={esMenor}
-              />
-
-            </div>
-
-            {/* Parentesco */}
-            <div className="col-12 col-md-3">
-
-              <label className="form-label">
-                Parentesco
-                <span className="text-danger"> *</span>
-              </label>
-
-              <select
-                name="tutor_parentesco"
-                className="form-select"
-                value={formulario.tutor_parentesco}
-                onChange={manejarCambio}
-                required={esMenor}
-              >
-
-                <option value="">
-                  Seleccione
-                </option>
-
-                <option value="MADRE">
-                  Madre
-                </option>
-
-                <option value="PADRE">
-                  Padre
-                </option>
-
-                <option value="TUTOR">
-                  Tutor
-                </option>
-
-                <option value="OTRO">
-                  Otro
-                </option>
-
-              </select>
-
-            </div>
-
-            {/* Teléfono tutor */}
-            <div className="col-12 col-md-3">
-
-              <label className="form-label">
-                Teléfono
-                <span className="text-danger"> *</span>
-              </label>
-
-              <input
-                type="tel"
-                name="tutor_telefono"
-                className="form-control"
-                value={formulario.tutor_telefono}
-                onChange={manejarCambio}
-                placeholder="8888-8888"
-                required={esMenor}
-              />
-
-            </div>
-
-          </div>
-
-        </div>
-
-      )}
-
+        )}
 
       {/* =========================================
           OBSERVACIONES

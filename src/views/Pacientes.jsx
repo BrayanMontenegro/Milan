@@ -14,6 +14,10 @@ import PacienteDetalle from "../components/pacientes/PacienteDetalle";
 import "../styles/pacientes.css";
 
 
+/* =========================================================
+   FORMULARIO INICIAL
+========================================================= */
+
 const formularioInicial = {
   nombres: "",
   apellidos: "",
@@ -25,12 +29,19 @@ const formularioInicial = {
   procedencia: "",
   ocupacion: "",
   estado_civil: "",
-  tutor_nombres: "",
-  tutor_parentesco: "",
-  tutor_telefono: "",
 
-  observaciones: "",
+  // Nombres correctos según la tabla pacientes
+  nombre_tutor: "",
+  parentesco_tutor: "",
+  telefono_tutor: "",
+
+  observaciones: ""
 };
+
+
+/* =========================================================
+   CALCULAR EDAD
+========================================================= */
 
 const calcularEdad = (fechaNacimiento) => {
 
@@ -69,125 +80,202 @@ const calcularEdad = (fechaNacimiento) => {
   return edad;
 };
 
+
+/* =========================================================
+   COMPONENTE
+========================================================= */
+
 const Pacientes = () => {
 
   /* =======================================================
      ESTADOS
-     ======================================================= */
-const [pacienteSeleccionado, setPacienteSeleccionado] =
-  useState(null);
+  ======================================================= */
 
-const [mostrarPaciente, setMostrarPaciente] =
-  useState(false);
+  const [
+    pacienteSeleccionado,
+    setPacienteSeleccionado
+  ] = useState(null);
 
-const verPaciente = (paciente) => {
-  setPacienteSeleccionado(paciente);
-  setMostrarPaciente(true);
-};
+  const [
+    mostrarPaciente,
+    setMostrarPaciente
+  ] = useState(false);
 
-const cerrarPaciente = () => {
-  setMostrarPaciente(false);
-  setPacienteSeleccionado(null);
-};
+  const [
+    pacientes,
+    setPacientes
+  ] = useState([]);
 
-  const [pacientes, setPacientes] = useState([]);
+  const [
+    cargando,
+    setCargando
+  ] = useState(true);
 
-  const [cargando, setCargando] =
-    useState(true);
+  const [
+    guardando,
+    setGuardando
+  ] = useState(false);
 
-  const [guardando, setGuardando] =
-    useState(false);
+
+  /* =======================================================
+     VER PACIENTE
+  ======================================================= */
+
+  const verPaciente = (paciente) => {
+
+    setPacienteSeleccionado(
+      paciente
+    );
+
+    setMostrarPaciente(true);
+  };
+
+
+  const cerrarPaciente = () => {
+
+    setMostrarPaciente(false);
+
+    setPacienteSeleccionado(null);
+  };
 
 
   /* =======================================================
      MODAL
-     ======================================================= */
+  ======================================================= */
 
-  const [mostrarModal, setMostrarModal] =
-    useState(false);
+  const [
+    mostrarModal,
+    setMostrarModal
+  ] = useState(false);
 
-  const [modoEdicion, setModoEdicion] =
-    useState(false);
+  const [
+    modoEdicion,
+    setModoEdicion
+  ] = useState(false);
 
 
   /* =======================================================
      FORMULARIO
-     ======================================================= */
+  ======================================================= */
 
-  const [formulario, setFormulario] =
-    useState({
-      ...formularioInicial
-    });
+  const [
+    formulario,
+    setFormulario
+  ] = useState({
+    ...formularioInicial
+  });
 
 
   /* =======================================================
      FILTROS
-     ======================================================= */
+  ======================================================= */
 
-  const [busqueda, setBusqueda] =
-    useState("");
+  const [
+    busqueda,
+    setBusqueda
+  ] = useState("");
 
-  const [procedencia, setProcedencia] =
-    useState("");
+  const [
+    procedencia,
+    setProcedencia
+  ] = useState("");
 
-  const [estado, setEstado] =
-    useState("");
+  const [
+    estado,
+    setEstado
+  ] = useState("");
+
+  const [
+    procedencias,
+    setProcedencias
+  ] = useState([]);
 
 
-  const [procedencias, setProcedencias] =
-    useState([]);
+  /* =======================================================
+     CARGAR PACIENTES
+  ======================================================= */
 
   const cargarPacientes = async () => {
-  try {
-    setCargando(true);
 
-    const { data, error } = await supabase
-      .from("pacientes")
-      .select(`
-        id_paciente,
-        codigo_expediente,
-        nombres,
-        apellidos,
-        fecha_nacimiento,
-        sexo,
-        telefono,
-        correo,
-        direccion,
-        procedencia,
-        ocupacion,
-        estado_civil,
-        es_menor_edad,
-        nombre_tutor,
-        parentesco_tutor,
-        telefono_tutor,
-        observaciones,
-        activo,
-        created_at,
-        updated_at
-      `)
-      .order("created_at", { ascending: false });
+    try {
 
-    if (error) {
-      console.error("Error cargando pacientes:", error);
-      throw error;
+      setCargando(true);
+
+      const {
+        data,
+        error
+      } = await supabase
+        .from("pacientes")
+        .select(`
+          id_paciente,
+          codigo_expediente,
+          nombres,
+          apellidos,
+          fecha_nacimiento,
+          sexo,
+          telefono,
+          correo,
+          direccion,
+          procedencia,
+          ocupacion,
+          estado_civil,
+          es_menor_edad,
+          nombre_tutor,
+          parentesco_tutor,
+          telefono_tutor,
+          observaciones,
+          activo,
+          created_at,
+          updated_at
+        `)
+        .order(
+          "created_at",
+          {
+            ascending: false
+          }
+        );
+
+      if (error) {
+
+        console.error(
+          "Error cargando pacientes:",
+          error
+        );
+
+        throw error;
+      }
+
+      console.log(
+        "Pacientes recibidos:",
+        data
+      );
+
+      setPacientes(
+        data || []
+      );
+
+    } catch (error) {
+
+      console.error(
+        "Error:",
+        error
+      );
+
+      toast.error(
+        "No se pudieron cargar los pacientes."
+      );
+
+    } finally {
+
+      setCargando(false);
+
     }
-
-    console.log("Pacientes recibidos:", data);
-
-    setPacientes(data || []);
-
-  } catch (error) {
-    console.error("Error:", error);
-    toast.error("No se pudieron cargar los pacientes.");
-  } finally {
-    setCargando(false);
-  }
-};
+  };
 
 
   /* =======================================================
      CARGAR PROCEDENCIAS
-     ======================================================= */
+  ======================================================= */
 
   const cargarProcedencias = async () => {
 
@@ -240,7 +328,7 @@ const cerrarPaciente = () => {
 
   /* =======================================================
      CARGA INICIAL
-     ======================================================= */
+  ======================================================= */
 
   useEffect(() => {
 
@@ -252,7 +340,7 @@ const cerrarPaciente = () => {
 
   /* =======================================================
      GENERAR CÓDIGO DE EXPEDIENTE
-     ======================================================= */
+  ======================================================= */
 
   const generarCodigoExpediente = async () => {
 
@@ -309,6 +397,7 @@ const cerrarPaciente = () => {
             ultimoNumero
           )
         ) {
+
           consecutivo =
             ultimoNumero + 1;
         }
@@ -326,11 +415,6 @@ const cerrarPaciente = () => {
         error
       );
 
-      /*
-       * Fallback para evitar dejar
-       * codigo_expediente vacío.
-       */
-
       return (
         `PAC-${anioActual}-` +
         `${Date.now().toString().slice(-6)}`
@@ -341,7 +425,7 @@ const cerrarPaciente = () => {
 
   /* =======================================================
      LIMPIAR FORMULARIO
-     ======================================================= */
+  ======================================================= */
 
   const limpiarFormulario = () => {
 
@@ -349,7 +433,9 @@ const cerrarPaciente = () => {
       ...formularioInicial
     });
 
-    setPacienteSeleccionado(null);
+    setPacienteSeleccionado(
+      null
+    );
 
     setModoEdicion(false);
   };
@@ -357,7 +443,7 @@ const cerrarPaciente = () => {
 
   /* =======================================================
      NUEVO PACIENTE
-     ======================================================= */
+  ======================================================= */
 
   const nuevoPaciente = () => {
 
@@ -369,7 +455,7 @@ const cerrarPaciente = () => {
 
   /* =======================================================
      EDITAR PACIENTE
-     ======================================================= */
+  ======================================================= */
 
   const editarPaciente = (paciente) => {
 
@@ -415,17 +501,18 @@ const cerrarPaciente = () => {
       estado_civil:
         paciente.estado_civil || "",
 
-      tutor_nombres:
-        paciente.tutor_nombres || "",
+      // Nombres correctos de la BD
+      nombre_tutor:
+        paciente.nombre_tutor || "",
 
-      tutor_parentesco:
-        paciente.tutor_parentesco || "",
+      parentesco_tutor:
+        paciente.parentesco_tutor || "",
 
-      tutor_telefono:
-        paciente.tutor_telefono || "",
+      telefono_tutor:
+        paciente.telefono_tutor || "",
 
       observaciones:
-        paciente.observaciones || "",
+        paciente.observaciones || ""
 
     });
 
@@ -435,7 +522,7 @@ const cerrarPaciente = () => {
 
   /* =======================================================
      VALIDAR FORMULARIO
-     ======================================================= */
+  ======================================================= */
 
   const validarFormulario = () => {
 
@@ -445,9 +532,9 @@ const cerrarPaciente = () => {
       fecha_nacimiento,
       sexo,
       procedencia,
-      tutor_nombres,
-      tutor_parentesco,
-      tutor_telefono
+      nombre_tutor,
+      parentesco_tutor,
+      telefono_tutor
     } = formulario;
 
 
@@ -563,7 +650,7 @@ const cerrarPaciente = () => {
 
     if (esMenor) {
 
-      if (!tutor_nombres.trim()) {
+      if (!nombre_tutor.trim()) {
 
         toast.warning(
           "Ingrese el nombre completo del tutor."
@@ -573,7 +660,7 @@ const cerrarPaciente = () => {
       }
 
 
-      if (!tutor_parentesco) {
+      if (!parentesco_tutor) {
 
         toast.warning(
           "Seleccione el parentesco del tutor."
@@ -583,7 +670,7 @@ const cerrarPaciente = () => {
       }
 
 
-      if (!tutor_telefono.trim()) {
+      if (!telefono_tutor.trim()) {
 
         toast.warning(
           "Ingrese el teléfono del tutor."
@@ -591,7 +678,6 @@ const cerrarPaciente = () => {
 
         return false;
       }
-
     }
 
 
@@ -601,7 +687,7 @@ const cerrarPaciente = () => {
 
   /* =======================================================
      PREPARAR DATOS
-     ======================================================= */
+  ======================================================= */
 
   const prepararDatosPaciente = (
     codigo = null
@@ -659,32 +745,26 @@ const cerrarPaciente = () => {
         formulario.estado_civil ||
         null,
 
-      /*
-       * El estado de menor se guarda
-       * directamente en la BD.
-       */
-
       es_menor_edad:
         esMenor,
 
-      /*
-       * Los datos del tutor únicamente
-       * se guardan para menores.
-       */
+      /* -----------------------------------------------
+         TUTOR
+      ------------------------------------------------ */
 
-      tutor_nombres:
+      nombre_tutor:
         esMenor
-          ? formulario.tutor_nombres.trim()
+          ? formulario.nombre_tutor.trim()
           : null,
 
-      tutor_parentesco:
+      parentesco_tutor:
         esMenor
-          ? formulario.tutor_parentesco
+          ? formulario.parentesco_tutor
           : null,
 
-      tutor_telefono:
+      telefono_tutor:
         esMenor
-          ? formulario.tutor_telefono.trim()
+          ? formulario.telefono_tutor.trim()
           : null,
 
       observaciones:
@@ -698,7 +778,7 @@ const cerrarPaciente = () => {
 
   /* =======================================================
      REGISTRAR PACIENTE
-     ======================================================= */
+  ======================================================= */
 
   const registrarPaciente = async () => {
 
@@ -711,17 +791,9 @@ const cerrarPaciente = () => {
       setGuardando(true);
 
 
-      /* -----------------------------------------------
-         GENERAR EXPEDIENTE
-      ------------------------------------------------ */
-
       const codigo =
         await generarCodigoExpediente();
 
-
-      /* -----------------------------------------------
-         DATOS
-      ------------------------------------------------ */
 
       const datosPaciente =
         prepararDatosPaciente(
@@ -734,10 +806,6 @@ const cerrarPaciente = () => {
         datosPaciente
       );
 
-
-      /* -----------------------------------------------
-         INSERTAR
-      ------------------------------------------------ */
 
       const {
         data,
@@ -762,10 +830,6 @@ const cerrarPaciente = () => {
       }
 
 
-      /* -----------------------------------------------
-         ACTUALIZAR LISTA
-      ------------------------------------------------ */
-
       setPacientes(
         (actuales) => [
           data,
@@ -776,10 +840,6 @@ const cerrarPaciente = () => {
 
       await cargarProcedencias();
 
-
-      /* -----------------------------------------------
-         CERRAR
-      ------------------------------------------------ */
 
       setMostrarModal(false);
 
@@ -812,7 +872,7 @@ const cerrarPaciente = () => {
 
   /* =======================================================
      ACTUALIZAR PACIENTE
-     ======================================================= */
+  ======================================================= */
 
   const actualizarPaciente = async () => {
 
@@ -837,15 +897,6 @@ const cerrarPaciente = () => {
 
       const datosActualizados =
         prepararDatosPaciente();
-
-
-      /*
-       * No modificamos:
-       *
-       * codigo_expediente
-       * id_paciente
-       * created_at
-       */
 
 
       datosActualizados.updated_at =
@@ -884,10 +935,6 @@ const cerrarPaciente = () => {
         throw error;
       }
 
-
-      /* -----------------------------------------------
-         ACTUALIZAR ESTADO LOCAL
-      ------------------------------------------------ */
 
       setPacientes(
         (actuales) =>
@@ -935,7 +982,7 @@ const cerrarPaciente = () => {
 
   /* =======================================================
      GUARDAR
-     ======================================================= */
+  ======================================================= */
 
   const guardarPaciente = async (e) => {
 
@@ -955,7 +1002,7 @@ const cerrarPaciente = () => {
 
   /* =======================================================
      CAMBIAR ESTADO
-     ======================================================= */
+  ======================================================= */
 
   const cambiarEstado = async (paciente) => {
 
@@ -992,9 +1039,13 @@ const cerrarPaciente = () => {
       } = await supabase
         .from("pacientes")
         .update({
-          activo: nuevoEstado,
+
+          activo:
+            nuevoEstado,
+
           updated_at:
             new Date().toISOString()
+
         })
         .eq(
           "id_paciente",
@@ -1040,6 +1091,11 @@ const cerrarPaciente = () => {
       );
     }
   };
+
+
+  /* =======================================================
+     FILTROS
+  ======================================================= */
 
   const pacientesFiltrados =
     useMemo(() => {
@@ -1121,7 +1177,7 @@ const cerrarPaciente = () => {
 
   /* =======================================================
      LIMPIAR FILTROS
-     ======================================================= */
+  ======================================================= */
 
   const limpiarFiltros = () => {
 
@@ -1135,7 +1191,7 @@ const cerrarPaciente = () => {
 
   /* =======================================================
      ESTADÍSTICAS
-     ======================================================= */
+  ======================================================= */
 
   const totalPacientes =
     pacientes.length;
@@ -1169,14 +1225,10 @@ const cerrarPaciente = () => {
 
   /* =======================================================
      RENDER
-     ======================================================= */
+  ======================================================= */
 
   return (
     <div className="pacientes-page container-fluid px-3 px-md-4 py-3">
-
-      {/* =================================================
-          HEADER
-      ================================================= */}
 
       <PacienteHeader
         onNuevoPaciente={
@@ -1200,6 +1252,7 @@ const cerrarPaciente = () => {
             </div>
 
             <div>
+
               <small>
                 Total pacientes
               </small>
@@ -1207,6 +1260,7 @@ const cerrarPaciente = () => {
               <h3>
                 {totalPacientes}
               </h3>
+
             </div>
 
           </div>
@@ -1223,6 +1277,7 @@ const cerrarPaciente = () => {
             </div>
 
             <div>
+
               <small>
                 Pacientes activos
               </small>
@@ -1230,6 +1285,7 @@ const cerrarPaciente = () => {
               <h3>
                 {pacientesActivos}
               </h3>
+
             </div>
 
           </div>
@@ -1246,6 +1302,7 @@ const cerrarPaciente = () => {
             </div>
 
             <div>
+
               <small>
                 Menores de edad
               </small>
@@ -1253,6 +1310,7 @@ const cerrarPaciente = () => {
               <h3>
                 {menores}
               </h3>
+
             </div>
 
           </div>
@@ -1269,6 +1327,7 @@ const cerrarPaciente = () => {
             </div>
 
             <div>
+
               <small>
                 Inactivos
               </small>
@@ -1276,6 +1335,7 @@ const cerrarPaciente = () => {
               <h3>
                 {pacientesInactivos}
               </h3>
+
             </div>
 
           </div>
@@ -1292,41 +1352,16 @@ const cerrarPaciente = () => {
       <div className="pacientes-main-card">
 
         <PacienteFiltros
-          busqueda={
-            busqueda
-          }
-
-          setBusqueda={
-            setBusqueda
-          }
-
-          procedencia={
-            procedencia
-          }
-
-          setProcedencia={
-            setProcedencia
-          }
-
-          estado={
-            estado
-          }
-
-          setEstado={
-            setEstado
-          }
-
-          procedencias={
-            procedencias
-          }
-
-          onLimpiar={
-            limpiarFiltros
-          }
+          busqueda={busqueda}
+          setBusqueda={setBusqueda}
+          procedencia={procedencia}
+          setProcedencia={setProcedencia}
+          estado={estado}
+          setEstado={setEstado}
+          procedencias={procedencias}
+          onLimpiar={limpiarFiltros}
         />
 
-
-        {/* CONTADOR */}
 
         <div className="px-3 px-md-4 py-3">
 
@@ -1377,33 +1412,20 @@ const cerrarPaciente = () => {
 
           <>
 
-            {/* =================================================
-                ESCRITORIO
-            ================================================= */}
-
             <PacienteTabla
-              pacientes={
-                pacientesFiltrados
-              }
-
-              onVer={
-                verPaciente
-              }
-
-              onEditar={
-                editarPaciente
-              }
-
-              onCambiarEstado={
-                cambiarEstado
-              }
+              pacientes={pacientesFiltrados}
+              onVer={verPaciente}
+              onEditar={editarPaciente}
+              onCambiarEstado={cambiarEstado}
             />
+
 
             <PacienteDetalle
               paciente={pacienteSeleccionado}
               mostrar={mostrarPaciente}
               onCerrar={cerrarPaciente}
             />
+
 
             {/* =================================================
                 MÓVIL
@@ -1487,6 +1509,7 @@ const cerrarPaciente = () => {
             );
 
             limpiarFormulario();
+
           }
 
         }}
@@ -1514,6 +1537,7 @@ const cerrarPaciente = () => {
         procedencias={
           procedencias
         }
+
       />
 
     </div>
