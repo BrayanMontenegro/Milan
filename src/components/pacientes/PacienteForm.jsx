@@ -179,28 +179,15 @@ const PacienteForm = ({
             </label>
 
             <select
-              name="sexo"
               className="form-select"
+              name="sexo"
               value={formulario.sexo}
               onChange={manejarCambio}
-              required
             >
-              <option value="">
-                Seleccione
-              </option>
-
-              <option value="Masculino">
-                Masculino
-              </option>
-
-              <option value="Femenino">
-                Femenino
-            </option>
-
-              <option value="Otro">
-                Otro
-              </option>
-
+              <option value="">Seleccione</option>
+              <option value="MASCULINO">Masculino</option>
+              <option value="FEMENINO">Femenino</option>
+              <option value="OTRO">Otro</option>
             </select>
 
           </div>

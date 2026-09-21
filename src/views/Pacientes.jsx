@@ -9,13 +9,10 @@ import PacienteFiltros from "../components/pacientes/PacienteFilters";
 import PacienteTabla from "../components/pacientes/PacienteTable";
 import PacienteCard from "../components/pacientes/PacienteCard";
 import PacienteModal from "../components/pacientes/PacienteModal";
+import PacienteDetalle from "../components/pacientes/PacienteDetalle";
 
 import "../styles/pacientes.css";
 
-
-/* =========================================================
-   FORMULARIO INICIAL
-   ========================================================= */
 
 const formularioInicial = {
   nombres: "",
@@ -28,18 +25,12 @@ const formularioInicial = {
   procedencia: "",
   ocupacion: "",
   estado_civil: "",
-
   tutor_nombres: "",
   tutor_parentesco: "",
   tutor_telefono: "",
 
   observaciones: "",
 };
-
-
-/* =========================================================
-   CALCULAR EDAD
-   ========================================================= */
 
 const calcularEdad = (fechaNacimiento) => {
 
@@ -78,16 +69,26 @@ const calcularEdad = (fechaNacimiento) => {
   return edad;
 };
 
-
-/* =========================================================
-   COMPONENTE
-   ========================================================= */
-
 const Pacientes = () => {
 
   /* =======================================================
      ESTADOS
      ======================================================= */
+const [pacienteSeleccionado, setPacienteSeleccionado] =
+  useState(null);
+
+const [mostrarPaciente, setMostrarPaciente] =
+  useState(false);
+
+const verPaciente = (paciente) => {
+  setPacienteSeleccionado(paciente);
+  setMostrarPaciente(true);
+};
+
+const cerrarPaciente = () => {
+  setMostrarPaciente(false);
+  setPacienteSeleccionado(null);
+};
 
   const [pacientes, setPacientes] = useState([]);
 
@@ -107,9 +108,6 @@ const Pacientes = () => {
 
   const [modoEdicion, setModoEdicion] =
     useState(false);
-
-  const [pacienteSeleccionado, setPacienteSeleccionado] =
-    useState(null);
 
 
   /* =======================================================
@@ -136,17 +134,8 @@ const Pacientes = () => {
     useState("");
 
 
-  /* =======================================================
-     PROCEDENCIAS
-     ======================================================= */
-
   const [procedencias, setProcedencias] =
     useState([]);
-
-
-  /* =======================================================
-     CARGAR PACIENTES
-     ======================================================= */
 
   const cargarPacientes = async () => {
   try {
@@ -1052,32 +1041,6 @@ const Pacientes = () => {
     }
   };
 
-
-  /* =======================================================
-     VER PACIENTE
-     ======================================================= */
-
-  const verPaciente = (paciente) => {
-
-    if (!paciente) {
-      return;
-    }
-
-    setPacienteSeleccionado(
-      paciente
-    );
-
-    console.log(
-      "Paciente seleccionado:",
-      paciente
-    );
-  };
-
-
-  /* =======================================================
-     FILTRAR PACIENTES
-     ======================================================= */
-
   const pacientesFiltrados =
     useMemo(() => {
 
@@ -1436,6 +1399,11 @@ const Pacientes = () => {
               }
             />
 
+            <PacienteDetalle
+              paciente={pacienteSeleccionado}
+              mostrar={mostrarPaciente}
+              onCerrar={cerrarPaciente}
+            />
 
             {/* =================================================
                 MÓVIL

@@ -1194,3 +1194,124 @@
   }
 
 }
+.paciente-modal-header {
+  background: linear-gradient(
+    135deg,
+    #9063A6,
+    #6f42c1
+  );
+  color: white;
+  padding: 1.2rem 1.5rem;
+}
+
+.paciente-modal-header .btn-close {
+  filter: brightness(0) invert(1);
+}
+
+.paciente-modal-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 700;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+.paciente-modal-expediente {
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+.paciente-info-section {
+  padding: 0.3rem 0;
+}
+
+.paciente-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  color: #9063A6;
+  font-weight: 700;
+
+  margin-bottom: 1rem;
+}
+
+.paciente-section-title svg {
+  font-size: 16px;
+}
+
+.paciente-info-item {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 12px 14px;
+  height: 100%;
+}
+
+.paciente-info-item span {
+  display: block;
+
+  font-size: 0.75rem;
+  color: #6c757d;
+
+  margin-bottom: 5px;
+}
+
+.paciente-info-item strong {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  font-size: 0.9rem;
+  color: #343a40;
+
+  word-break: break-word;
+}
+
+.paciente-info-item strong svg {
+  color: #9063A6;
+  flex-shrink: 0;
+}
+
+.paciente-observaciones {
+  background: #f8f9fa;
+  border-left: 4px solid #9063A6;
+
+  border-radius: 8px;
+  padding: 14px;
+
+  color: #495057;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 576px) {
+
+  .paciente-modal-header {
+    padding: 1rem;
+  }
+
+  .paciente-modal-header h5 {
+    font-size: 1rem;
+  }
+
+  .paciente-modal-avatar {
+    width: 44px;
+    height: 44px;
+    font-size: 15px;
+  }
+
+  .modal-body {
+    padding: 1rem;
+  }
+
+  .paciente-info-item {
+    padding: 10px;
+  }
+
+}
