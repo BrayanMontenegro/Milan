@@ -1,4 +1,5 @@
 import React from "react";
+import ProcedenciaSelector from "./ProcedenciaSelector";
 import {
   FaUser,
   FaPhone,
@@ -179,15 +180,28 @@ const PacienteForm = ({
             </label>
 
             <select
-              className="form-select"
               name="sexo"
+              className="form-select"
               value={formulario.sexo}
               onChange={manejarCambio}
+              required
             >
-              <option value="">Seleccione</option>
-              <option value="MASCULINO">Masculino</option>
-              <option value="FEMENINO">Femenino</option>
-              <option value="OTRO">Otro</option>
+              <option value="">
+                Seleccione
+              </option>
+
+              <option value="MASCULINO">
+                Masculino
+              </option>
+
+              <option value="FEMENINO">
+                Femenino
+            </option>
+
+              <option value="OTRO">
+                Otro
+              </option>
+
             </select>
 
           </div>
@@ -309,34 +323,29 @@ const PacienteForm = ({
               <span className="text-danger"> *</span>
             </label>
 
-            <select
-              name="procedencia"
-              className="form-select"
-              value={formulario.procedencia}
-              onChange={manejarCambio}
+              <ProcedenciaSelector
+                valor={formulario.procedencia}
+                procedencias={procedencias}
+                onSeleccionar={(procedencia) =>
+                  setFormulario((actual) => ({
+                    ...actual,
+                    procedencia
+                  }))
+                }
+              />
+
+            <input
+              type="text"
+              value={formulario.procedencia || ""}
               required
-            >
-
-              <option value="">
-                Seleccione procedencia
-              </option>
-
-            <option value="Santo tomás">
-                Santo tomás
-              </option>
-
-              {procedencias.map(
-                (procedencia, index) => (
-                  <option
-                    key={index}
-                    value={procedencia}
-                  >
-                    {procedencia}
-                  </option>
-                )
-              )}
-
-            </select>
+              readOnly
+              tabIndex="-1"
+              className="position-absolute opacity-0"
+              style={{
+                width: "1px",
+                height: "1px"
+              }}
+            />
 
           </div>
 

@@ -1315,3 +1315,658 @@
   }
 
 }
+
+/* =========================================================
+   PROCEDENCIA SELECTOR
+   Clínica de Especialidades Milán
+========================================================= */
+
+.procedencia-selector {
+  width: 100%;
+}
+
+.procedencia-selector .input-group {
+  height: 42px;
+}
+
+.procedencia-selector .input-group-text {
+  background: #f7f3f9;
+  border-color: #dcd3e2;
+  color: #9063a6;
+  border-radius: 10px 0 0 10px;
+}
+
+.procedencia-selector .form-control {
+  border-color: #dcd3e2;
+  background-color: #fff;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.procedencia-selector .form-control:focus {
+  box-shadow: none;
+  border-color: #9063a6;
+}
+
+
+/* =========================================================
+   BOTÓN SELECCIONAR
+========================================================= */
+
+.btn-procedencia-selector {
+  height: 42px;
+  background: #9063a6;
+  border: 1px solid #9063a6;
+  color: white;
+  border-radius: 10px;
+  padding: 0 18px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-procedencia-selector:hover {
+  background: #7e5294;
+  border-color: #7e5294;
+  color: white;
+  transform: translateY(-1px);
+}
+
+.btn-procedencia-selector:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   FONDO DEL MODAL
+========================================================= */
+
+.procedencia-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1055;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(38, 27, 45, 0.48);
+
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+
+  animation: procedenciaFadeIn 0.2s ease;
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.procedencia-modal {
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #ffffff;
+
+  border: 1px solid rgba(144, 99, 166, 0.15);
+  border-radius: 18px;
+
+  box-shadow:
+    0 20px 50px rgba(40, 25, 50, 0.18),
+    0 5px 15px rgba(40, 25, 50, 0.08);
+
+  overflow: hidden;
+
+  animation: procedenciaModalEntrada 0.25s ease;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.procedencia-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 20px 22px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #9063a6 0%,
+      #7f5796 100%
+    );
+
+  color: white;
+}
+
+.procedencia-modal-header h5 {
+  margin: 0 0 4px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.1px;
+}
+
+.procedencia-modal-header small {
+  display: block;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.78rem;
+}
+
+
+/* =========================================================
+   BOTÓN CERRAR
+========================================================= */
+
+.procedencia-close {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.13);
+  color: white;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.procedencia-close:hover {
+  background: rgba(255, 255, 255, 0.24);
+  transform: rotate(90deg);
+}
+
+
+/* =========================================================
+   BUSCADOR
+========================================================= */
+
+.procedencia-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin: 18px 20px 12px;
+  padding: 0 13px;
+
+  height: 44px;
+
+  background: #f8f7f9;
+  border: 1px solid #e1dbe5;
+  border-radius: 11px;
+
+  color: #9063a6;
+
+  transition: all 0.2s ease;
+}
+
+.procedencia-search:focus-within {
+  background: #ffffff;
+  border-color: #9063a6;
+
+  box-shadow:
+    0 0 0 3px rgba(144, 99, 166, 0.10);
+}
+
+.procedencia-search > svg {
+  flex-shrink: 0;
+  font-size: 0.9rem;
+}
+
+.procedencia-search input {
+  flex: 1;
+
+  width: 100%;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  color: #333;
+  font-size: 0.88rem;
+}
+
+.procedencia-search input::placeholder {
+  color: #999;
+}
+
+.procedencia-search button {
+  width: 26px;
+  height: 26px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 50%;
+
+  background: transparent;
+  color: #999;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.procedencia-search button:hover {
+  background: #ece7ef;
+  color: #9063a6;
+}
+
+
+/* =========================================================
+   LISTA
+========================================================= */
+
+.procedencia-list {
+  flex: 1;
+
+  min-height: 100px;
+  max-height: 330px;
+
+  overflow-y: auto;
+
+  padding: 4px 20px 12px;
+}
+
+
+/* Scroll */
+
+.procedencia-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.procedencia-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.procedencia-list::-webkit-scrollbar-thumb {
+  background: #d2c5d8;
+  border-radius: 10px;
+}
+
+.procedencia-list::-webkit-scrollbar-thumb:hover {
+  background: #9063a6;
+}
+
+
+/* =========================================================
+   OPCIÓN DE PROCEDENCIA
+========================================================= */
+
+.procedencia-option {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin-bottom: 7px;
+  padding: 11px 12px;
+
+  border: 1px solid #eeeaf0;
+  border-radius: 11px;
+
+  background: #ffffff;
+
+  color: #444;
+
+  text-align: left;
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.procedencia-option:hover {
+  background: #faf7fb;
+  border-color: #cdbbd4;
+
+  transform: translateX(2px);
+
+  box-shadow:
+    0 3px 10px rgba(80, 50, 90, 0.06);
+}
+
+.procedencia-option.seleccionada {
+  background: #f7f1f9;
+  border-color: #9063a6;
+
+  box-shadow:
+    0 0 0 2px rgba(144, 99, 166, 0.08);
+}
+
+
+/* Icono */
+
+.procedencia-option-icon {
+  width: 34px;
+  height: 34px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background: #f1eaf4;
+  color: #9063a6;
+
+  font-size: 0.82rem;
+
+  transition: all 0.2s ease;
+}
+
+.procedencia-option:hover .procedencia-option-icon,
+.procedencia-option.seleccionada .procedencia-option-icon {
+  background: #9063a6;
+  color: white;
+}
+
+
+/* Texto */
+
+.procedencia-option span {
+  flex: 1;
+
+  font-size: 0.88rem;
+  font-weight: 500;
+
+  color: #444;
+}
+
+
+/* Check */
+
+.procedencia-check {
+  color: #9063a6;
+  font-size: 0.9rem;
+}
+
+
+/* =========================================================
+   ESTADO VACÍO
+========================================================= */
+
+.procedencia-empty {
+  min-height: 170px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 25px;
+
+  text-align: center;
+
+  color: #999;
+}
+
+.procedencia-empty > svg {
+  margin-bottom: 10px;
+
+  font-size: 1.8rem;
+
+  color: #c8b6cf;
+}
+
+.procedencia-empty p {
+  margin: 0 0 14px;
+
+  font-size: 0.85rem;
+}
+
+
+/* =========================================================
+   AGREGAR PROCEDENCIA
+========================================================= */
+
+.procedencia-agregar-container {
+  padding: 28px 24px 24px;
+}
+
+.procedencia-agregar-icon {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto 18px;
+
+  border-radius: 13px;
+
+  background: #f1eaf4;
+  color: #9063a6;
+
+  font-size: 1.15rem;
+}
+
+.procedencia-agregar-container .form-label {
+  margin-bottom: 7px;
+
+  font-size: 0.82rem;
+  font-weight: 600;
+
+  color: #555;
+}
+
+.procedencia-agregar-container .form-control {
+  height: 43px;
+
+  border: 1px solid #ddd6e1;
+  border-radius: 10px;
+
+  font-size: 0.88rem;
+
+  transition: all 0.2s ease;
+}
+
+.procedencia-agregar-container .form-control:focus {
+  border-color: #9063a6;
+
+  box-shadow:
+    0 0 0 3px rgba(144, 99, 166, 0.10);
+}
+
+
+/* =========================================================
+   BOTÓN AGREGAR
+========================================================= */
+
+.btn-procedencia-agregar {
+  background: #9063a6;
+  border: 1px solid #9063a6;
+
+  color: white;
+
+  border-radius: 9px;
+
+  font-size: 0.82rem;
+  font-weight: 500;
+
+  padding: 8px 13px;
+
+  transition: all 0.2s ease;
+}
+
+.btn-procedencia-agregar:hover {
+  background: #7e5294;
+  border-color: #7e5294;
+
+  color: white;
+
+  transform: translateY(-1px);
+}
+
+.btn-procedencia-agregar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.procedencia-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  padding: 13px 20px;
+
+  border-top: 1px solid #eeeaf0;
+
+  background: #fcfbfd;
+}
+
+.procedencia-modal-footer span {
+  color: #999;
+
+  font-size: 0.76rem;
+}
+
+
+/* =========================================================
+   ANIMACIONES
+========================================================= */
+
+@keyframes procedenciaFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes procedenciaModalEntrada {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 576px) {
+
+  .procedencia-modal-backdrop {
+    padding: 12px;
+    align-items: center;
+  }
+
+  .procedencia-modal {
+    max-width: 100%;
+    max-height: 92vh;
+
+    border-radius: 16px;
+  }
+
+  .procedencia-modal-header {
+    padding: 17px 18px;
+  }
+
+  .procedencia-modal-header h5 {
+    font-size: 0.98rem;
+  }
+
+  .procedencia-modal-header small {
+    font-size: 0.73rem;
+  }
+
+  .procedencia-search {
+    margin: 14px 15px 10px;
+  }
+
+  .procedencia-list {
+    padding-left: 15px;
+    padding-right: 15px;
+
+    max-height: 45vh;
+  }
+
+  .procedencia-modal-footer {
+    padding: 12px 15px;
+  }
+
+  .procedencia-modal-footer span {
+    display: none;
+  }
+
+  .procedencia-modal-footer .btn {
+    width: 100%;
+  }
+
+  .btn-procedencia-selector {
+    padding: 0 12px;
+    font-size: 0.8rem;
+  }
+
+  .btn-procedencia-selector .me-2 {
+    margin-right: 5px !important;
+  }
+
+}
+
+
+/* =========================================================
+   TELÉFONOS MUY PEQUEÑOS
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .procedencia-selector .d-flex {
+    flex-direction: column;
+  }
+
+  .btn-procedencia-selector {
+    width: 100%;
+  }
+
+  .procedencia-modal-footer {
+    padding: 10px 12px;
+  }
+
+  .procedencia-option {
+    padding: 10px;
+  }
+
+}
