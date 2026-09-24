@@ -486,11 +486,29 @@ const Pacientes = () => {
       return false;
     }
 
+    if (/[0-9]/.test(nombres)) {
+
+      toast.warning(
+        "Los nombres del paciente no deben contener números."
+      );
+
+      return false;
+    }
+
 
     if (!apellidos.trim()) {
 
       toast.warning(
         "Ingrese los apellidos del paciente."
+      );
+
+      return false;
+    }
+
+    if (/[0-9]/.test(apellidos)) {
+
+      toast.warning(
+        "Los apellidos del paciente no deben contener números."
       );
 
       return false;
@@ -579,6 +597,15 @@ const Pacientes = () => {
         return false;
       }
 
+      if (/[0-9]/.test(nombre_tutor)) {
+
+        toast.warning(
+          "El nombre del tutor no debe contener números."
+        );
+
+        return false;
+      }
+
 
       if (!parentesco_tutor) {
 
@@ -598,6 +625,24 @@ const Pacientes = () => {
 
         return false;
       }
+
+      if (!/^\d{4}-\d{4}$/.test(telefono_tutor)) {
+
+        toast.warning(
+          "El teléfono del tutor debe tener el formato 8888-8888."
+        );
+
+        return false;
+      }
+    }
+
+    if (formulario.telefono && !/^\d{4}-\d{4}$/.test(formulario.telefono)) {
+
+      toast.warning(
+        "El teléfono del paciente debe tener el formato 8888-8888."
+      );
+
+      return false;
     }
 
 
@@ -685,6 +730,71 @@ const Pacientes = () => {
       activo: true
     };
   };
+
+const eliminarPaciente = async (paciente) => {
+  if (!paciente?.id_paciente) {
+    toast.error("No se encontró el paciente seleccionado.");
+    return;
+  }
+
+  try {
+    setGuardando(true);
+
+    const { data, error } = await supabase
+      .from("pacientes")
+      .delete()
+      .eq("id_paciente", paciente.id_paciente)
+      .select();
+
+    if (error) {
+      console.error(
+        "Error eliminando paciente:",
+        error
+      );
+
+      throw error;
+    }
+
+    // Verificamos que realmente se haya eliminado
+    if (!data || data.length === 0) {
+      toast.error(
+        "El paciente no fue eliminado. Verifique los permisos de Supabase."
+      );
+
+      return;
+    }
+
+    // Actualizar la lista inmediatamente
+    setPacientes((actuales) =>
+      actuales.filter(
+        (item) =>
+          item.id_paciente !== paciente.id_paciente
+      )
+    );
+
+    // Actualizar procedencias por si ya no existe
+    await cargarProcedencias();
+
+    toast.success(
+      "Paciente eliminado correctamente."
+    );
+
+  } catch (error) {
+    console.error(
+      "Error al eliminar paciente:",
+      error
+    );
+
+    toast.error(
+      error?.message ||
+      "No se pudo eliminar el paciente."
+    );
+
+  } finally {
+    setGuardando(false);
+  }
+};
+
 
   const registrarPaciente = async () => {
 
@@ -1265,12 +1375,13 @@ const Pacientes = () => {
 
           <>
 
-            <PacienteTabla
-              pacientes={pacientesFiltrados}
-              onVer={verPaciente}
-              onEditar={editarPaciente}
-              onCambiarEstado={cambiarEstado}
-            />
+              <PacienteTabla
+                pacientes={pacientesFiltrados}
+                onVer={verPaciente}
+                onEditar={editarPaciente}
+                onCambiarEstado={cambiarEstado}
+                onEliminar={eliminarPaciente}
+              />
 
 
             <PacienteDetalle

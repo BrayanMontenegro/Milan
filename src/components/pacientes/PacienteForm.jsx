@@ -41,6 +41,47 @@ const calcularEdad = (fechaNacimiento) => {
   return edad;
 };
 
+const limpiarTextoNombre = (valor) => {
+  return valor
+    .replace(/[^a-zA-ZÁÉÍÓÚáéíóúÑñÜü\s'-]/g, "")
+    .replace(/\s{2,}/g, " ");
+};
+
+const formatearTelefono = (valor) => {
+  const numeros = valor.replace(/\D/g, "");
+  const limitado = numeros.slice(0, 8);
+  if (limitado.length > 4) {
+    return (
+      limitado.slice(0, 4) +
+      "-" +
+      limitado.slice(4)
+    );
+  }
+
+  return limitado;
+};
+
+const telefonoValido = (telefono) => {
+  return /^\d{4}-\d{4}$/.test(
+    telefono
+  );
+};
+
+const limpiarCorreo = (valor) => {
+  return valor
+    .replace(/\s/g, "")
+    .slice(0, 100);
+};
+
+const correoValido = (correo) => {
+  if (!correo) {
+    return true;
+  }
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+    correo
+  );
+};
+
 const PacienteForm = ({
   formulario,
   setFormulario,
@@ -67,9 +108,30 @@ const PacienteForm = ({
       value
     } = e.target;
 
+    let valorProcesado = value;
+
+    if (
+      name === "nombres" ||
+      name === "apellidos" ||
+      name === "nombre_tutor"
+    ) {
+      valorProcesado = limpiarTextoNombre(value);
+    }
+
+    if (
+      name === "telefono" ||
+      name === "telefono_tutor"
+    ) {
+      valorProcesado = formatearTelefono(value);
+    }
+
+    if (name === "ocupacion") {
+      valorProcesado = value.replace(/[0-9]/g, "");
+    }
+
     setFormulario((actual) => ({
       ...actual,
-      [name]: value
+      [name]: valorProcesado
     }));
   };
 
@@ -275,14 +337,15 @@ const PacienteForm = ({
             <label className="form-label">
               Teléfono
             </label>
-
             <input
               type="tel"
               name="telefono"
               className="form-control"
-              value={formulario.telefono}
+              value={formulario.telefono || ""}
               onChange={manejarCambio}
               placeholder="8888-8888"
+              inputMode="numeric"
+              maxLength={9}
             />
 
           </div>
@@ -477,20 +540,19 @@ const PacienteForm = ({
                   <span className="text-danger ms-1">*</span>
                 </label>
 
-                <input
-                  type="tel"
-                  name="telefono_tutor"
-                  className="form-control"
-                  value={formulario.telefono_tutor || ""}
-                  onChange={manejarCambio}
-                  placeholder="8888-8888"
-                  required
-                />
-
+                  <input
+                    type="tel"
+                    name="telefono_tutor"
+                    className="form-control"
+                    value={formulario.telefono_tutor || ""}
+                    onChange={manejarCambio}
+                    placeholder="8888-8888"
+                    inputMode="numeric"
+                    maxLength={9}
+                    required
+                  />
               </div>
-
             </div>
-
           </div>
         )}
 

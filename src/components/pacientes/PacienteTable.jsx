@@ -2,31 +2,25 @@ import React from "react";
 import {
   FaEye,
   FaEdit,
+  FaTrash,
   FaToggleOn,
   FaToggleOff
 } from "react-icons/fa";
 
 const obtenerIniciales = (nombres = "", apellidos = "") => {
-  const nombre =
-    nombres.trim().charAt(0);
-
-  const apellido =
-    apellidos.trim().charAt(0);
+  const nombre = nombres.trim().charAt(0);
+  const apellido = apellidos.trim().charAt(0);
 
   return `${nombre}${apellido}`.toUpperCase();
 };
 
 const calcularEdad = (fechaNacimiento) => {
-
   if (!fechaNacimiento) {
     return "-";
   }
 
-  const nacimiento =
-    new Date(fechaNacimiento);
-
-  const hoy =
-    new Date();
+  const nacimiento = new Date(fechaNacimiento);
+  const hoy = new Date();
 
   let edad =
     hoy.getFullYear() -
@@ -53,8 +47,24 @@ const PacienteTabla = ({
   pacientes = [],
   onVer,
   onEditar,
-  onCambiarEstado
+  onCambiarEstado,
+  onEliminar
 }) => {
+
+  const confirmarEliminacion = (paciente) => {
+
+    const nombrePaciente =
+      `${paciente.nombres || ""} ${paciente.apellidos || ""}`.trim();
+
+    const confirmar = window.confirm(
+      `¿Está seguro de eliminar al paciente "${nombrePaciente}"?\n\n` +
+      `Esta acción eliminará permanentemente el registro.`
+    );
+
+    if (confirmar) {
+      onEliminar?.(paciente);
+    }
+  };
 
   return (
     <div className="pacientes-table-wrapper">
@@ -184,7 +194,9 @@ const PacienteTabla = ({
                   <td>
 
                     <span className="paciente-age">
-                      {edad !== "-" ? `${edad} años` : "-"}
+                      {edad !== "-"
+                        ? `${edad} años`
+                        : "-"}
                     </span>
 
                   </td>
@@ -221,6 +233,7 @@ const PacienteTabla = ({
 
                     <div className="d-flex justify-content-center gap-1">
 
+                      {/* Ver */}
                       <button
                         type="button"
                         className="paciente-action-btn"
@@ -232,6 +245,7 @@ const PacienteTabla = ({
                         <FaEye />
                       </button>
 
+                      {/* Editar */}
                       <button
                         type="button"
                         className="paciente-action-btn"
@@ -243,6 +257,7 @@ const PacienteTabla = ({
                         <FaEdit />
                       </button>
 
+                      {/* Activar / Desactivar */}
                       <button
                         type="button"
                         className="paciente-action-btn"
@@ -260,6 +275,18 @@ const PacienteTabla = ({
                         ) : (
                           <FaToggleOff />
                         )}
+                      </button>
+
+                      {/* Eliminar */}
+                      <button
+                        type="button"
+                        className="paciente-action-btn"
+                        title="Eliminar paciente"
+                        onClick={() =>
+                          confirmarEliminacion(paciente)
+                        }
+                      >
+                        <FaTrash />
                       </button>
 
                     </div>
