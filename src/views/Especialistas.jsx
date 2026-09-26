@@ -3,17 +3,14 @@ import {
   useMemo,
   useState,
 } from "react";
-
 import { FaUserMd } from "react-icons/fa";
-
 import { toast } from "react-toastify";
-
 import { supabase } from "../database/supabase";
-
 import EspecialistaHeader from "../components/especialistas/EspecialistaHeader";
 import EspecialistaFiltros from "../components/especialistas/EspecialistaFiltros";
 import EspecialistaTabla from "../components/especialistas/EspecialistaTabla";
 import EspecialistaCard from "../components/especialistas/EspecialistaCard";
+import EspecialistaDetalle from "../components/especialistas/EspecialistaDetalle";
 import EspecialistaModal from "../components/especialistas/EspecialistaModal";
 
 import "../styles/especialistas.css";
@@ -32,6 +29,7 @@ const formularioInicial = {
   password: "",
   confirmar_password: "",
 };
+
 
 // =========================================================
 // COMPONENTE
@@ -77,6 +75,12 @@ const Especialistas = () => {
 
   const [guardando, setGuardando] =
     useState(false);
+
+  const [mostrarValidacion, setMostrarValidacion] =
+    useState(false);
+
+  const [errores, setErrores] =
+    useState({});
 
   // =========================================================
   // CARGAR ESPECIALISTAS
@@ -252,8 +256,9 @@ const Especialistas = () => {
       ...formularioInicial,
     });
 
+    setErrores({});
+    setMostrarValidacion(false);
     setEspecialistaSeleccionado(null);
-
     setModoEdicion(false);
   };
 
@@ -263,6 +268,7 @@ const Especialistas = () => {
 
   const nuevoEspecialista = () => {
     limpiarFormulario();
+    setMostrarValidacion(false);
 
     setMostrarModal(true);
   };
@@ -376,6 +382,8 @@ const Especialistas = () => {
       confirmar_password: "",
     });
 
+    setErrores({});
+    setMostrarValidacion(false);
     setModoEdicion(true);
 
     setMostrarModal(true);
@@ -386,106 +394,82 @@ const Especialistas = () => {
   // =========================================================
 
   const validarFormulario = () => {
-    if (
-      !formulario.nombres.trim()
-    ) {
-      toast.warning(
-        "Ingrese los nombres del especialista."
-      );
+    const nuevosErrores = {};
 
-      return false;
+    const nombres = formulario.nombres.trim();
+    const apellidos = formulario.apellidos.trim();
+    const telefono = (formulario.telefono || "").trim();
+    const correo = formulario.correo.trim();
+
+    if (!nombres) {
+      nuevosErrores.nombres =
+        "Ingrese los nombres del especialista.";
+    } else if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑüÜ\s]+$/.test(nombres)) {
+      nuevosErrores.nombres =
+        "Los nombres solo pueden contener letras y espacios.";
     }
 
-    if (
-      !formulario.apellidos.trim()
-    ) {
-      toast.warning(
-        "Ingrese los apellidos del especialista."
-      );
-
-      return false;
+    if (!apellidos) {
+      nuevosErrores.apellidos =
+        "Ingrese los apellidos del especialista.";
+    } else if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑüÜ\s]+$/.test(apellidos)) {
+      nuevosErrores.apellidos =
+        "Los apellidos solo pueden contener letras y espacios.";
     }
 
-    if (
-      !formulario.id_especialidad
-    ) {
-      toast.warning(
-        "Seleccione una especialidad."
-      );
-
-      return false;
+    if (!formulario.id_especialidad) {
+      nuevosErrores.id_especialidad =
+        "Seleccione una especialidad.";
     }
 
-    if (
-      !formulario.telefono.trim()
-    ) {
-      toast.warning(
-        "Ingrese el teléfono del especialista."
-      );
+    const telefonoNumerico = telefono.replace(/\D/g, "");
 
-      return false;
+    if (!telefono) {
+      nuevosErrores.telefono =
+        "Ingrese el teléfono del especialista.";
+    } else if (!/^\d{4}-\d{4}$/.test(telefono)) {
+      nuevosErrores.telefono =
+        "El teléfono debe tener el formato 1234-5678.";
     }
 
-    if (
-      !formulario.correo.trim()
-    ) {
-      toast.warning(
-        "Ingrese el correo electrónico."
-      );
-
-      return false;
+    if (!correo) {
+      nuevosErrores.correo =
+        "Ingrese el correo electrónico.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
+      nuevosErrores.correo =
+        "Ingrese un correo electrónico válido.";
     }
-
-    // -------------------------------------------------------
-    // VALIDAR CORREO
-    // -------------------------------------------------------
-
-    const correoValido =
-      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
-        formulario.correo.trim()
-      );
-
-    if (!correoValido) {
-      toast.warning(
-        "Ingrese un correo electrónico válido."
-      );
-
-      return false;
-    }
-
-    // -------------------------------------------------------
-    // CONTRASEÑA SOLO AL CREAR
-    // -------------------------------------------------------
 
     if (!modoEdicion) {
       if (!formulario.password) {
-        toast.warning(
-          "Ingrese una contraseña."
-        );
-
-        return false;
-      }
-
-      if (
-        formulario.password.length < 6
+        nuevosErrores.password =
+          "Ingrese una contraseña.";
+      } else if (
+        formulario.password.length < 6 ||
+        !/^(?=.*[A-Za-z])(?=.*\d).{6,}$/.test(formulario.password)
       ) {
-        toast.warning(
-          "La contraseña debe tener al menos 6 caracteres."
-        );
-
-        return false;
+        nuevosErrores.password =
+          "La contraseña debe tener al menos 6 caracteres, incluir letras y números.";
       }
 
-      if (
+      if (!formulario.confirmar_password) {
+        nuevosErrores.confirmar_password =
+          "Confirme la contraseña.";
+      } else if (
         formulario.password !==
         formulario.confirmar_password
       ) {
-        toast.warning(
-          "Las contraseñas no coinciden."
-        );
-
-        return false;
+        nuevosErrores.confirmar_password =
+          "Las contraseñas no coinciden.";
       }
+    }
+
+    setErrores(nuevosErrores);
+
+    if (Object.keys(nuevosErrores).length > 0) {
+      const mensaje = Object.values(nuevosErrores)[0];
+      toast.warning(mensaje);
+      return false;
     }
 
     return true;
@@ -496,10 +480,6 @@ const Especialistas = () => {
   // =========================================================
 
   const registrarEspecialista = async () => {
-    if (!validarFormulario()) {
-      return;
-    }
-
     // -------------------------------------------------------
     // VERIFICAR ROL
     // -------------------------------------------------------
@@ -649,10 +629,6 @@ const Especialistas = () => {
   // =========================================================
 
   const actualizarEspecialista = async () => {
-    if (!validarFormulario()) {
-      return;
-    }
-
     if (!especialistaSeleccionado) {
       toast.error(
         "No se encontró el especialista."
@@ -772,6 +748,11 @@ const Especialistas = () => {
     e
   ) => {
     e.preventDefault();
+    setMostrarValidacion(true);
+
+    if (!validarFormulario()) {
+      return;
+    }
 
     if (modoEdicion) {
       await actualizarEspecialista();
@@ -882,12 +863,11 @@ const Especialistas = () => {
   // VER
   // =========================================================
 
-  const verEspecialista = (
-    especialista
-  ) => {
-    setEspecialistaSeleccionado(
-      especialista
-    );
+  const [mostrarDetalle, setMostrarDetalle] = useState(false);
+
+  const verEspecialista = (especialista) => {
+    setEspecialistaSeleccionado(especialista);
+    setMostrarDetalle(true);
   };
 
   // =========================================================
@@ -984,6 +964,7 @@ const Especialistas = () => {
     setEstadoFiltro("");
   };
 
+  
   // =========================================================
   // ESTADÍSTICAS
   // =========================================================
@@ -1280,8 +1261,16 @@ const Especialistas = () => {
           modoEdicion={modoEdicion}
           especialidades={especialidades}
           onAgregarEspecialidad={agregarEspecialidad}
+          errores={errores}
+          setErrores={setErrores}
+          mostrarValidacion={mostrarValidacion}
         />
-
+      {/* MODAL DETALLE */}
+      <EspecialistaDetalle
+        mostrar={mostrarDetalle}
+        especialista={especialistaSeleccionado}
+        onCerrar={() => setMostrarDetalle(false)}
+      />
     </div>
   );
 };

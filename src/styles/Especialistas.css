@@ -1222,3 +1222,332 @@
     padding: 0.8rem;
   }
 }
+
+/* =========================================================
+   DETALLE DEL ESPECIALISTA
+========================================================= */
+
+.especialista-detalle-modal {
+  z-index: 1060;
+}
+
+.especialista-detalle-content {
+  border: none;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.18);
+}
+
+/* HEADER */
+
+.especialistas-detalle-header {
+  background: linear-gradient(
+    135deg,
+    #c6006f 0%,
+    #a8005d 100%
+  );
+  color: white;
+  border-bottom: none;
+  padding: 1.25rem 1.5rem;
+}
+
+.especialistas-detalle-header .modal-title {
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+.especialistas-detalle-header small {
+  opacity: 0.9;
+}
+
+.especialistas-detalle-header .btn-close {
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+}
+
+.especialistas-detalle-header .btn-close:hover {
+  opacity: 1;
+}
+
+/* AVATAR DEL HEADER */
+
+.especialista-detalle-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  flex-shrink: 0;
+}
+
+/* BODY */
+
+.especialista-detalle-body {
+  padding: 1.5rem;
+  max-height: 70vh;
+  overflow-y: auto;
+  background: #f8f9fa;
+}
+
+/* PERFIL */
+
+.especialista-detalle-profile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: white;
+  border-radius: 16px;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  border: 1px solid #e9ecef;
+}
+
+.especialista-detalle-profile-avatar {
+  width: 64px;
+  height: 64px;
+  min-width: 64px;
+  border-radius: 50%;
+  background: rgba(198, 0, 111, 0.1);
+  color: #c6006f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
+}
+
+.especialista-detalle-profile-info h4 {
+  margin: 0 0 0.35rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #212529;
+}
+
+.especialista-detalle-specialty {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #c6006f;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* SECCIONES */
+
+.especialista-detalle-section {
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 16px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.especialista-detalle-section:last-child {
+  margin-bottom: 0;
+}
+
+.especialista-detalle-section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: #c6006f;
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.especialista-detalle-section-title svg {
+  font-size: 0.9rem;
+}
+
+/* ITEMS */
+
+.especialista-detalle-item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  min-height: 62px;
+  padding: 0.85rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border: 1px solid #edf0f2;
+}
+
+.especialista-detalle-icon {
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  border-radius: 10px;
+  background: rgba(198, 0, 111, 0.1);
+  color: #c6006f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.especialista-detalle-item > div:last-child {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.especialista-detalle-item small {
+  color: #6c757d;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.especialista-detalle-item strong {
+  color: #212529;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* DESCRIPCIÓN */
+
+.especialista-detalle-description {
+  background: #f8f9fa;
+  border: 1px solid #edf0f2;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.especialista-detalle-description small {
+  display: block;
+  color: #6c757d;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.especialista-detalle-description p {
+  color: #495057;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+/* BADGES DE ESTADO */
+
+.especialista-detalle-profile .estado-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.45rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.especialista-detalle-profile .estado-badge.activo {
+  background: rgba(25, 135, 84, 0.1);
+  color: #198754;
+}
+
+.especialista-detalle-profile .estado-badge.inactivo {
+  background: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+}
+
+/* FOOTER */
+
+.especialista-detalle-content .modal-footer {
+  background: white;
+  border-top: 1px solid #e9ecef;
+  padding: 1rem 1.5rem;
+}
+
+.especialista-detalle-content .modal-footer .btn {
+  min-width: 100px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 767.98px) {
+
+  .especialista-detalle-modal {
+    padding: 0 !important;
+  }
+
+  .especialista-detalle-modal .modal-dialog {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: stretch;
+  }
+
+  .especialista-detalle-content {
+    width: 100%;
+    min-height: 100vh;
+    border-radius: 0;
+  }
+
+  .especialistas-detalle-header {
+    padding: 1rem;
+  }
+
+  .especialista-detalle-avatar {
+    width: 42px;
+    height: 42px;
+    font-size: 1.15rem;
+  }
+
+  .especialistas-detalle-header .modal-title {
+    font-size: 1rem;
+  }
+
+  .especialistas-detalle-header small {
+    font-size: 0.72rem;
+  }
+
+  .especialista-detalle-body {
+    padding: 1rem;
+    max-height: none;
+    overflow-y: auto;
+  }
+
+  .especialista-detalle-profile {
+    padding: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .especialista-detalle-profile-avatar {
+    width: 55px;
+    height: 55px;
+    min-width: 55px;
+    font-size: 1.4rem;
+  }
+
+  .especialista-detalle-profile-info h4 {
+    font-size: 1.05rem;
+  }
+
+  .especialista-detalle-profile .ms-auto {
+    width: 100%;
+    margin-left: 0 !important;
+    margin-top: 0.25rem;
+  }
+
+  .especialista-detalle-section {
+    padding: 1rem;
+  }
+
+  .especialista-detalle-item {
+    min-height: 58px;
+  }
+
+  .especialista-detalle-content .modal-footer {
+    padding: 0.85rem 1rem;
+  }
+
+  .especialista-detalle-content .modal-footer .btn {
+    width: 100%;
+  }
+}

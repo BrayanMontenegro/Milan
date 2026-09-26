@@ -64,7 +64,6 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <div className="p-4">
-                  <h2>Usuarios</h2>
                   <Usuarios />
                 </div>
               </ProtectedRoute>

@@ -17,16 +17,55 @@ const EspecialistaModal = ({
   modoEdicion,
   especialidades,
   onAgregarEspecialidad,
+  errores = {},
+  setErrores,
+  mostrarValidacion = false,
 }) => {
   if (!mostrar) return null;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
+    let nuevoValor = value;
+
+    if (name === "telefono") {
+      const soloNumeros = value.replace(/\D/g, "").slice(0, 8);
+      if (soloNumeros.length <= 4) {
+        nuevoValor = soloNumeros;
+      } else {
+        nuevoValor = `${soloNumeros.slice(0, 4)}-${soloNumeros.slice(4)}`;
+      }
+    }
+
+    if (
+      name === "nombres" ||
+      name === "apellidos"
+    ) {
+      nuevoValor = value.replace(/[0-9]/g, "");
+    }
+
     setFormulario((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: nuevoValor,
     }));
+
+    if (setErrores && errores[name]) {
+      setErrores((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+    }
+  };
+
+  const getFieldClass = (fieldName) => {
+    const value = formulario[fieldName] ?? "";
+    const error = errores[fieldName];
+    const tieneError = mostrarValidacion && !!error;
+    const tieneValor = String(value).trim().length > 0;
+
+    return `form-control ${tieneError ? "is-invalid" : ""} ${
+      !tieneError && tieneValor ? "is-valid" : ""
+    }`;
   };
 
   return (
@@ -78,8 +117,11 @@ const EspecialistaModal = ({
 
           {/* FORMULARIO */}
           <form
+            noValidate
             onSubmit={onSubmit}
-            className="especialista-modal-form"
+            className={`especialista-modal-form ${
+              mostrarValidacion ? "was-validated" : ""
+            }`}
           >
 
             {/* CUERPO CON SCROLL */}
@@ -105,14 +147,22 @@ const EspecialistaModal = ({
 
                     <input
                       type="text"
-                      className="form-control"
+                      className={getFieldClass("nombres")}
                       name="nombres"
                       value={formulario.nombres || ""}
                       onChange={handleChange}
                       placeholder="Ingrese los nombres"
                       disabled={guardando}
+                      aria-invalid={
+                        mostrarValidacion && !!errores.nombres
+                      }
                       required
                     />
+                    {mostrarValidacion && errores.nombres && (
+                      <div className="invalid-feedback d-block">
+                        {errores.nombres}
+                      </div>
+                    )}
                   </div>
 
                   {/* APELLIDOS */}
@@ -123,14 +173,22 @@ const EspecialistaModal = ({
 
                     <input
                       type="text"
-                      className="form-control"
+                      className={getFieldClass("apellidos")}
                       name="apellidos"
                       value={formulario.apellidos || ""}
                       onChange={handleChange}
                       placeholder="Ingrese los apellidos"
                       disabled={guardando}
+                      aria-invalid={
+                        mostrarValidacion && !!errores.apellidos
+                      }
                       required
                     />
+                    {mostrarValidacion && errores.apellidos && (
+                      <div className="invalid-feedback d-block">
+                        {errores.apellidos}
+                      </div>
+                    )}
                   </div>
 
                   {/* ESPECIALIDAD */}
@@ -139,18 +197,38 @@ const EspecialistaModal = ({
                       Especialidad *
                     </label>
 
-                    <EspecialidadSelector
-                      especialidades={especialidades}
-                      value={formulario.id_especialidad}
-                      onChange={(id_especialidad) =>
-                        setFormulario((prev) => ({
-                          ...prev,
-                          id_especialidad,
-                        }))
+                    <div
+                      className={
+                        mostrarValidacion && errores.id_especialidad
+                          ? "border border-danger rounded-2 p-1"
+                          : ""
                       }
-                      onAgregarEspecialidad={onAgregarEspecialidad}
-                      disabled={guardando}
-                    />
+                    >
+                      <EspecialidadSelector
+                        especialidades={especialidades}
+                        value={formulario.id_especialidad}
+                        onChange={(id_especialidad) => {
+                          setFormulario((prev) => ({
+                            ...prev,
+                            id_especialidad,
+                          }));
+
+                          if (setErrores && errores.id_especialidad) {
+                            setErrores((prev) => ({
+                              ...prev,
+                              id_especialidad: "",
+                            }));
+                          }
+                        }}
+                        onAgregarEspecialidad={onAgregarEspecialidad}
+                        disabled={guardando}
+                      />
+                    </div>
+                    {mostrarValidacion && errores.id_especialidad && (
+                      <div className="invalid-feedback d-block">
+                        {errores.id_especialidad}
+                      </div>
+                    )}
                   </div>
 
                   {/* CÓDIGO PROFESIONAL */}
@@ -194,13 +272,24 @@ const EspecialistaModal = ({
 
                     <input
                       type="tel"
-                      className="form-control"
+                      className={getFieldClass("telefono")}
                       name="telefono"
                       value={formulario.telefono || ""}
                       onChange={handleChange}
                       placeholder="8888-8888"
                       disabled={guardando}
+                      inputMode="numeric"
+                      maxLength={9}
+                      pattern="\d{4}-\d{4}"
+                      aria-invalid={
+                        mostrarValidacion && !!errores.telefono
+                      }
                     />
+                    {mostrarValidacion && errores.telefono && (
+                      <div className="invalid-feedback d-block">
+                        {errores.telefono}
+                      </div>
+                    )}
                   </div>
 
                   {/* CORREO */}
@@ -211,14 +300,23 @@ const EspecialistaModal = ({
 
                     <input
                       type="email"
-                      className="form-control"
+                      className={getFieldClass("correo")}
                       name="correo"
                       value={formulario.correo || ""}
                       onChange={handleChange}
                       placeholder="correo@ejemplo.com"
                       disabled={guardando}
+                      pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+                      aria-invalid={
+                        mostrarValidacion && !!errores.correo
+                      }
                       required
                     />
+                    {mostrarValidacion && errores.correo && (
+                      <div className="invalid-feedback d-block">
+                        {errores.correo}
+                      </div>
+                    )}
                   </div>
 
                 </div>
@@ -275,15 +373,24 @@ const EspecialistaModal = ({
 
                       <input
                         type="password"
-                        className="form-control"
+                        className={getFieldClass("password")}
                         name="password"
                         value={formulario.password || ""}
                         onChange={handleChange}
                         placeholder="Mínimo 6 caracteres"
                         disabled={guardando}
                         minLength={6}
+                        pattern="^(?=.*[A-Za-z])(?=.*\d).{6,}$"
+                        aria-invalid={
+                          mostrarValidacion && !!errores.password
+                        }
                         required
                       />
+                      {mostrarValidacion && errores.password && (
+                        <div className="invalid-feedback d-block">
+                          {errores.password}
+                        </div>
+                      )}
 
                     </div>
 
@@ -296,15 +403,23 @@ const EspecialistaModal = ({
 
                       <input
                         type="password"
-                        className="form-control"
+                        className={getFieldClass("confirmar_password")}
                         name="confirmar_password"
                         value={formulario.confirmar_password || ""}
                         onChange={handleChange}
                         placeholder="Repita la contraseña"
                         disabled={guardando}
                         minLength={6}
+                        aria-invalid={
+                          mostrarValidacion && !!errores.confirmar_password
+                        }
                         required
                       />
+                      {mostrarValidacion && errores.confirmar_password && (
+                        <div className="invalid-feedback d-block">
+                          {errores.confirmar_password}
+                        </div>
+                      )}
 
                     </div>
 
