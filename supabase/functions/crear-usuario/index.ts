@@ -1,5 +1,10 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+
 import { createClient } from "npm:@supabase/supabase-js@2";
+
+// =========================================================
+// CORS
+// =========================================================
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "http://localhost:5173",
@@ -9,10 +14,14 @@ const corsHeaders = {
     "POST, OPTIONS",
 };
 
+// =========================================================
+// FUNCIÓN PRINCIPAL
+// =========================================================
+
 Deno.serve(async (req: Request) => {
-  // ==========================================
-  // CORS
-  // ==========================================
+  // -------------------------------------------------------
+  // PRE-FLIGHT CORS
+  // -------------------------------------------------------
 
   if (req.method === "OPTIONS") {
     return new Response("ok", {
@@ -22,31 +31,9 @@ Deno.serve(async (req: Request) => {
   }
 
   try {
-    // ==========================================
-    // VARIABLES DE ENTORNO
-    // ==========================================
-
-    const supabaseUrl = Deno.env.get("SUPABASE_URL");
-    const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY");
-    const supabaseServiceRoleKey =
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-
-    if (
-      !supabaseUrl ||
-      !supabaseAnonKey ||
-      !supabaseServiceRoleKey
-    ) {
-      return responder(
-        {
-          error: "Faltan variables de entorno de Supabase.",
-        },
-        500
-      );
-    }
-
-    // ==========================================
-    // SOLO POST
-    // ==========================================
+    // -----------------------------------------------------
+    // VALIDAR MÉTODO
+    // -----------------------------------------------------
 
     if (req.method !== "POST") {
       return responder(
@@ -57,25 +44,50 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // ==========================================
-    // OBTENER TOKEN
-    // ==========================================
+    // -----------------------------------------------------
+    // VARIABLES DE SUPABASE
+    // -----------------------------------------------------
 
-    const authHeader = req.headers.get("Authorization");
+    const supabaseUrl = Deno.env.get("SUPABASE_URL");
+
+    const supabaseAnonKey =
+      Deno.env.get("SUPABASE_ANON_KEY");
+
+    const supabaseServiceRoleKey =
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+
+    if (
+      !supabaseUrl ||
+      !supabaseAnonKey ||
+      !supabaseServiceRoleKey
+    ) {
+      return responder(
+        {
+          error:
+            "Faltan variables de entorno de Supabase.",
+        },
+        500
+      );
+    }
+
+    // -----------------------------------------------------
+    // OBTENER SESIÓN DEL ADMINISTRADOR
+    // -----------------------------------------------------
+
+    const authHeader =
+      req.headers.get("Authorization");
 
     if (!authHeader) {
       return responder(
         {
-          error: "No se encontró la sesión del usuario.",
+          error:
+            "No se encontró la sesión del usuario.",
         },
         401
       );
     }
 
-    // ==========================================
-    // CLIENTE CON SESIÓN DEL USUARIO
-    // ==========================================
-
+    // Cliente usando la sesión del usuario actual
     const supabase = createClient(
       supabaseUrl,
       supabaseAnonKey,
@@ -107,18 +119,18 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // ==========================================
-    // CLIENTE ADMIN
-    // ==========================================
+    // -----------------------------------------------------
+    // CLIENTE ADMINISTRADOR
+    // -----------------------------------------------------
 
     const supabaseAdmin = createClient(
       supabaseUrl,
       supabaseServiceRoleKey
     );
 
-    // ==========================================
-    // OBTENER PERFIL DEL ADMINISTRADOR
-    // ==========================================
+    // -----------------------------------------------------
+    // OBTENER PERFIL DEL USUARIO ACTUAL
+    // -----------------------------------------------------
 
     const {
       data: usuarioActual,
@@ -136,7 +148,10 @@ Deno.serve(async (req: Request) => {
       .eq("id_usuario", user.id)
       .single();
 
-    if (perfilActualError || !usuarioActual) {
+    if (
+      perfilActualError ||
+      !usuarioActual
+    ) {
       console.error(
         "Error obteniendo perfil:",
         perfilActualError
@@ -151,19 +166,18 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // ==========================================
-    // OBTENER NOMBRE DEL ROL ACTUAL
-    // ==========================================
+    // -----------------------------------------------------
+    // OBTENER NOMBRE DEL ROL
+    // -----------------------------------------------------
 
-    const rolActual = Array.isArray(
-      usuarioActual.roles
-    )
-      ? usuarioActual.roles[0]?.nombre
-      : usuarioActual.roles?.nombre;
+    const rolActual =
+      Array.isArray(usuarioActual.roles)
+        ? usuarioActual.roles[0]?.nombre
+        : usuarioActual.roles?.nombre;
 
-    // ==========================================
-    // VERIFICAR ADMINISTRADOR
-    // ==========================================
+    // -----------------------------------------------------
+    // VALIDAR ADMINISTRADOR
+    // -----------------------------------------------------
 
     if (rolActual !== "ADMINISTRADOR") {
       return responder(
@@ -175,9 +189,9 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // ==========================================
+    // -----------------------------------------------------
     // LEER BODY
-    // ==========================================
+    // -----------------------------------------------------
 
     const body = await req.json();
 
@@ -201,14 +215,24 @@ Deno.serve(async (req: Request) => {
         ? body.password
         : "";
 
+    const telefono =
+      typeof body?.telefono === "string"
+        ? body.telefono.trim()
+        : "";
+
     const id_rol =
       typeof body?.id_rol === "string"
         ? body.id_rol.trim()
         : "";
 
-    // ==========================================
-    // VALIDAR CAMPOS
-    // ==========================================
+    const id_especialidad =
+      typeof body?.id_especialidad === "string"
+        ? body.id_especialidad.trim()
+        : "";
+
+    // -----------------------------------------------------
+    // VALIDACIONES BÁSICAS
+    // -----------------------------------------------------
 
     if (
       !nombres ||
@@ -220,15 +244,15 @@ Deno.serve(async (req: Request) => {
       return responder(
         {
           error:
-            "Todos los campos son obligatorios.",
+            "Todos los campos obligatorios deben completarse.",
         },
         400
       );
     }
 
-    // ==========================================
+    // -----------------------------------------------------
     // VALIDAR CONTRASEÑA
-    // ==========================================
+    // -----------------------------------------------------
 
     if (password.length < 6) {
       return responder(
@@ -240,16 +264,12 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // ==========================================
-    // NORMALIZAR EMAIL
-    // ==========================================
+    // -----------------------------------------------------
+    // NORMALIZAR CORREO
+    // -----------------------------------------------------
 
     const emailNormalizado =
       email.toLowerCase();
-
-    // ==========================================
-    // VALIDAR EMAIL
-    // ==========================================
 
     const emailValido =
       /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
@@ -259,15 +279,16 @@ Deno.serve(async (req: Request) => {
     if (!emailValido) {
       return responder(
         {
-          error: "El correo electrónico no es válido.",
+          error:
+            "El correo electrónico no es válido.",
         },
         400
       );
     }
 
-    // ==========================================
-    // VALIDAR ROL
-    // ==========================================
+    // -----------------------------------------------------
+    // BUSCAR ROL
+    // -----------------------------------------------------
 
     const {
       data: rol,
@@ -293,9 +314,9 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // ==========================================
+    // -----------------------------------------------------
     // NO PERMITIR CREAR ADMINISTRADORES
-    // ==========================================
+    // -----------------------------------------------------
 
     if (rol.nombre === "ADMINISTRADOR") {
       return responder(
@@ -307,9 +328,78 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // ==========================================
+    // -----------------------------------------------------
+    // VALIDAR ESPECIALISTA
+    // -----------------------------------------------------
+
+    const esEspecialista =
+      rol.nombre === "ESPECIALISTA";
+
+    if (
+      esEspecialista &&
+      !id_especialidad
+    ) {
+      return responder(
+        {
+          error:
+            "Debe seleccionar una especialidad para el especialista.",
+        },
+        400
+      );
+    }
+
+    // -----------------------------------------------------
+    // BUSCAR ESPECIALIDAD
+    // -----------------------------------------------------
+
+    let especialidad = null;
+
+    if (esEspecialista) {
+      const {
+        data,
+        error,
+      } = await supabaseAdmin
+        .from("especialidades")
+        .select(
+          "id_especialidad, nombre, activo"
+        )
+        .eq(
+          "id_especialidad",
+          id_especialidad
+        )
+        .single();
+
+      if (error || !data) {
+        console.error(
+          "Error buscando especialidad:",
+          error
+        );
+
+        return responder(
+          {
+            error:
+              "La especialidad seleccionada no existe.",
+          },
+          400
+        );
+      }
+
+      if (!data.activo) {
+        return responder(
+          {
+            error:
+              "La especialidad seleccionada está inactiva.",
+          },
+          400
+        );
+      }
+
+      especialidad = data;
+    }
+
+    // -----------------------------------------------------
     // CREAR USUARIO EN AUTH
-    // ==========================================
+    // -----------------------------------------------------
 
     const {
       data: nuevoUsuario,
@@ -348,24 +438,23 @@ Deno.serve(async (req: Request) => {
     const nuevoUsuarioId =
       nuevoUsuario.user.id;
 
-    // ==========================================
-    // EL TRIGGER CREA public.usuarios
-    // ==========================================
+    // -----------------------------------------------------
+    // ESPERAR TRIGGER
+    // -----------------------------------------------------
     //
-    // IMPORTANTE:
-    // No hacemos INSERT aquí porque el trigger
-    // crear_usuario() ya creó el registro.
+    // Tu proyecto ya tiene un trigger que crea
+    // public.usuarios cuando se crea auth.users.
     //
+    // NO hacemos INSERT manual en usuarios.
+    // -----------------------------------------------------
 
-    // Pequeña espera para permitir que el trigger
-    // termine antes de consultar el perfil.
     await new Promise((resolve) =>
       setTimeout(resolve, 300)
     );
 
-    // ==========================================
-    // VERIFICAR PERFIL CREADO POR EL TRIGGER
-    // ==========================================
+    // -----------------------------------------------------
+    // VERIFICAR PERFIL
+    // -----------------------------------------------------
 
     const {
       data: perfilExistente,
@@ -373,7 +462,10 @@ Deno.serve(async (req: Request) => {
     } = await supabaseAdmin
       .from("usuarios")
       .select("id_usuario")
-      .eq("id_usuario", nuevoUsuarioId)
+      .eq(
+        "id_usuario",
+        nuevoUsuarioId
+      )
       .maybeSingle();
 
     if (
@@ -385,8 +477,6 @@ Deno.serve(async (req: Request) => {
         perfilConsultaError
       );
 
-      // Si el trigger no creó el perfil,
-      // eliminamos el usuario de Auth.
       await supabaseAdmin.auth.admin.deleteUser(
         nuevoUsuarioId
       );
@@ -403,9 +493,9 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // ==========================================
-    // ACTUALIZAR PERFIL
-    // ==========================================
+    // -----------------------------------------------------
+    // ACTUALIZAR USUARIO
+    // -----------------------------------------------------
 
     const {
       data: perfil,
@@ -417,11 +507,16 @@ Deno.serve(async (req: Request) => {
           id_rol,
           nombres,
           apellidos,
+          telefono:
+            telefono || null,
           activo: true,
           updated_at:
             new Date().toISOString(),
         })
-        .eq("id_usuario", nuevoUsuarioId)
+        .eq(
+          "id_usuario",
+          nuevoUsuarioId
+        )
         .select(`
           id_usuario,
           id_rol,
@@ -438,10 +533,6 @@ Deno.serve(async (req: Request) => {
         `)
         .single();
 
-    // ==========================================
-    // SI FALLA LA ACTUALIZACIÓN
-    // ==========================================
-
     if (
       perfilUpdateError ||
       !perfil
@@ -451,7 +542,16 @@ Deno.serve(async (req: Request) => {
         perfilUpdateError
       );
 
-      // Eliminar usuario de Auth
+      // Eliminar primero public.usuarios
+      await supabaseAdmin
+        .from("usuarios")
+        .delete()
+        .eq(
+          "id_usuario",
+          nuevoUsuarioId
+        );
+
+      // Luego eliminar Auth
       await supabaseAdmin.auth.admin.deleteUser(
         nuevoUsuarioId
       );
@@ -467,23 +567,222 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // ==========================================
+    // -----------------------------------------------------
     // OBTENER NOMBRE DEL ROL
-    // ==========================================
+    // -----------------------------------------------------
 
     const nombreRol =
       Array.isArray(perfil.roles)
         ? perfil.roles[0]?.nombre
         : perfil.roles?.nombre;
 
-    // ==========================================
-    // RESPUESTA EXITOSA
-    // ==========================================
+    // =====================================================
+    // CREAR ESPECIALISTA
+    // =====================================================
+
+    let especialistaCreado = null;
+
+    if (esEspecialista) {
+      // ---------------------------------------------------
+      // GENERAR CÓDIGO PROFESIONAL
+      // ---------------------------------------------------
+
+      const anio =
+        new Date().getFullYear();
+
+      const prefijo =
+        `ESP-${anio}-`;
+
+      const {
+        data: ultimoEspecialista,
+        error:
+          codigoConsultaError,
+      } = await supabaseAdmin
+        .from("especialistas")
+        .select(
+          "codigo_profesional"
+        )
+        .like(
+          "codigo_profesional",
+          `${prefijo}%`
+        )
+        .order(
+          "codigo_profesional",
+          {
+            ascending: false,
+          }
+        )
+        .limit(1);
+
+      if (codigoConsultaError) {
+        console.error(
+          "Error consultando códigos:",
+          codigoConsultaError
+        );
+
+        // Rollback
+        await supabaseAdmin
+          .from("usuarios")
+          .delete()
+          .eq(
+            "id_usuario",
+            nuevoUsuarioId
+          );
+
+        await supabaseAdmin.auth.admin.deleteUser(
+          nuevoUsuarioId
+        );
+
+        return responder(
+          {
+            error:
+              "No se pudo generar el código profesional.",
+            detalle:
+              codigoConsultaError.message,
+          },
+          500
+        );
+      }
+
+      let siguiente = 1;
+
+      if (
+        ultimoEspecialista &&
+        ultimoEspecialista.length > 0
+      ) {
+        const ultimoCodigo =
+          ultimoEspecialista[0]
+            .codigo_profesional;
+
+        if (ultimoCodigo) {
+          const numero =
+            parseInt(
+              ultimoCodigo.replace(
+                prefijo,
+                ""
+              ),
+              10
+            );
+
+          if (
+            !Number.isNaN(numero)
+          ) {
+            siguiente =
+              numero + 1;
+          }
+        }
+      }
+
+      const codigoProfesional =
+        `${prefijo}${String(
+          siguiente
+        ).padStart(3, "0")}`;
+
+      // ---------------------------------------------------
+      // CREAR REGISTRO ESPECIALISTA
+      // ---------------------------------------------------
+
+      const {
+        data:
+          nuevoEspecialista,
+        error:
+          especialistaError,
+      } = await supabaseAdmin
+        .from("especialistas")
+        .insert({
+          id_usuario:
+            nuevoUsuarioId,
+
+          id_especialidad:
+            id_especialidad,
+
+          nombres,
+
+          apellidos,
+
+          codigo_profesional:
+            codigoProfesional,
+
+          telefono:
+            telefono || null,
+
+          correo:
+            emailNormalizado,
+
+          activo: true,
+        })
+        .select(`
+          id_especialista,
+          id_usuario,
+          id_especialidad,
+          nombres,
+          apellidos,
+          codigo_profesional,
+          telefono,
+          correo,
+          activo,
+          created_at,
+          updated_at,
+          especialidades (
+            id_especialidad,
+            nombre,
+            descripcion
+          )
+        `)
+        .single();
+
+      if (
+        especialistaError ||
+        !nuevoEspecialista
+      ) {
+        console.error(
+          "Error creando especialista:",
+          especialistaError
+        );
+
+        // -------------------------------------------------
+        // ROLLBACK
+        // -------------------------------------------------
+
+        await supabaseAdmin
+          .from("usuarios")
+          .delete()
+          .eq(
+            "id_usuario",
+            nuevoUsuarioId
+          );
+
+        await supabaseAdmin.auth.admin.deleteUser(
+          nuevoUsuarioId
+        );
+
+        return responder(
+          {
+            error:
+              "No se pudo crear el registro del especialista.",
+            detalle:
+              especialistaError?.message,
+          },
+          500
+        );
+      }
+
+      especialistaCreado =
+        nuevoEspecialista;
+    }
+
+    // =====================================================
+    // RESPUESTA
+    // =====================================================
 
     return responder(
       {
+        success: true,
+
         mensaje:
-          "Usuario creado correctamente.",
+          esEspecialista
+            ? "Especialista registrado correctamente."
+            : "Usuario creado correctamente.",
 
         usuario: {
           id:
@@ -498,17 +797,27 @@ Deno.serve(async (req: Request) => {
           email:
             emailNormalizado,
 
+          telefono:
+            perfil.telefono,
+
           rol:
             nombreRol,
 
           activo:
             perfil.activo,
         },
+
+        especialista:
+          especialistaCreado,
       },
       200
     );
 
   } catch (error) {
+    // =====================================================
+    // ERROR GENERAL
+    // =====================================================
+
     console.error(
       "Error interno:",
       error
@@ -518,7 +827,6 @@ Deno.serve(async (req: Request) => {
       {
         error:
           "Ocurrió un error interno al crear el usuario.",
-
         detalle:
           error instanceof Error
             ? error.message
@@ -529,9 +837,9 @@ Deno.serve(async (req: Request) => {
   }
 });
 
-// ==========================================
-// FUNCIÓN DE RESPUESTA
-// ==========================================
+// =========================================================
+// RESPONDER
+// =========================================================
 
 function responder(
   datos: Record<string, unknown>,
@@ -544,7 +852,6 @@ function responder(
 
       headers: {
         ...corsHeaders,
-
         "Content-Type":
           "application/json",
       },

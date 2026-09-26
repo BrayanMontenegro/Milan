@@ -14,6 +14,7 @@ import Login from "./views/Login";
 import Inicio from "./views/Inicio";
 import Usuarios from "./views/Usuarios";
 import Pacientes from "./views/Pacientes";
+import Especialistas from "./views/Especialistas";
 import Encabezado from "./components/Encabezado";
 import ProtectedRoute from "./assets/routes/ProtectedRoute";
 
@@ -52,7 +53,6 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <div className="p-4">
-                  <h2>Pacientes</h2>
                   <Pacientes />
                 </div>
               </ProtectedRoute>
@@ -112,8 +112,7 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <div className="p-4">
-                  <h2>Especialistas</h2>
-                  <p>Módulo en desarrollo.</p>
+                  <Especialistas />
                 </div>
               </ProtectedRoute>
             }

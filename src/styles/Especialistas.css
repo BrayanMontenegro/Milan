@@ -1,0 +1,1224 @@
+/* =========================================================
+   CLÍNICA MILÁN - ESPECIALISTAS
+   ========================================================= */
+
+.especialistas-page {
+  min-height: 100vh;
+  background: var(--milan-background, #f7f8fc);
+  padding-bottom: 30px;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.especialistas-header {
+  background: linear-gradient(
+    135deg,
+    var(--milan-purple, #9063a6),
+    var(--milan-blue, #002855)
+  );
+  color: #ffffff;
+  padding: 28px 0;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 15px rgba(0, 40, 85, 0.12);
+}
+
+.especialistas-header h2 {
+  font-size: 1.65rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.especialistas-header p {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.92rem;
+}
+
+.especialistas-header-icon {
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  font-size: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* =========================================================
+   BOTONES
+   ========================================================= */
+
+.btn-milan-primary {
+  background: var(--milan-fuchsia, #c6006f);
+  border: 1px solid var(--milan-fuchsia, #c6006f);
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 9px;
+  padding: 10px 18px;
+  transition: all 0.2s ease;
+}
+
+.btn-milan-primary:hover {
+  background: #a9005e;
+  border-color: #a9005e;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(198, 0, 111, 0.25);
+}
+
+.btn-milan-primary:active {
+  transform: translateY(0);
+}
+
+/* =========================================================
+   TARJETAS DE ESTADÍSTICAS
+   ========================================================= */
+
+.especialista-stat-card {
+  background: #ffffff;
+  border: 1px solid #e9eaf0;
+  border-radius: 14px;
+  padding: 18px;
+  min-height: 96px;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.especialista-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
+}
+
+.especialista-stat-card > div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.especialista-stat-card span {
+  color: #737782;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.especialista-stat-card strong {
+  color: var(--milan-blue, #002855);
+  font-size: 1.55rem;
+  line-height: 1.2;
+}
+
+.especialista-stat-icon {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.2rem;
+}
+
+/* COLORES DE ESTADÍSTICAS */
+
+.especialista-stat-icon.purple {
+  color: var(--milan-purple, #9063a6);
+  background: rgba(144, 99, 166, 0.12);
+}
+
+.especialista-stat-icon.turquoise {
+  color: var(--milan-turquoise, #00a89c);
+  background: rgba(0, 168, 156, 0.12);
+}
+
+.especialista-stat-icon.yellow {
+  color: #9b7900;
+  background: rgba(242, 193, 0, 0.16);
+}
+
+.especialista-stat-icon.fuchsia {
+  color: var(--milan-fuchsia, #c6006f);
+  background: rgba(198, 0, 111, 0.1);
+}
+
+/* =========================================================
+   FILTROS
+   ========================================================= */
+
+.especialistas-filtros-card {
+  background: #ffffff;
+  border: 1px solid #e9eaf0;
+  border-radius: 14px;
+  padding: 20px;
+
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.035);
+}
+
+.especialistas-filtros-card h6 {
+  color: var(--milan-blue, #002855);
+  font-weight: 700;
+}
+
+.especialistas-filtros-card .form-label {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #555b66;
+  margin-bottom: 6px;
+}
+
+.especialistas-filtros-card .form-control,
+.especialistas-filtros-card .form-select {
+  min-height: 42px;
+  border-color: #dfe2e8;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.especialistas-filtros-card .form-control:focus,
+.especialistas-filtros-card .form-select:focus {
+  border-color: var(--milan-purple, #9063a6);
+  box-shadow: 0 0 0 0.2rem rgba(144, 99, 166, 0.12);
+}
+
+.especialistas-filtros-card .input-group-text {
+  background: #ffffff;
+  border-color: #dfe2e8;
+  color: var(--milan-purple, #9063a6);
+}
+
+/* =========================================================
+   CONTENEDOR PRINCIPAL
+   ========================================================= */
+
+.especialistas-main-card {
+  background: #ffffff;
+  border: 1px solid #e9eaf0;
+  border-radius: 14px;
+  overflow: hidden;
+
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.035);
+}
+
+.especialistas-section-title {
+  padding: 20px 22px;
+  border-bottom: 1px solid #eceef2;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.especialistas-section-title h5 {
+  margin: 0;
+  color: var(--milan-blue, #002855);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.especialistas-section-title span {
+  color: #7b808a;
+  font-size: 0.82rem;
+}
+
+/* =========================================================
+   TABLA
+   ========================================================= */
+
+.especialistas-table-wrapper {
+  width: 100%;
+}
+
+.especialistas-table {
+  color: #30343b;
+}
+
+.especialistas-table thead th {
+  background: #fafbfc;
+  color: #626873;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+
+  letter-spacing: 0.03em;
+
+  padding: 14px 16px;
+  white-space: nowrap;
+}
+
+.especialistas-table tbody td {
+  padding: 15px 16px;
+  border-bottom: 1px solid #eef0f3;
+  font-size: 0.88rem;
+}
+
+.especialistas-table tbody tr {
+  transition: background 0.15s ease;
+}
+
+.especialistas-table tbody tr:hover {
+  background: #fafbfe;
+}
+
+.especialistas-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* =========================================================
+   AVATAR
+   ========================================================= */
+
+.especialista-avatar {
+  width: 43px;
+  height: 43px;
+  min-width: 43px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: rgba(144, 99, 166, 0.12);
+  color: var(--milan-purple, #9063a6);
+
+  font-size: 1.05rem;
+}
+
+/* =========================================================
+   ESPECIALIDAD
+   ========================================================= */
+
+.especialidad-badge {
+  display: inline-flex;
+  align-items: center;
+
+  background: rgba(0, 168, 156, 0.1);
+  color: #007f77;
+
+  border-radius: 20px;
+
+  padding: 5px 10px;
+
+  font-size: 0.76rem;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   CÓDIGO PROFESIONAL
+   ========================================================= */
+
+.codigo-profesional {
+  display: inline-block;
+
+  background: #f5f6f8;
+  color: var(--milan-blue, #002855);
+
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+
+  padding: 5px 8px;
+
+  font-size: 0.76rem;
+  font-weight: 600;
+
+  letter-spacing: 0.02em;
+}
+
+/* =========================================================
+   ESTADOS
+   ========================================================= */
+
+.estado-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 68px;
+
+  padding: 5px 9px;
+
+  border-radius: 20px;
+
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.estado-badge.activo {
+  background: rgba(0, 168, 156, 0.1);
+  color: #007f77;
+}
+
+.estado-badge.inactivo {
+  background: rgba(198, 0, 111, 0.09);
+  color: var(--milan-fuchsia, #c6006f);
+}
+
+/* =========================================================
+   BOTONES DE TABLA
+   ========================================================= */
+
+.especialistas-table .btn {
+  width: 34px;
+  height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 7px;
+
+  transition: all 0.2s ease;
+}
+
+.especialistas-table .btn-light {
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  color: #626873;
+}
+
+.especialistas-table .btn-light:hover {
+  color: var(--milan-purple, #9063a6);
+  border-color: var(--milan-purple, #9063a6);
+  background: rgba(144, 99, 166, 0.05);
+}
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.especialistas-loading {
+  min-height: 260px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  color: #747a84;
+}
+
+.especialistas-loading .spinner-border {
+  color: var(--milan-purple, #9063a6);
+  margin-bottom: 12px;
+}
+
+.especialistas-loading p {
+  margin: 0;
+  font-size: 0.88rem;
+}
+
+/* =========================================================
+   MOBILE CARDS
+   ========================================================= */
+
+.especialistas-mobile-list {
+  display: none;
+  padding: 14px;
+}
+
+.especialista-mobile-card {
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  padding: 16px;
+  margin-bottom: 12px;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.035);
+}
+
+.especialista-mobile-card:last-child {
+  margin-bottom: 0;
+}
+
+.especialista-mobile-card h6 {
+  color: var(--milan-blue, #002855);
+  font-weight: 700;
+}
+
+.especialista-mobile-card hr {
+  border-color: #eceef2;
+  margin: 15px 0;
+}
+
+.especialista-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.especialista-card-info > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  color: #646a74;
+
+  font-size: 0.82rem;
+}
+
+.especialista-card-info svg {
+  width: 15px;
+  color: var(--milan-purple, #9063a6);
+}
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.especialistas-modal-header {
+  background: linear-gradient(
+    135deg,
+    var(--milan-purple, #9063a6),
+    var(--milan-blue, #002855)
+  );
+
+  color: #ffffff;
+  border-bottom: 0;
+}
+
+.especialistas-modal-header .modal-title {
+  font-weight: 700;
+}
+
+.especialistas-modal-header small {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.especialistas-modal-header .btn-close {
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+}
+
+.especialistas-modal-icon {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 11px;
+
+  font-size: 1.2rem;
+}
+
+.especialista-form-section {
+  border: 1px solid #e8eaf0;
+  border-radius: 11px;
+  padding: 18px;
+  background: #fcfcfd;
+}
+
+.especialista-form-title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  color: var(--milan-blue, #002855);
+
+  font-size: 0.92rem;
+  font-weight: 700;
+
+  margin-bottom: 17px;
+}
+
+.especialista-form-title svg {
+  color: var(--milan-purple, #9063a6);
+}
+
+.especialista-form-section .form-label {
+  color: #4e535d;
+  font-size: 0.83rem;
+  font-weight: 600;
+}
+
+.especialista-form-section .form-control,
+.especialista-form-section .form-select {
+  min-height: 43px;
+
+  border-color: #dfe2e8;
+  border-radius: 8px;
+
+  font-size: 0.88rem;
+}
+
+.especialista-form-section .form-control:focus,
+.especialista-form-section .form-select:focus {
+  border-color: var(--milan-purple, #9063a6);
+
+  box-shadow:
+    0 0 0 0.2rem rgba(144, 99, 166, 0.12);
+}
+
+.especialista-form-section .input-group-text {
+  background: #ffffff;
+  border-color: #dfe2e8;
+  color: var(--milan-purple, #9063a6);
+}
+
+.especialista-form-section .alert {
+  border-radius: 8px;
+  font-size: 0.82rem;
+}
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+
+  .especialistas-header {
+    padding: 23px 0;
+  }
+
+  .especialistas-header h2 {
+    font-size: 1.45rem;
+  }
+
+  .especialistas-table thead th,
+  .especialistas-table tbody td {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+}
+
+/* =========================================================
+   RESPONSIVE - TELÉFONO
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+  .especialistas-page {
+    padding-bottom: 20px;
+  }
+
+  .especialistas-header {
+    padding: 20px 0;
+    margin-bottom: 18px;
+  }
+
+  .especialistas-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .especialistas-header p {
+    font-size: 0.8rem;
+  }
+
+  .especialistas-header-icon {
+    width: 45px;
+    height: 45px;
+    min-width: 45px;
+    font-size: 1.25rem;
+  }
+
+  .especialistas-header .btn-milan-primary {
+    width: 100%;
+  }
+
+  .especialista-stat-card {
+    min-height: 82px;
+    padding: 13px;
+    gap: 10px;
+  }
+
+  .especialista-stat-icon {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    font-size: 1rem;
+  }
+
+  .especialista-stat-card strong {
+    font-size: 1.25rem;
+  }
+
+  .especialista-stat-card span {
+    font-size: 0.73rem;
+  }
+
+  .especialistas-filtros-card {
+    padding: 15px;
+  }
+
+  .especialistas-main-card {
+    border-radius: 11px;
+  }
+
+  .especialistas-section-title {
+    padding: 16px;
+  }
+
+  /* Ocultar tabla */
+  .especialistas-table-wrapper {
+    display: none;
+  }
+
+  /* Mostrar tarjetas */
+  .especialistas-mobile-list {
+    display: block;
+  }
+
+  .especialista-mobile-card {
+    padding: 14px;
+  }
+
+  .especialista-mobile-card .especialista-avatar {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+  }
+
+  .especialistas-modal-header {
+    padding: 14px;
+  }
+
+  .especialistas-modal-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .especialistas-modal-header .modal-title {
+    font-size: 0.98rem;
+  }
+
+  .especialistas-modal-header small {
+    font-size: 0.72rem;
+  }
+
+  .especialista-form-section {
+    padding: 14px;
+  }
+
+  .modal-footer {
+    flex-direction: column-reverse;
+  }
+
+  .modal-footer button {
+    width: 100%;
+  }
+
+}
+
+/* =========================================================
+   TELÉFONOS PEQUEÑOS
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+  .especialista-stat-card {
+    padding: 10px;
+  }
+
+  .especialista-stat-icon {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+  }
+
+  .especialista-stat-card strong {
+    font-size: 1.1rem;
+  }
+
+  .especialista-mobile-card {
+    padding: 12px;
+  }
+
+  .especialista-mobile-card .btn {
+    font-size: 0.78rem;
+  }
+
+}
+/* =========================================
+   MODAL DE ESPECIALISTAS
+========================================= */
+
+.especialista-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1055;
+  overflow: hidden;
+}
+
+/* Contenedor del modal */
+.especialista-modal-dialog {
+  width: 100%;
+  max-width: 900px;
+  height: calc(100vh - 2rem);
+  margin: 1rem auto;
+}
+
+/* Contenido completo */
+.especialista-modal-content {
+  height: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Formulario ocupa todo el espacio disponible */
+.especialista-modal-form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+/* =========================================
+   ÁREA QUE HACE SCROLL
+========================================= */
+
+.especialista-modal-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1.5rem;
+}
+
+/* Scroll más agradable */
+.especialista-modal-body::-webkit-scrollbar {
+  width: 7px;
+}
+
+.especialista-modal-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.especialista-modal-body::-webkit-scrollbar-thumb {
+  background: rgba(144, 99, 166, 0.45);
+  border-radius: 10px;
+}
+
+.especialista-modal-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(144, 99, 166, 0.7);
+}
+
+/* Firefox */
+.especialista-modal-body {
+  scrollbar-width: thin;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.especialistas-modal-header {
+  flex-shrink: 0;
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.especialista-modal-content .modal-footer {
+  flex-shrink: 0;
+  background: #fff;
+  border-top: 1px solid #dee2e6;
+}
+
+/* =========================================
+   MÓVILES
+========================================= */
+
+@media (max-width: 768px) {
+
+  .especialista-modal-dialog {
+    height: 100vh;
+    max-height: 100vh;
+    margin: 0;
+  }
+
+  .especialista-modal-content {
+    border-radius: 0;
+  }
+
+  .especialista-modal-body {
+    padding: 1rem;
+  }
+
+  .especialistas-modal-header {
+    padding: 1rem;
+  }
+
+  .especialista-modal-content .modal-footer {
+    padding: 0.75rem 1rem;
+  }
+
+}
+
+/* =========================================================
+   SELECTOR DE ESPECIALIDADES
+   Clínica de Especialidades Milán
+   ========================================================= */
+
+.especialidad-selector {
+  position: relative;
+  width: 100%;
+}
+
+/* Botón principal */
+.especialidad-selector-button {
+  width: 100%;
+  min-height: 42px;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.375rem;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #212529;
+  text-align: left;
+}
+
+.especialidad-selector-button:hover {
+  border-color: #9063a6;
+}
+
+.especialidad-selector-button.activo {
+  border-color: #9063a6;
+  box-shadow: 0 0 0 0.2rem rgba(144, 99, 166, 0.15);
+}
+
+.especialidad-selector-button:disabled {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+  opacity: 0.75;
+}
+
+/* Valor seleccionado */
+.especialidad-selector-value {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: 0;
+}
+
+.especialidad-selector-value span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.especialidad-selector-icon {
+  color: #9063a6;
+  flex-shrink: 0;
+}
+
+/* Acciones */
+.especialidad-selector-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-shrink: 0;
+}
+
+.especialidad-selector-clear {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c757d;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.especialidad-selector-clear:hover {
+  background-color: #f1f1f1;
+  color: #dc3545;
+}
+
+.especialidad-selector-arrow {
+  color: #6c757d;
+  transition: transform 0.2s ease;
+}
+
+.especialidad-selector-arrow.rotado {
+  transform: rotate(180deg);
+}
+
+/* =========================================================
+   DROPDOWN
+   ========================================================= */
+
+.especialidad-selector-dropdown {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  right: 0;
+  z-index: 1055;
+  background: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 0.5rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+
+/* Buscador */
+.especialidad-selector-search {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.7rem 0.8rem;
+  border-bottom: 1px solid #e9ecef;
+  background-color: #fafafa;
+}
+
+.especialidad-selector-search svg {
+  color: #9063a6;
+  flex-shrink: 0;
+}
+
+.especialidad-selector-search input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.9rem;
+  color: #212529;
+}
+
+.especialidad-selector-search input::placeholder {
+  color: #adb5bd;
+}
+
+/* Lista */
+.especialidad-selector-list {
+  max-height: 230px;
+  overflow-y: auto;
+}
+
+/* Scroll */
+.especialidad-selector-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.especialidad-selector-list::-webkit-scrollbar-track {
+  background: #f8f9fa;
+}
+
+.especialidad-selector-list::-webkit-scrollbar-thumb {
+  background: #c7b5d1;
+  border-radius: 10px;
+}
+
+/* Opción */
+.especialidad-selector-option {
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  border: none;
+  background: #fff;
+  display: block;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.especialidad-selector-option:hover {
+  background-color: #f7f1f9;
+}
+
+.especialidad-selector-option.seleccionada {
+  background-color: #f1e7f4;
+  border-left: 3px solid #9063a6;
+}
+
+.especialidad-selector-option strong {
+  display: block;
+  color: #343a40;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.especialidad-selector-option small {
+  display: block;
+  margin-top: 2px;
+  color: #6c757d;
+  font-size: 0.78rem;
+  line-height: 1.3;
+}
+
+/* Sin resultados */
+.especialidad-selector-empty {
+  padding: 1.25rem 1rem;
+  text-align: center;
+  color: #6c757d;
+  font-size: 0.85rem;
+}
+
+/* =========================================================
+   FOOTER DEL DROPDOWN
+   ========================================================= */
+
+.especialidad-selector-footer {
+  padding: 0.65rem;
+  border-top: 1px solid #e9ecef;
+  background-color: #fafafa;
+}
+
+.especialidad-selector-add {
+  width: 100%;
+  border: 1px dashed #9063a6;
+  border-radius: 0.375rem;
+  padding: 0.55rem 0.75rem;
+  background-color: #fff;
+  color: #9063a6;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.especialidad-selector-add:hover {
+  background-color: #9063a6;
+  color: #fff;
+}
+
+/* =========================================================
+   FORMULARIO - NUEVA ESPECIALIDAD
+   ========================================================= */
+
+.especialidad-nueva-container {
+  margin-top: 0.85rem;
+  padding: 1rem;
+  border: 1px solid #d8c9df;
+  border-radius: 0.6rem;
+  background-color: #faf8fb;
+  animation: especialidadEntrada 0.2s ease;
+}
+
+@keyframes especialidadEntrada {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.especialidad-nueva-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e5dce9;
+}
+
+.especialidad-nueva-header strong {
+  display: block;
+  color: #754b8b;
+  font-size: 0.95rem;
+}
+
+.especialidad-nueva-header small {
+  display: block;
+  margin-top: 2px;
+  color: #6c757d;
+  font-size: 0.78rem;
+}
+
+.especialidad-nueva-header .btn {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Inputs del formulario */
+.especialidad-nueva-container .form-label {
+  margin-bottom: 0.4rem;
+  color: #343a40;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.especialidad-nueva-container .form-control {
+  border-color: #ced4da;
+  font-size: 0.88rem;
+}
+
+.especialidad-nueva-container .form-control:focus {
+  border-color: #9063a6;
+  box-shadow: 0 0 0 0.2rem rgba(144, 99, 166, 0.15);
+}
+
+/* Botón principal Milán */
+.especialidad-nueva-container .btn-milan-primary {
+  background-color: #9063a6;
+  border-color: #9063a6;
+  color: #fff;
+}
+
+.especialidad-nueva-container .btn-milan-primary:hover {
+  background-color: #754b8b;
+  border-color: #754b8b;
+  color: #fff;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 576px) {
+  .especialidad-selector-dropdown {
+    position: fixed;
+    top: auto;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    width: auto;
+    max-height: 70vh;
+  }
+
+  .especialidad-selector-list {
+    max-height: 200px;
+  }
+
+  .especialidad-nueva-container {
+    padding: 0.85rem;
+  }
+
+  .especialidad-selector-option {
+    padding: 0.8rem;
+  }
+}
