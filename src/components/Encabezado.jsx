@@ -134,6 +134,15 @@ const Encabezado = () => {
     },
 
     {
+      nombre: "Horario",
+      ruta: "/especialista-horario",
+      icono: <FiCalendar />,
+      mostrar:
+        esEspecialista ||
+        esAdministrador,
+    },
+
+    {
       nombre: "Especialistas",
       ruta: "/especialistas",
       icono: <FiUserCheck />,

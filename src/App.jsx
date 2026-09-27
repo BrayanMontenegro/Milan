@@ -15,6 +15,7 @@ import Inicio from "./views/Inicio";
 import Usuarios from "./views/Usuarios";
 import Pacientes from "./views/Pacientes";
 import Especialistas from "./views/Especialistas";
+import EspecialistaHorario from "./views/EspecialistaHorario";
 import Encabezado from "./components/Encabezado";
 import ProtectedRoute from "./assets/routes/ProtectedRoute";
 
@@ -65,6 +66,17 @@ const App = () => {
               <ProtectedRoute>
                 <div className="p-4">
                   <Usuarios />
+                </div>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/especialista-horario"
+            element={
+              <ProtectedRoute>
+                <div className="p-4">
+                  <EspecialistaHorario />
                 </div>
               </ProtectedRoute>
             }

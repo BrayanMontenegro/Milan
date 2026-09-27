@@ -1,0 +1,939 @@
+/* =========================================================
+   ESPECIALISTA - HORARIO
+   Clínica de Especialidades Milán
+========================================================= */
+
+.especialista-horario-container {
+  width: 100%;
+  min-height: 100%;
+  padding: 24px;
+  background: #f7f7f9;
+}
+
+/* =========================================================
+   ENCABEZADO
+========================================================= */
+
+.especialista-horario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px 28px;
+  margin-bottom: 24px;
+
+  border: 1px solid #eeeeee;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.especialista-horario-titulo {
+  min-width: 0;
+}
+
+.especialista-horario-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  color: #c6006f;
+  font-size: 14px;
+  font-weight: 600;
+
+  margin-bottom: 6px;
+}
+
+.especialista-horario-label svg {
+  font-size: 15px;
+}
+
+.especialista-horario-titulo h2 {
+  margin: 0;
+
+  color: #002855;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.especialista-horario-titulo p {
+  margin: 5px 0 0;
+
+  color: #6c757d;
+  font-size: 15px;
+}
+
+/* =========================================================
+   INFORMACIÓN DEL ESPECIALISTA
+========================================================= */
+
+.especialista-horario-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  padding: 12px 18px;
+
+  background: #fff5fa;
+  border: 1px solid #f2d4e4;
+  border-radius: 12px;
+
+  min-width: 180px;
+}
+
+.especialista-horario-info span {
+  color: #777777;
+  font-size: 12px;
+  margin-bottom: 3px;
+}
+
+.especialista-horario-info strong {
+  color: #c6006f;
+  font-size: 16px;
+}
+
+/* =========================================================
+   GRID DE DÍAS
+========================================================= */
+
+.especialista-horario-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 18px;
+}
+
+/* =========================================================
+   TARJETA DE DÍA
+========================================================= */
+
+.especialista-horario-dia {
+  background: #ffffff;
+
+  border: 1px solid #e8e8e8;
+  border-radius: 15px;
+
+  overflow: hidden;
+
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.especialista-horario-dia:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
+}
+
+/* =========================================================
+   CABECERA DEL DÍA
+========================================================= */
+
+.especialista-horario-dia-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 15px 17px;
+
+  background: #fafafa;
+
+  border-bottom: 1px solid #eeeeee;
+}
+
+.especialista-horario-dia-header h5 {
+  margin: 0;
+
+  color: #002855;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.especialista-horario-dia-header .btn {
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border-radius: 8px;
+
+  background: #c6006f;
+  border-color: #c6006f;
+}
+
+.especialista-horario-dia-header .btn:hover {
+  background: #a9005e;
+  border-color: #a9005e;
+}
+
+/* =========================================================
+   CUERPO DEL DÍA
+========================================================= */
+
+.especialista-horario-dia-body {
+  padding: 14px;
+  min-height: 95px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+/* =========================================================
+   SIN HORARIO
+========================================================= */
+
+.horario-sin-registro {
+  min-height: 65px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  color: #a0a0a0;
+
+  font-size: 13px;
+}
+
+.horario-sin-registro svg {
+  font-size: 18px;
+  opacity: 0.6;
+}
+
+/* =========================================================
+   BLOQUE DE HORARIO
+========================================================= */
+
+.horario-bloque {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  padding: 10px 11px;
+
+  background: #f8f9fa;
+
+  border: 1px solid #e7e7e7;
+  border-left: 4px solid #c6006f;
+
+  border-radius: 9px;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.horario-bloque:hover {
+  background: #fff5fa;
+  border-color: #ead1df;
+  border-left-color: #c6006f;
+}
+
+/* =========================================================
+   HORA
+========================================================= */
+
+.horario-bloque-horas {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  min-width: 0;
+}
+
+.horario-bloque-horas svg {
+  flex-shrink: 0;
+
+  color: #c6006f;
+
+  font-size: 14px;
+}
+
+.horario-bloque-horas span {
+  color: #333333;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   ACCIONES
+========================================================= */
+
+.horario-bloque-acciones {
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+
+  flex-shrink: 0;
+}
+
+.horario-bloque-acciones .btn {
+  width: 29px;
+  height: 29px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 0;
+  border-radius: 7px;
+
+  color: #666666;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.horario-bloque-acciones .btn:hover {
+  background: #eeeeee;
+  color: #c6006f;
+}
+
+.horario-bloque-acciones .text-danger:hover {
+  color: #dc3545 !important;
+}
+
+/* =========================================================
+   ESTADO DE CARGA
+========================================================= */
+
+.especialista-horario-loading {
+  min-height: 400px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  color: #6c757d;
+}
+
+.especialista-horario-loading .spinner-border {
+  width: 38px;
+  height: 38px;
+
+  color: #c6006f !important;
+}
+
+.especialista-horario-loading p {
+  margin: 0;
+
+  font-size: 14px;
+}
+
+/* =========================================================
+   SIN ESPECIALISTA
+========================================================= */
+
+.especialista-horario-empty {
+  min-height: 400px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 30px;
+}
+
+.especialista-horario-empty > svg {
+  font-size: 48px;
+  color: #c6006f;
+
+  margin-bottom: 15px;
+}
+
+.especialista-horario-empty h4 {
+  margin: 0 0 8px;
+
+  color: #002855;
+  font-size: 20px;
+}
+
+.especialista-horario-empty p {
+  margin: 0;
+
+  color: #777777;
+  font-size: 14px;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+  .especialista-horario-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .especialista-horario-header {
+    align-items: flex-start;
+  }
+}
+
+/* =========================================================
+   TABLET PEQUEÑA
+========================================================= */
+
+@media (max-width: 768px) {
+  .especialista-horario-container {
+    padding: 16px;
+  }
+
+  .especialista-horario-header {
+    flex-direction: column;
+    align-items: stretch;
+
+    padding: 20px;
+  }
+
+  .especialista-horario-titulo h2 {
+    font-size: 22px;
+  }
+
+  .especialista-horario-info {
+    align-items: flex-start;
+
+    width: 100%;
+    min-width: auto;
+  }
+
+  .especialista-horario-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+/* =========================================================
+   CELULAR
+========================================================= */
+
+@media (max-width: 480px) {
+  .especialista-horario-container {
+    padding: 12px;
+  }
+
+  .especialista-horario-header {
+    padding: 17px;
+    border-radius: 13px;
+
+    margin-bottom: 16px;
+  }
+
+  .especialista-horario-label {
+    font-size: 13px;
+  }
+
+  .especialista-horario-titulo h2 {
+    font-size: 20px;
+  }
+
+  .especialista-horario-titulo p {
+    font-size: 14px;
+  }
+
+  .especialista-horario-info {
+    padding: 10px 13px;
+  }
+
+  .especialista-horario-info strong {
+    font-size: 14px;
+  }
+
+  .especialista-horario-dia {
+    border-radius: 12px;
+  }
+
+  .especialista-horario-dia-header {
+    padding: 13px 14px;
+  }
+
+  .especialista-horario-dia-header h5 {
+    font-size: 15px;
+  }
+
+  .especialista-horario-dia-body {
+    padding: 11px;
+  }
+
+  .horario-bloque {
+    padding: 9px;
+  }
+
+  .horario-bloque-horas span {
+    font-size: 12px;
+  }
+
+  .horario-bloque-acciones .btn {
+    width: 27px;
+    height: 27px;
+  }
+}
+
+/* =========================================================
+   CELULAR MUY PEQUEÑO
+========================================================= */
+
+@media (max-width: 360px) {
+  .especialista-horario-container {
+    padding: 9px;
+  }
+
+  .especialista-horario-titulo h2 {
+    font-size: 18px;
+  }
+
+  .horario-bloque {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .horario-bloque-acciones {
+    justify-content: flex-end;
+  }
+}
+
+.especialista-horario-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #eeeeee;
+  border-radius: 14px;
+
+  padding: 18px 20px;
+  margin-bottom: 18px;
+
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+}
+
+.especialista-horario-toolbar h4 {
+  margin: 0 0 4px;
+
+  color: #002855;
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.especialista-horario-toolbar p {
+  margin: 0;
+
+  color: #777777;
+
+  font-size: 13px;
+}
+
+.especialista-horario-toolbar .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  background: #c6006f;
+  border-color: #c6006f;
+
+  padding: 9px 16px;
+
+  border-radius: 9px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+.especialista-horario-toolbar .btn:hover {
+  background: #a9005e;
+  border-color: #a9005e;
+}
+
+/* =========================================================
+   RESPONSIVE TOOLBAR
+========================================================= */
+
+@media (max-width: 768px) {
+  .especialista-horario-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .especialista-horario-toolbar .btn {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   MODAL DE HORARIOS - CLÍNICA MILÁN
+   ========================================================= */
+
+.horario-modal {
+  border: none;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.18);
+  animation: horarioModalEntrada 0.2s ease-out;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.horario-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 20px 22px;
+  background: #ffffff;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.horario-modal-titulo {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.horario-modal-icono {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(198, 0, 111, 0.10);
+  color: #c6006f;
+  border-radius: 12px;
+  font-size: 19px;
+}
+
+.horario-modal-titulo h5 {
+  margin: 0;
+  color: #002855;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.horario-modal-titulo span {
+  display: block;
+  margin-top: 3px;
+  color: #777777;
+  font-size: 13px;
+}
+
+/* Botón cerrar */
+
+.horario-modal-header .btn-close {
+  margin: 0;
+  padding: 10px;
+  border-radius: 8px;
+  opacity: 0.65;
+  transition: all 0.2s ease;
+}
+
+.horario-modal-header .btn-close:hover {
+  opacity: 1;
+  background-color: #f5f5f5;
+}
+
+/* =========================================================
+   BODY
+   ========================================================= */
+
+.horario-modal .modal-body {
+  padding: 24px 22px;
+  background: #ffffff;
+}
+
+.horario-modal .form-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 8px;
+  color: #002855;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.horario-modal .form-label svg {
+  color: #c6006f;
+  font-size: 14px;
+}
+
+/* Inputs */
+
+.horario-modal .form-control,
+.horario-modal .form-select {
+  min-height: 44px;
+  border: 1px solid #dddddd;
+  border-radius: 9px;
+  padding: 9px 12px;
+  color: #333333;
+  background-color: #ffffff;
+  font-size: 14px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.horario-modal .form-control:focus,
+.horario-modal .form-select:focus {
+  border-color: #c6006f;
+  box-shadow: 0 0 0 3px rgba(198, 0, 111, 0.10);
+  outline: none;
+}
+
+.horario-modal .form-control:disabled,
+.horario-modal .form-select:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   MENSAJE DE ERROR
+   ========================================================= */
+
+.horario-modal-error {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 11px 13px;
+  border: none;
+  border-radius: 9px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* =========================================================
+   INFORMACIÓN DEL HORARIO
+   ========================================================= */
+
+.horario-modal-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 15px;
+  border-radius: 11px;
+  background: rgba(0, 168, 156, 0.07);
+  border: 1px solid rgba(0, 168, 156, 0.15);
+}
+
+.horario-modal-info > svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #00a89c;
+  font-size: 17px;
+}
+
+.horario-modal-info strong {
+  display: block;
+  margin-bottom: 3px;
+  color: #006f68;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.horario-modal-info p {
+  margin: 0;
+  color: #666666;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.horario-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 22px;
+  background: #fafafa;
+  border-top: 1px solid #eeeeee;
+}
+
+.horario-modal-footer .btn {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 8px 16px;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.horario-modal-footer .btn-light {
+  color: #555555;
+  background: #ffffff;
+  border: 1px solid #dddddd;
+}
+
+.horario-modal-footer .btn-light:hover {
+  color: #333333;
+  background: #f2f2f2;
+  border-color: #cccccc;
+}
+
+/* Botón guardar */
+
+.horario-btn-guardar {
+  color: #ffffff !important;
+  background: #c6006f !important;
+  border-color: #c6006f !important;
+}
+
+.horario-btn-guardar:hover:not(:disabled) {
+  background: #a9005e !important;
+  border-color: #a9005e !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(198, 0, 111, 0.20);
+}
+
+.horario-btn-guardar:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.horario-btn-guardar:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   ANIMACIÓN
+   ========================================================= */
+
+@keyframes horarioModalEntrada {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 576px) {
+
+  .horario-modal {
+    margin: 10px;
+    border-radius: 15px;
+  }
+
+  .horario-modal-header {
+    padding: 17px;
+  }
+
+  .horario-modal-icono {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    font-size: 17px;
+  }
+
+  .horario-modal-titulo h5 {
+    font-size: 16px;
+  }
+
+  .horario-modal-titulo span {
+    font-size: 12px;
+  }
+
+  .horario-modal .modal-body {
+    padding: 20px 17px;
+  }
+
+  .horario-modal-footer {
+    padding: 14px 17px;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE - TELÉFONO
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+  .horario-modal-header {
+    padding: 15px;
+  }
+
+  .horario-modal-titulo {
+    gap: 9px;
+  }
+
+  .horario-modal-icono {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    border-radius: 9px;
+    font-size: 15px;
+  }
+
+  .horario-modal-titulo h5 {
+    font-size: 15px;
+  }
+
+  .horario-modal-titulo span {
+    font-size: 11px;
+  }
+
+  .horario-modal .modal-body {
+    padding: 18px 15px;
+  }
+
+  .horario-modal-footer {
+    flex-direction: column-reverse;
+    padding: 13px 15px;
+  }
+
+  .horario-modal-footer .btn {
+    width: 100%;
+  }
+
+  .horario-modal-info {
+    padding: 12px;
+  }
+}
