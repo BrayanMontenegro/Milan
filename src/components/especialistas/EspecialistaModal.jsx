@@ -3,6 +3,8 @@ import {
   FaUserMd,
   FaLock,
   FaKey,
+  FaEye,
+  FaEyeSlash,
 } from "react-icons/fa";
 import "../../styles/Especialistas.css";
 import EspecialidadSelector from "./EspecialidadSelector";
@@ -21,6 +23,9 @@ const EspecialistaModal = ({
   setErrores,
   mostrarValidacion = false,
 }) => {
+  const [mostrarPassword, setMostrarPassword] = React.useState(false);
+  const [mostrarConfirmPassword, setMostrarConfirmPassword] = React.useState(false);
+
   if (!mostrar) return null;
 
   const handleChange = (e) => {
@@ -245,23 +250,16 @@ const EspecialistaModal = ({
 
                       <input
                         type="text"
-                        className="form-control"
-                        value={
-                          modoEdicion
-                            ? formulario.codigo_profesional || ""
-                            : "Se generará automáticamente"
-                        }
-                        disabled
-                        readOnly
+                        className={getFieldClass("codigo_profesional")}
+                        name="codigo_profesional"
+                        value={formulario.codigo_profesional || ""}
+                        onChange={handleChange}
+                        placeholder="Ingrese el código profesional"
+                        disabled={guardando}
+                        maxLength={50}
                       />
 
                     </div>
-
-                    {!modoEdicion && (
-                      <small className="text-muted">
-                        El sistema asignará el código automáticamente.
-                      </small>
-                    )}
                   </div>
 
                   {/* TELÉFONO */}
@@ -371,21 +369,32 @@ const EspecialistaModal = ({
                         Contraseña *
                       </label>
 
-                      <input
-                        type="password"
-                        className={getFieldClass("password")}
-                        name="password"
-                        value={formulario.password || ""}
-                        onChange={handleChange}
-                        placeholder="Mínimo 6 caracteres"
-                        disabled={guardando}
-                        minLength={6}
-                        pattern="^(?=.*[A-Za-z])(?=.*\d).{6,}$"
-                        aria-invalid={
-                          mostrarValidacion && !!errores.password
-                        }
-                        required
-                      />
+                      <div className="input-group">
+                        <input
+                          type={mostrarPassword ? "text" : "password"}
+                          className={getFieldClass("password")}
+                          name="password"
+                          value={formulario.password || ""}
+                          onChange={handleChange}
+                          placeholder="8+ caracteres, mayúscula, número y #"
+                          disabled={guardando}
+                          minLength={8}
+                          pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$"
+                          aria-invalid={
+                            mostrarValidacion && !!errores.password
+                          }
+                          required
+                        />
+                        <button
+                          type="button"
+                          className="btn btn-outline-secondary"
+                          onClick={() => setMostrarPassword((prev) => !prev)}
+                          aria-label={mostrarPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                          tabIndex={-1}
+                        >
+                          {mostrarPassword ? <FaEyeSlash /> : <FaEye />}
+                        </button>
+                      </div>
                       {mostrarValidacion && errores.password && (
                         <div className="invalid-feedback d-block">
                           {errores.password}
@@ -401,20 +410,31 @@ const EspecialistaModal = ({
                         Confirmar contraseña *
                       </label>
 
-                      <input
-                        type="password"
-                        className={getFieldClass("confirmar_password")}
-                        name="confirmar_password"
-                        value={formulario.confirmar_password || ""}
-                        onChange={handleChange}
-                        placeholder="Repita la contraseña"
-                        disabled={guardando}
-                        minLength={6}
-                        aria-invalid={
-                          mostrarValidacion && !!errores.confirmar_password
-                        }
-                        required
-                      />
+                      <div className="input-group">
+                        <input
+                          type={mostrarConfirmPassword ? "text" : "password"}
+                          className={getFieldClass("confirmar_password")}
+                          name="confirmar_password"
+                          value={formulario.confirmar_password || ""}
+                          onChange={handleChange}
+                          placeholder="Repita la contraseña"
+                          disabled={guardando}
+                          minLength={6}
+                          aria-invalid={
+                            mostrarValidacion && !!errores.confirmar_password
+                          }
+                          required
+                        />
+                        <button
+                          type="button"
+                          className="btn btn-outline-secondary"
+                          onClick={() => setMostrarConfirmPassword((prev) => !prev)}
+                          aria-label={mostrarConfirmPassword ? "Ocultar confirmación" : "Mostrar confirmación"}
+                          tabIndex={-1}
+                        >
+                          {mostrarConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                        </button>
+                      </div>
                       {mostrarValidacion && errores.confirmar_password && (
                         <div className="invalid-feedback d-block">
                           {errores.confirmar_password}

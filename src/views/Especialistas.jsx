@@ -30,6 +30,45 @@ const formularioInicial = {
   confirmar_password: "",
 };
 
+const validarPassword = (password = "") => {
+  const requisitos = [
+    {
+      valido: password.length >= 8,
+      mensaje: "al menos 8 caracteres",
+    },
+    {
+      valido: /[A-Z]/.test(password),
+      mensaje: "una mayúscula",
+    },
+    {
+      valido: /[a-z]/.test(password),
+      mensaje: "una minúscula",
+    },
+    {
+      valido: /\d/.test(password),
+      mensaje: "un número",
+    },
+    {
+      valido: /[^A-Za-z0-9]/.test(password),
+      mensaje: "un carácter especial como #, !, @, $ o %",
+    },
+  ];
+
+  const faltantes = requisitos
+    .filter((requisito) => !requisito.valido)
+    .map((requisito) => requisito.mensaje);
+
+  if (faltantes.length === 0) {
+    return { valido: true, mensaje: "" };
+  }
+
+  const texto =
+    faltantes.length === 1
+      ? `Falta ${faltantes[0]}.`
+      : `Faltan ${faltantes.slice(0, -1).join(", ")} y ${faltantes[faltantes.length - 1]}.`;
+
+  return { valido: false, mensaje: texto };
+};
 
 // =========================================================
 // COMPONENTE
@@ -444,12 +483,13 @@ const Especialistas = () => {
       if (!formulario.password) {
         nuevosErrores.password =
           "Ingrese una contraseña.";
-      } else if (
-        formulario.password.length < 6 ||
-        !/^(?=.*[A-Za-z])(?=.*\d).{6,}$/.test(formulario.password)
-      ) {
-        nuevosErrores.password =
-          "La contraseña debe tener al menos 6 caracteres, incluir letras y números.";
+      } else {
+        const validacionPassword = validarPassword(formulario.password);
+
+        if (!validacionPassword.valido) {
+          nuevosErrores.password =
+            `La contraseña debe tener ${validacionPassword.mensaje}`;
+        }
       }
 
       if (!formulario.confirmar_password) {
@@ -520,6 +560,9 @@ const Especialistas = () => {
 
               telefono:
                 formulario.telefono.trim(),
+
+              codigo_profesional:
+                formulario.codigo_profesional.trim(),
 
               password:
                 formulario.password,
@@ -649,6 +692,9 @@ const Especialistas = () => {
 
         id_especialidad:
           formulario.id_especialidad,
+
+        codigo_profesional:
+          formulario.codigo_profesional.trim(),
 
         telefono:
           formulario.telefono.trim(),

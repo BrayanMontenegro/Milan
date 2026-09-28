@@ -220,6 +220,16 @@ Deno.serve(async (req: Request) => {
         ? body.telefono.trim()
         : "";
 
+    const codigo_profesional =
+      typeof body?.codigo_profesional === "string"
+        ? body.codigo_profesional.trim()
+        : "";
+
+    const codigo_minsa =
+      typeof body?.codigo_minsa === "string"
+        ? body.codigo_minsa.trim()
+        : "";
+
     const id_rol =
       typeof body?.id_rol === "string"
         ? body.id_rol.trim()
@@ -254,11 +264,23 @@ Deno.serve(async (req: Request) => {
     // VALIDAR CONTRASEÑA
     // -----------------------------------------------------
 
-    if (password.length < 6) {
+    const tieneLongitudValida = password.length >= 8;
+    const tieneMayuscula = /[A-Z]/.test(password);
+    const tieneMinuscula = /[a-z]/.test(password);
+    const tieneNumero = /\d/.test(password);
+    const tieneCaracterEspecial = /[^A-Za-z0-9]/.test(password);
+
+    if (
+      !tieneLongitudValida ||
+      !tieneMayuscula ||
+      !tieneMinuscula ||
+      !tieneNumero ||
+      !tieneCaracterEspecial
+    ) {
       return responder(
         {
           error:
-            "La contraseña debe tener al menos 6 caracteres.",
+            "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial (#, !, @, $, %).",
         },
         400
       );
@@ -674,6 +696,7 @@ Deno.serve(async (req: Request) => {
       }
 
       const codigoProfesional =
+        codigo_profesional ||
         `${prefijo}${String(
           siguiente
         ).padStart(3, "0")}`;
@@ -703,6 +726,9 @@ Deno.serve(async (req: Request) => {
           codigo_profesional:
             codigoProfesional,
 
+          codigo_minsa:
+            codigo_minsa || null,
+
           telefono:
             telefono || null,
 
@@ -718,6 +744,7 @@ Deno.serve(async (req: Request) => {
           nombres,
           apellidos,
           codigo_profesional,
+          codigo_minsa,
           telefono,
           correo,
           activo,
