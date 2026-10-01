@@ -68,20 +68,19 @@ const CitaCard = ({
       case "CONFIRMADA":
         return "confirmada";
 
-      case "COMPLETADA":
-        return "completada";
+      case "ATENDIDA":
+        return "atendida";
 
       case "CANCELADA":
         return "cancelada";
 
-      case "NO_ATENDIDA":
-        return "no-atendida";
+      case "NO_ASISTIO":
+        return "no-asistio";
 
       default:
         return "pendiente";
     }
   };
-
   const obtenerTextoEstado = (estado) => {
     if (!estado) return "SIN ESTADO";
 

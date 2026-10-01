@@ -1,0 +1,1106 @@
+.citas-page {
+  min-height: 100vh;
+  background: #f7f8fa;
+  color: #343a40;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.citas-header {
+  background: linear-gradient(
+    135deg,
+    #c6006f 0%,
+    #a90060 100%
+  );
+  color: #ffffff;
+  padding: 1.5rem 0;
+  box-shadow: 0 4px 16px rgba(198, 0, 111, 0.15);
+}
+
+.citas-header-icon {
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.45rem;
+}
+
+.citas-header h2 {
+  font-size: 1.7rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.citas-header p {
+  font-size: 0.9rem;
+  opacity: 0.88;
+}
+
+.citas-header .btn-milan-primary {
+  background: #ffffff;
+  color: #c6006f;
+  border: none;
+  font-weight: 600;
+  padding: 0.65rem 1.15rem;
+  border-radius: 9px;
+  transition: all 0.2s ease;
+}
+
+.citas-header .btn-milan-primary:hover {
+  background: #f8f8f8;
+  color: #a90060;
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   FILTROS
+   ========================================================= */
+
+.cita-filtros {
+  background: #ffffff;
+  border: 1px solid #e9ecef;
+  border-radius: 14px;
+  padding: 1.25rem;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+}
+
+.cita-filtros-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.cita-filtros-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #c6006f;
+  font-weight: 700;
+}
+
+.cita-filtros-title svg {
+  font-size: 0.95rem;
+}
+
+.cita-limpiar-btn {
+  border-radius: 7px;
+  white-space: nowrap;
+}
+
+.cita-filtros .form-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 0.4rem;
+}
+
+.cita-filtros .form-control,
+.cita-filtros .form-select {
+  min-height: 42px;
+  border-color: #dee2e6;
+  font-size: 0.88rem;
+  border-radius: 7px;
+}
+
+.cita-filtros .form-control:focus,
+.cita-filtros .form-select:focus {
+  border-color: #c6006f;
+  box-shadow: 0 0 0 0.2rem rgba(198, 0, 111, 0.1);
+}
+
+.cita-filtros .input-group-text {
+  background: #ffffff;
+  border-color: #dee2e6;
+  color: #c6006f;
+}
+
+/* =========================================================
+   RESUMEN
+   ========================================================= */
+
+.citas-resumen {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #ffffff;
+  border: 1px solid #e9ecef;
+  border-radius: 10px;
+  padding: 0.65rem 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.citas-resumen-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: rgba(198, 0, 111, 0.1);
+  color: #c6006f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.citas-resumen strong {
+  color: #343a40;
+  font-size: 1rem;
+  margin-right: 0.25rem;
+}
+
+.citas-resumen span {
+  color: #6c757d;
+  font-size: 0.86rem;
+}
+
+/* =========================================================
+   TARJETA DE CITA
+   ========================================================= */
+
+.cita-card {
+  height: 100%;
+  background: #ffffff;
+  border: 1px solid #e8eaed;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.045);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.cita-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  border-color: rgba(198, 0, 111, 0.2);
+}
+
+/* =========================================================
+   CABECERA DE TARJETA
+   ========================================================= */
+
+.cita-card-header {
+  padding: 1rem 1.1rem;
+  background: linear-gradient(
+    135deg,
+    #fff7fb,
+    #ffffff
+  );
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.cita-horario {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  min-width: 0;
+}
+
+.cita-horario > svg {
+  color: #c6006f;
+  font-size: 1.05rem;
+  margin-top: 0.18rem;
+  flex-shrink: 0;
+}
+
+.cita-horario strong {
+  display: block;
+  color: #343a40;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.cita-horario small {
+  display: block;
+  color: #777;
+  font-size: 0.76rem;
+  margin-top: 0.2rem;
+  text-transform: capitalize;
+}
+
+/* =========================================================
+   ESTADOS
+   ========================================================= */
+
+.cita-estado {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.32rem 0.65rem;
+  border-radius: 20px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.cita-estado.programada {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.cita-estado.confirmada {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.cita-estado.atendida {
+  background: #d4edda;
+  color: #155724;
+}
+
+.cita-estado.cancelada {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.cita-estado.no-asistio {
+  background: #e2e3e5;
+  color: #495057;
+}
+
+.cita-estado.pendiente {
+  background: #e9ecef;
+  color: #495057;
+}
+
+/* =========================================================
+   INFORMACIÓN DEL PACIENTE
+   ========================================================= */
+
+.cita-card-paciente {
+  padding: 1rem 1.1rem 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.cita-paciente-avatar {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 50%;
+  background: rgba(198, 0, 111, 0.1);
+  color: #c6006f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cita-paciente-info {
+  min-width: 0;
+}
+
+.cita-label {
+  display: block;
+  color: #8a8f94;
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.12rem;
+}
+
+.cita-paciente-info strong {
+  display: block;
+  color: #343a40;
+  font-size: 0.9rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cita-paciente-info small {
+  color: #888;
+  font-size: 0.73rem;
+}
+
+/* =========================================================
+   ESPECIALISTA
+   ========================================================= */
+
+.cita-card-especialista {
+  margin: 0 1.1rem;
+  padding: 0.75rem;
+  background: #f8f9fa;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.cita-info-icon {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #9063a6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.cita-card-especialista strong {
+  display: block;
+  color: #343a40;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.cita-card-especialista small {
+  display: block;
+  color: #9063a6;
+  font-size: 0.72rem;
+  margin-top: 0.1rem;
+}
+
+/* =========================================================
+   MOTIVO
+   ========================================================= */
+
+.cita-card-motivo {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.9rem 1.1rem 0.65rem;
+}
+
+.cita-card-motivo .cita-info-icon {
+  color: #00a89c;
+  flex-shrink: 0;
+}
+
+.cita-card-motivo p {
+  margin: 0.15rem 0 0;
+  color: #666;
+  font-size: 0.78rem;
+  line-height: 1.45;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* =========================================================
+   TIPO DE CONSULTA
+   ========================================================= */
+
+.cita-tipo-consulta {
+  margin: 0 1.1rem 0.85rem;
+  padding: 0.45rem 0.7rem;
+  border-radius: 7px;
+  background: rgba(0, 168, 156, 0.08);
+  color: #008f84;
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 0.45rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+/* =========================================================
+   FOOTER / ACCIONES
+   ========================================================= */
+
+.cita-card-footer {
+  margin-top: auto;
+  padding: 0.8rem 1.1rem;
+  border-top: 1px solid #eeeeee;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cita-action-btn {
+  border: 1px solid #e4e6e8;
+  color: #555;
+  background: #ffffff;
+  border-radius: 7px;
+  font-size: 0.75rem;
+  padding: 0.4rem 0.65rem;
+  transition: all 0.2s ease;
+}
+
+.cita-action-btn:hover {
+  color: #c6006f;
+  border-color: rgba(198, 0, 111, 0.3);
+  background: rgba(198, 0, 111, 0.04);
+}
+
+.cita-action-btn svg {
+  margin-right: 0.3rem;
+}
+
+.cita-more-btn {
+  margin-left: auto;
+  padding-left: 0.55rem;
+  padding-right: 0.55rem;
+}
+
+.cita-more-btn svg {
+  margin-right: 0;
+}
+
+/* =========================================================
+   PAGINACIÓN
+   ========================================================= */
+
+.cita-paginacion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  padding: 1rem 0 0.5rem;
+}
+
+.cita-paginacion button {
+  border-radius: 8px;
+  font-size: 0.8rem;
+  min-width: 105px;
+}
+
+.cita-paginacion-info {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #6c757d;
+  font-size: 0.82rem;
+}
+
+.cita-paginacion-info strong {
+  color: #343a40;
+}
+
+/* =========================================================
+   CARGANDO
+   ========================================================= */
+
+.citas-loading {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+  color: #777;
+}
+
+.citas-loading .spinner-border {
+  color: #c6006f;
+  width: 2.3rem;
+  height: 2.3rem;
+}
+
+.citas-loading p {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+/* =========================================================
+   SIN RESULTADOS
+   ========================================================= */
+
+.citas-empty {
+  min-height: 320px;
+  margin-top: 1.5rem;
+  background: #ffffff;
+  border: 1px dashed #dfe2e5;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.citas-empty-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(198, 0, 111, 0.08);
+  color: #c6006f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.citas-empty h4 {
+  margin: 0 0 0.4rem;
+  color: #343a40;
+  font-size: 1.05rem;
+}
+
+.citas-empty p {
+  max-width: 420px;
+  margin: 0 0 1.2rem;
+  color: #7a7f83;
+  font-size: 0.84rem;
+}
+
+/* =========================================================
+   BOTÓN MILÁN
+   ========================================================= */
+
+.btn-milan-primary {
+  background: #c6006f;
+  border-color: #c6006f;
+  color: #ffffff;
+}
+
+.btn-milan-primary:hover,
+.btn-milan-primary:focus {
+  background: #a90060;
+  border-color: #a90060;
+  color: #ffffff;
+}
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+
+  .citas-header {
+    padding: 1.3rem 0;
+  }
+
+  .citas-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .cita-filtros {
+    padding: 1rem;
+  }
+
+  .cita-card-header {
+    padding: 0.9rem;
+  }
+
+}
+
+/* =========================================================
+   RESPONSIVE - MÓVIL
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+  .citas-header {
+    padding: 1.1rem 0;
+  }
+
+  .citas-header-icon {
+    width: 46px;
+    height: 46px;
+    min-width: 46px;
+    font-size: 1.2rem;
+  }
+
+  .citas-header h2 {
+    font-size: 1.35rem;
+  }
+
+  .citas-header p {
+    font-size: 0.78rem;
+  }
+
+  .citas-header .btn-milan-primary {
+    width: 100%;
+  }
+
+  .cita-filtros-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .cita-limpiar-btn {
+    width: 100%;
+  }
+
+  .citas-resumen {
+    width: 100%;
+  }
+
+  .cita-card {
+    border-radius: 13px;
+  }
+
+  .cita-paginacion {
+    gap: 0.6rem;
+  }
+
+  .cita-paginacion button {
+    min-width: auto;
+    padding: 0.45rem 0.65rem;
+  }
+
+  .cita-paginacion-info {
+    font-size: 0.75rem;
+  }
+
+}
+
+/* =========================================================
+   MÓVILES PEQUEÑOS
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+  .cita-card-header {
+    flex-direction: column;
+  }
+
+  .cita-estado {
+    align-self: flex-start;
+  }
+
+  .cita-card-footer {
+    flex-wrap: wrap;
+  }
+
+  .cita-action-btn span {
+    display: none;
+  }
+
+  .cita-action-btn svg {
+    margin-right: 0;
+  }
+
+  .cita-more-btn {
+    margin-left: auto;
+  }
+
+  .cita-paginacion {
+    justify-content: space-between;
+  }
+
+  .cita-paginacion-info span:first-child,
+  .cita-paginacion-info span:last-child {
+    display: none;
+  }
+
+}
+
+/* =========================================================
+   DETALLE DE CITA
+   ========================================================= */
+
+.cita-detalle-overlay {
+  background: rgba(0, 0, 0, 0.48);
+  z-index: 1060;
+}
+
+.cita-detalle-modal {
+  border: none;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.2);
+}
+
+/* HEADER */
+
+.cita-detalle-header {
+  background: linear-gradient(
+    135deg,
+    #c6006f,
+    #a90060
+  );
+  color: #ffffff;
+  border-bottom: none;
+  padding: 1.1rem 1.25rem;
+}
+
+.cita-detalle-header-icon {
+  width: 43px;
+  height: 43px;
+  min-width: 43px;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cita-detalle-header .modal-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.cita-detalle-header small {
+  font-size: 0.74rem;
+  opacity: 0.85;
+}
+
+.cita-detalle-close {
+  color: #ffffff;
+  font-size: 1rem;
+  border: none;
+  opacity: 0.85;
+}
+
+.cita-detalle-close:hover {
+  color: #ffffff;
+  opacity: 1;
+}
+
+/* RESUMEN */
+
+.cita-detalle-resumen {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem;
+  background: #fff8fc;
+  border: 1px solid #f5dce9;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.cita-detalle-fecha,
+.cita-detalle-hora {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-width: 0;
+}
+
+.cita-detalle-icon {
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  border-radius: 9px;
+  background: rgba(198, 0, 111, 0.1);
+  color: #c6006f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cita-detalle-label {
+  display: block;
+  color: #888;
+  font-size: 0.67rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.cita-detalle-fecha strong,
+.cita-detalle-hora strong {
+  display: block;
+  color: #343a40;
+  font-size: 0.82rem;
+  margin-top: 0.12rem;
+}
+
+.cita-detalle-estado {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0.7rem;
+  border-radius: 20px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.cita-detalle-estado.programada {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.cita-detalle-estado.confirmada {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.cita-detalle-estado.atendida {
+  background: #d4edda;
+  color: #155724;
+}
+
+.cita-detalle-estado.cancelada {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.cita-detalle-estado.no-asistio {
+  background: #e2e3e5;
+  color: #495057;
+}
+
+.cita-detalle-estado.pendiente {
+  background: #e9ecef;
+  color: #495057;
+}
+
+/* SECCIONES */
+
+.cita-detalle-section {
+  padding-bottom: 1.4rem;
+  margin-bottom: 1.4rem;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.cita-detalle-section:last-of-type {
+  margin-bottom: 1rem;
+}
+
+.cita-detalle-section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: #c6006f;
+  font-size: 0.86rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.cita-detalle-section-title svg {
+  font-size: 0.85rem;
+}
+
+/* PACIENTE */
+
+.cita-detalle-paciente {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.cita-detalle-avatar {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 50%;
+  background: rgba(198, 0, 111, 0.1);
+  color: #c6006f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cita-detalle-paciente-main h5 {
+  margin: 0 0 0.25rem;
+  font-size: 0.95rem;
+  color: #343a40;
+}
+
+.cita-detalle-expediente {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #777;
+  font-size: 0.73rem;
+}
+
+/* ESPECIALISTA */
+
+.cita-detalle-especialista {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.cita-detalle-especialista-icon {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #9063a6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+}
+
+.cita-detalle-especialista h5 {
+  margin: 0 0 0.15rem;
+  font-size: 0.88rem;
+  color: #343a40;
+}
+
+.cita-detalle-especialista span {
+  color: #9063a6;
+  font-size: 0.74rem;
+}
+
+/* CONTACTO */
+
+.cita-detalle-contacto {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.7rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.cita-detalle-contacto > svg {
+  color: #00a89c;
+  font-size: 0.85rem;
+}
+
+.cita-detalle-contacto span {
+  display: block;
+  color: #888;
+  font-size: 0.67rem;
+}
+
+.cita-detalle-contacto strong {
+  display: block;
+  color: #343a40;
+  font-size: 0.76rem;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+/* DATOS DE CONSULTA */
+
+.cita-detalle-dato {
+  padding: 0.75rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.cita-detalle-dato > span {
+  display: block;
+  color: #888;
+  font-size: 0.67rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.cita-detalle-dato strong {
+  color: #343a40;
+  font-size: 0.8rem;
+}
+
+.cita-detalle-dato svg {
+  color: #00a89c;
+  font-size: 0.8rem;
+}
+
+.cita-detalle-dato p {
+  margin: 0;
+  color: #666;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+/* IDENTIFICADOR */
+
+.cita-detalle-identificador {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.75rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.cita-detalle-identificador > svg {
+  color: #00a89c;
+}
+
+.cita-detalle-identificador span {
+  display: block;
+  color: #888;
+  font-size: 0.65rem;
+}
+
+.cita-detalle-identificador strong {
+  display: block;
+  color: #555;
+  font-size: 0.68rem;
+  word-break: break-all;
+}
+
+/* FOOTER */
+
+.cita-detalle-footer {
+  background: #fafafa;
+  border-top: 1px solid #eeeeee;
+}
+
+.cita-detalle-footer .btn {
+  border-radius: 8px;
+  font-size: 0.8rem;
+  padding: 0.5rem 1rem;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 767.98px) {
+
+  .cita-detalle-modal {
+    margin: 0.75rem;
+  }
+
+  .cita-detalle-resumen {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.9rem;
+  }
+
+  .cita-detalle-estado {
+    margin-left: 0;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .cita-detalle-modal {
+    margin: 0;
+    border-radius: 12px;
+  }
+
+  .cita-detalle-header {
+    padding: 0.9rem;
+  }
+
+  .cita-detalle-header-icon {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+  }
+
+  .cita-detalle-header .modal-title {
+    font-size: 0.92rem;
+  }
+
+  .cita-detalle-header small {
+    display: none;
+  }
+
+}

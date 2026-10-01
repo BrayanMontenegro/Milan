@@ -1,0 +1,1452 @@
+/* =========================================================
+   CREAR CITA - CLÍNICA MILÁN
+   ========================================================= */
+
+.crear-cita-container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 24px;
+  background: #f7f8fa;
+  color: #333;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.crear-cita-header {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-bottom: 24px;
+}
+
+.crear-cita-btn-regresar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border: 1px solid #dddddd;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #555555;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.crear-cita-btn-regresar:hover:not(:disabled) {
+  color: #c6006f;
+  border-color: #c6006f;
+  background: #fff8fc;
+}
+
+.crear-cita-btn-regresar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.crear-cita-titulo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.crear-cita-icono {
+  width: 50px;
+  height: 50px;
+  min-width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 13px;
+  background: rgba(198, 0, 111, 0.1);
+  color: #c6006f;
+  font-size: 21px;
+}
+
+.crear-cita-titulo h1 {
+  margin: 0;
+  color: #002855;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.crear-cita-titulo p {
+  margin: 4px 0 0;
+  color: #777777;
+  font-size: 13px;
+}
+
+/* =========================================================
+   PASOS
+   ========================================================= */
+
+.crear-cita-pasos {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 18px 22px;
+  margin-bottom: 22px;
+  background: #ffffff;
+  border: 1px solid #eeeeee;
+  border-radius: 14px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+}
+
+.crear-cita-paso {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  opacity: 0.55;
+  transition: all 0.25s ease;
+}
+
+.crear-cita-paso.completado {
+  opacity: 1;
+}
+
+.crear-cita-paso-icono {
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #eeeeee;
+  color: #777777;
+  font-size: 14px;
+  transition: all 0.25s ease;
+}
+
+.crear-cita-paso.completado .crear-cita-paso-icono {
+  background: #c6006f;
+  color: #ffffff;
+}
+
+.crear-cita-paso-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.crear-cita-paso-info span {
+  color: #999999;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.crear-cita-paso-info strong {
+  color: #002855;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.crear-cita-paso-linea {
+  flex: 1;
+  height: 2px;
+  min-width: 25px;
+  margin: 0 16px;
+  background: #eeeeee;
+}
+
+/* =========================================================
+   LAYOUT PRINCIPAL
+   ========================================================= */
+
+.crear-cita-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  align-items: start;
+  gap: 22px;
+}
+
+.crear-cita-contenido {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* =========================================================
+   SECCIONES
+   ========================================================= */
+
+.crear-cita-seccion {
+  padding: 22px;
+  background: #ffffff;
+  border: 1px solid #eeeeee;
+  border-radius: 15px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.035);
+}
+
+.crear-cita-seccion-header {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 20px;
+}
+
+.crear-cita-seccion-header h2 {
+  margin: 0;
+  color: #002855;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.crear-cita-seccion-header p {
+  margin: 3px 0 0;
+  color: #888888;
+  font-size: 12px;
+}
+
+.crear-cita-seccion-icono {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+  font-size: 17px;
+}
+
+/* Colores institucionales */
+
+.crear-cita-seccion-icono.paciente {
+  background: rgba(144, 99, 166, 0.12);
+  color: #9063a6;
+}
+
+.crear-cita-seccion-icono.especialidad {
+  background: rgba(242, 193, 0, 0.13);
+  color: #c49b00;
+}
+
+.crear-cita-seccion-icono.especialista {
+  background: rgba(0, 168, 156, 0.12);
+  color: #00a89c;
+}
+
+.crear-cita-seccion-icono.horario {
+  background: rgba(198, 0, 111, 0.1);
+  color: #c6006f;
+}
+
+.crear-cita-seccion-icono.formulario {
+  background: rgba(0, 40, 85, 0.08);
+  color: #002855;
+}
+
+/* =========================================================
+   BLOQUEO / ESTADO VACÍO
+   ========================================================= */
+
+.crear-cita-bloqueo {
+  min-height: 135px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 25px;
+  border: 1px dashed #d8d8d8;
+  border-radius: 12px;
+  background: #fafafa;
+  text-align: center;
+}
+
+.crear-cita-bloqueo > svg {
+  margin-bottom: 3px;
+  color: #aaaaaa;
+  font-size: 23px;
+}
+
+.crear-cita-bloqueo strong {
+  color: #666666;
+  font-size: 13px;
+}
+
+.crear-cita-bloqueo span {
+  max-width: 400px;
+  color: #999999;
+  font-size: 12px;
+}
+
+/* =========================================================
+   PLACEHOLDER GENERAL
+   ========================================================= */
+
+.crear-cita-placeholder {
+  min-height: 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 25px;
+  border: 1px dashed #dddddd;
+  border-radius: 12px;
+  background: #fafafa;
+  text-align: center;
+}
+
+.crear-cita-placeholder > svg {
+  color: #c6006f;
+  font-size: 24px;
+}
+
+.crear-cita-placeholder strong {
+  color: #555555;
+  font-size: 14px;
+}
+
+.crear-cita-placeholder span {
+  color: #999999;
+  font-size: 12px;
+}
+
+/* =========================================================
+   PACIENTE SELECTOR
+   ========================================================= */
+
+.cita-paciente-selector {
+  position: relative;
+  width: 100%;
+}
+
+.cita-paciente-buscador {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.cita-paciente-buscador > svg {
+  position: absolute;
+  left: 14px;
+  z-index: 2;
+  color: #999999;
+  font-size: 14px;
+}
+
+.cita-paciente-buscador .form-control {
+  height: 46px;
+  padding: 9px 42px 9px 39px;
+  border: 1px solid #dddddd;
+  border-radius: 10px;
+  font-size: 13px;
+  box-shadow: none;
+}
+
+.cita-paciente-buscador .form-control:focus {
+  border-color: #c6006f;
+  box-shadow: 0 0 0 3px rgba(198, 0, 111, 0.08);
+}
+
+.cita-buscador-limpiar {
+  position: absolute;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #999999;
+  cursor: pointer;
+}
+
+.cita-buscador-limpiar:hover {
+  background: #f1f1f1;
+  color: #555555;
+}
+
+/* Resultados */
+
+.cita-paciente-resultados {
+  position: relative;
+  z-index: 10;
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 8px;
+  border: 1px solid #eeeeee;
+  border-radius: 11px;
+  background: #ffffff;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.09);
+}
+
+.cita-paciente-resultado {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: none;
+  border-bottom: 1px solid #f1f1f1;
+  background: #ffffff;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.cita-paciente-resultado:last-child {
+  border-bottom: none;
+}
+
+.cita-paciente-resultado:hover {
+  background: #fff7fb;
+}
+
+.cita-paciente-resultado-icono {
+  width: 37px;
+  height: 37px;
+  min-width: 37px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  background: rgba(198, 0, 111, 0.09);
+  color: #c6006f;
+}
+
+.cita-paciente-resultado-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cita-paciente-resultado-info strong {
+  color: #333333;
+  font-size: 13px;
+}
+
+.cita-paciente-resultado-info span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #888888;
+  font-size: 11px;
+}
+
+.cita-paciente-resultado-info span svg {
+  color: #c6006f;
+}
+
+/* Paciente seleccionado */
+
+.cita-paciente-seleccionado {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 13px 15px;
+  border: 1px solid rgba(0, 168, 156, 0.25);
+  border-radius: 11px;
+  background: rgba(0, 168, 156, 0.045);
+}
+
+.cita-paciente-avatar {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+  background: rgba(0, 168, 156, 0.12);
+  color: #00a89c;
+}
+
+.cita-paciente-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
+}
+
+.cita-paciente-info strong {
+  color: #002855;
+  font-size: 14px;
+}
+
+.cita-paciente-info span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #777777;
+  font-size: 11px;
+}
+
+.cita-paciente-info span svg {
+  color: #00a89c;
+}
+
+.cita-paciente-check {
+  color: #00a89c;
+  font-size: 19px;
+}
+
+.cita-paciente-quitar {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #999999;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cita-paciente-quitar:hover {
+  color: #c6006f;
+  background: #fff0f7;
+}
+
+/* =========================================================
+   SELECTORES DE ESPECIALIDAD
+   ========================================================= */
+
+.cita-especialidades-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.cita-especialidad-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-height: 72px;
+  padding: 12px;
+  border: 1px solid #e5e5e5;
+  border-radius: 11px;
+  background: #ffffff;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cita-especialidad-card:hover {
+  border-color: #f2c100;
+  background: #fffdf4;
+}
+
+.cita-especialidad-card.seleccionada {
+  border-color: #f2c100;
+  background: rgba(242, 193, 0, 0.07);
+  box-shadow: 0 0 0 2px rgba(242, 193, 0, 0.08);
+}
+
+.cita-especialidad-icono {
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  background: rgba(242, 193, 0, 0.12);
+  color: #c49b00;
+}
+
+.cita-especialidad-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.cita-especialidad-info strong {
+  color: #002855;
+  font-size: 13px;
+}
+
+.cita-especialidad-info span {
+  overflow: hidden;
+  color: #888888;
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cita-especialidad-check {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #c49b00;
+  font-size: 14px;
+}
+
+/* =========================================================
+   ESPECIALISTAS
+   ========================================================= */
+
+.cita-especialistas-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.cita-especialista-card {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  background: #ffffff;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cita-especialista-card:hover {
+  border-color: #00a89c;
+  background: #fbfffe;
+  transform: translateY(-1px);
+}
+
+.cita-especialista-card.seleccionado {
+  border-color: #00a89c;
+  background: rgba(0, 168, 156, 0.045);
+  box-shadow: 0 0 0 2px rgba(0, 168, 156, 0.08);
+}
+
+.cita-especialista-avatar {
+  width: 45px;
+  height: 45px;
+  min-width: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+  background: rgba(0, 168, 156, 0.11);
+  color: #00a89c;
+  font-size: 19px;
+}
+
+.cita-especialista-contenido {
+  flex: 1;
+  min-width: 0;
+}
+
+.cita-especialista-nombre {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.cita-especialista-nombre strong {
+  color: #002855;
+  font-size: 13px;
+}
+
+.cita-especialista-nombre > svg {
+  flex-shrink: 0;
+  color: #00a89c;
+  font-size: 15px;
+}
+
+.cita-especialista-codigo {
+  display: block;
+  margin-top: 3px;
+  color: #999999;
+  font-size: 10px;
+}
+
+.cita-especialista-datos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 14px;
+  margin-top: 9px;
+}
+
+.cita-especialista-datos span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #777777;
+  font-size: 10px;
+}
+
+.cita-especialista-datos svg {
+  color: #00a89c;
+}
+
+.cita-especialista-cola {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 9px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: #f5f5f5;
+  color: #777777;
+  font-size: 10px;
+}
+
+.cita-especialista-cola svg {
+  color: #9063a6;
+}
+
+/* =========================================================
+   CALENDARIO
+   ========================================================= */
+
+.crear-cita-calendario-wrapper {
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.cita-calendario {
+  width: 100%;
+  padding: 16px;
+  border: 1px solid #eeeeee;
+  border-radius: 13px;
+  background: #ffffff;
+}
+
+.cita-calendario-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.cita-calendario-header > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #002855;
+}
+
+.cita-calendario-header > div svg {
+  color: #c6006f;
+}
+
+.cita-calendario-header strong {
+  font-size: 14px;
+}
+
+.cita-calendario-nav {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 8px;
+  background: #f5f5f5;
+  color: #666666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cita-calendario-nav:hover {
+  background: rgba(198, 0, 111, 0.09);
+  color: #c6006f;
+}
+
+.cita-calendario-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.cita-calendario-dia-nombre {
+  padding: 6px 2px;
+  color: #999999;
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.cita-calendario-dia {
+  position: relative;
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #777777;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cita-calendario-dia:hover:not(:disabled) {
+  border-color: #c6006f;
+  background: #fff8fc;
+  color: #c6006f;
+}
+
+.cita-calendario-dia i {
+  position: absolute;
+  bottom: 5px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #00a89c;
+}
+
+.cita-calendario-dia.seleccionado {
+  background: #c6006f;
+  color: #ffffff;
+}
+
+.cita-calendario-dia.seleccionado i {
+  background: #ffffff;
+}
+
+.cita-calendario-dia.sin-horario {
+  color: #cccccc;
+  cursor: not-allowed;
+}
+
+.cita-calendario-dia.deshabilitado {
+  color: #dddddd;
+  cursor: not-allowed;
+}
+
+.cita-calendario-dia.vacio {
+  pointer-events: none;
+}
+
+.cita-calendario-leyenda {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 13px;
+  padding-top: 11px;
+  border-top: 1px solid #eeeeee;
+}
+
+.cita-calendario-leyenda span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #888888;
+  font-size: 10px;
+}
+
+.cita-calendario-leyenda i {
+  width: 7px;
+  height: 7px;
+  display: block;
+  border-radius: 50%;
+}
+
+.cita-calendario-leyenda i.disponible {
+  background: #00a89c;
+}
+
+.cita-calendario-leyenda i.seleccionado {
+  background: #c6006f;
+}
+
+/* =========================================================
+   HORARIOS
+   ========================================================= */
+
+.crear-cita-horarios-wrapper {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #eeeeee;
+}
+
+.crear-cita-subtitulo {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 13px;
+}
+
+.crear-cita-subtitulo > svg {
+  color: #c6006f;
+}
+
+.crear-cita-subtitulo div {
+  display: flex;
+  flex-direction: column;
+}
+
+.crear-cita-subtitulo strong {
+  color: #002855;
+  font-size: 13px;
+}
+
+.crear-cita-subtitulo span {
+  margin-top: 2px;
+  color: #999999;
+  font-size: 11px;
+}
+
+.cita-horarios-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.cita-horario-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 58px;
+  padding: 8px 10px;
+  border: 1px solid #dddddd;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #666666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cita-horario-card:hover {
+  border-color: #c6006f;
+  background: #fff8fc;
+  color: #c6006f;
+}
+
+.cita-horario-card.seleccionado {
+  border-color: #c6006f;
+  background: #c6006f;
+  color: #ffffff;
+}
+
+.cita-horario-card > svg:first-child {
+  font-size: 13px;
+}
+
+.cita-horario-card > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.cita-horario-card strong {
+  font-size: 12px;
+}
+
+.cita-horario-card span {
+  font-size: 9px;
+  opacity: 0.75;
+}
+
+.cita-horario-card small {
+  position: absolute;
+  bottom: 3px;
+  right: 5px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 7px;
+}
+
+.cita-horario-check {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 10px;
+}
+
+/* =========================================================
+   FORMULARIO
+   ========================================================= */
+
+.cita-form .form-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 7px;
+  color: #002855;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.cita-form .form-label svg {
+  color: #c6006f;
+}
+
+.cita-form .form-control,
+.cita-form .form-select {
+  border-color: #dddddd;
+  border-radius: 9px;
+  font-size: 13px;
+  box-shadow: none;
+}
+
+.cita-form .form-control:focus,
+.cita-form .form-select:focus {
+  border-color: #c6006f;
+  box-shadow: 0 0 0 3px rgba(198, 0, 111, 0.08);
+}
+
+.cita-form textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+/* =========================================================
+   ESTADOS GENERALES DE SELECTORES
+   ========================================================= */
+
+.cita-selector-cargando {
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  color: #777777;
+  font-size: 12px;
+}
+
+.cita-selector-cargando .spinner-border {
+  color: #c6006f;
+}
+
+.cita-selector-vacio {
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 20px;
+  border: 1px dashed #dddddd;
+  border-radius: 11px;
+  background: #fafafa;
+  text-align: center;
+}
+
+.cita-selector-vacio > svg {
+  margin-bottom: 3px;
+  color: #aaaaaa;
+  font-size: 22px;
+}
+
+.cita-selector-vacio strong {
+  color: #666666;
+  font-size: 13px;
+}
+
+.cita-selector-vacio span {
+  color: #999999;
+  font-size: 11px;
+}
+
+/* =========================================================
+   RESUMEN LATERAL
+   ========================================================= */
+
+.crear-cita-resumen {
+  position: sticky;
+  top: 20px;
+  overflow: hidden;
+  border: 1px solid #eeeeee;
+  border-radius: 15px;
+  background: #ffffff;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+}
+
+.crear-cita-resumen-header {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 18px;
+  border-bottom: 1px solid #eeeeee;
+  background: #fffafd;
+}
+
+.crear-cita-resumen-header > svg {
+  color: #c6006f;
+  font-size: 20px;
+}
+
+.crear-cita-resumen-header h3 {
+  margin: 0;
+  color: #002855;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.crear-cita-resumen-header span {
+  display: block;
+  margin-top: 2px;
+  color: #999999;
+  font-size: 10px;
+}
+
+.crear-cita-resumen-body {
+  padding: 5px 18px;
+}
+
+.crear-cita-resumen-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.crear-cita-resumen-item:last-child {
+  border-bottom: none;
+}
+
+.crear-cita-resumen-item > span {
+  color: #999999;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.crear-cita-resumen-item strong {
+  color: #333333;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.crear-cita-resumen-item small {
+  color: #c6006f;
+  font-size: 10px;
+}
+
+.crear-cita-resumen-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 15px 18px;
+  border-top: 1px solid #eeeeee;
+  background: #fafafa;
+}
+
+.crear-cita-resumen-footer .btn {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border-radius: 9px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.crear-cita-resumen-footer .btn-light {
+  border: 1px solid #dddddd;
+  background: #ffffff;
+  color: #666666;
+}
+
+.crear-cita-resumen-footer .btn-light:hover {
+  background: #f4f4f4;
+}
+
+.crear-cita-resumen-footer .btn-primary {
+  border-color: #c6006f;
+  background: #c6006f;
+}
+
+.crear-cita-resumen-footer .btn-primary:hover:not(:disabled) {
+  border-color: #a9005e;
+  background: #a9005e;
+}
+
+.crear-cita-resumen-footer .btn-primary:disabled {
+  border-color: #dddddd;
+  background: #dddddd;
+  color: #999999;
+}
+
+.crear-cita-resumen-ayuda {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  padding: 11px 15px;
+  border-top: 1px solid #eeeeee;
+  background: #fffafd;
+  color: #999999;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.crear-cita-resumen-ayuda svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: #c6006f;
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+  .crear-cita-layout {
+    grid-template-columns: minmax(0, 1fr) 290px;
+  }
+
+  .cita-especialidades-grid,
+  .cita-especialistas-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cita-horarios-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+}
+
+/* =========================================================
+   TABLET PEQUEÑA
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .crear-cita-container {
+    padding: 18px;
+  }
+
+  .crear-cita-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .crear-cita-resumen {
+    position: static;
+    order: -1;
+  }
+
+  .crear-cita-resumen-body {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 20px;
+  }
+
+  .crear-cita-resumen-footer {
+    flex-direction: row;
+  }
+
+  .crear-cita-resumen-footer .btn {
+    flex: 1;
+  }
+
+}
+
+/* =========================================================
+   MÓVIL
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .crear-cita-container {
+    padding: 14px;
+  }
+
+  .crear-cita-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .crear-cita-btn-regresar {
+    align-self: flex-start;
+  }
+
+  .crear-cita-titulo {
+    gap: 10px;
+  }
+
+  .crear-cita-icono {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    font-size: 18px;
+  }
+
+  .crear-cita-titulo h1 {
+    font-size: 21px;
+  }
+
+  .crear-cita-titulo p {
+    font-size: 11px;
+  }
+
+  /* Pasos */
+
+  .crear-cita-pasos {
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding: 13px;
+    gap: 8px;
+  }
+
+  .crear-cita-paso-info {
+    display: none;
+  }
+
+  .crear-cita-paso-linea {
+    flex: 0 0 25px;
+    min-width: 25px;
+    margin: 0 3px;
+  }
+
+  .crear-cita-paso-icono {
+    width: 35px;
+    height: 35px;
+    min-width: 35px;
+  }
+
+  /* Secciones */
+
+  .crear-cita-seccion {
+    padding: 17px;
+    border-radius: 13px;
+  }
+
+  .crear-cita-seccion-header {
+    margin-bottom: 16px;
+  }
+
+  .crear-cita-seccion-header h2 {
+    font-size: 15px;
+  }
+
+  .crear-cita-seccion-header p {
+    font-size: 11px;
+  }
+
+  .crear-cita-seccion-icono {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    font-size: 15px;
+  }
+
+  /* Especialistas */
+
+  .cita-especialistas-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Calendario */
+
+  .cita-calendario {
+    padding: 11px;
+  }
+
+  .cita-calendario-dia {
+    min-height: 38px;
+  }
+
+  /* Horarios */
+
+  .cita-horarios-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Resumen */
+
+  .crear-cita-resumen-body {
+    grid-template-columns: 1fr;
+  }
+
+  .crear-cita-resumen-footer {
+    flex-direction: column;
+  }
+
+  .crear-cita-resumen-footer .btn {
+    width: 100%;
+  }
+
+}
+
+/* =========================================================
+   MÓVIL PEQUEÑO
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+  .crear-cita-container {
+    padding: 10px;
+  }
+
+  .crear-cita-seccion {
+    padding: 14px;
+  }
+
+  .crear-cita-pasos {
+    padding: 10px;
+  }
+
+  .crear-cita-paso-icono {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    font-size: 12px;
+  }
+
+  .cita-paciente-seleccionado {
+    padding: 10px;
+  }
+
+  .cita-paciente-avatar {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+  }
+
+  .cita-paciente-info strong {
+    font-size: 12px;
+  }
+
+  .cita-especialista-card {
+    padding: 12px;
+  }
+
+  .cita-especialista-avatar {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+  }
+
+  .cita-horario-card {
+    min-height: 54px;
+  }
+
+}
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+.cita-paciente-resultados::-webkit-scrollbar {
+  width: 5px;
+}
+
+.cita-paciente-resultados::-webkit-scrollbar-track {
+  background: #f5f5f5;
+}
+
+.cita-paciente-resultados::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: #cccccc;
+}
+
+.cita-paciente-resultados::-webkit-scrollbar-thumb:hover {
+  background: #aaaaaa;
+}

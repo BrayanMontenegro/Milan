@@ -1,5 +1,6 @@
 import React from "react";
 import { FaCalendarAlt, FaPlus } from "react-icons/fa";
+import "../../styles/Citas.css";
 
 const CitasHeader = ({ onNuevaCita }) => {
     return (
@@ -35,3 +36,4 @@ const CitasHeader = ({ onNuevaCita }) => {
         </div>
     );
 }
+export default CitasHeader;

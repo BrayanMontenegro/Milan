@@ -16,6 +16,8 @@ import Usuarios from "./views/Usuarios";
 import Pacientes from "./views/Pacientes";
 import Especialistas from "./views/Especialistas";
 import EspecialistaHorario from "./views/EspecialistaHorario";
+import CrearCita from "./views/CrearCita";
+import Citas from "./views/Citas";
 import Encabezado from "./components/Encabezado";
 import ProtectedRoute from "./assets/routes/ProtectedRoute";
 
@@ -83,12 +85,22 @@ const App = () => {
           />
 
           <Route
+            path="/crear-cita"
+            element={
+              <ProtectedRoute>
+                <div className="p-4">
+                  <CrearCita />
+                </div>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
             path="/citas"
             element={
               <ProtectedRoute>
                 <div className="p-4">
-                  <h2>Citas</h2>
-                  <p>Módulo en desarrollo.</p>
+                  <Citas />
                 </div>
               </ProtectedRoute>
             }

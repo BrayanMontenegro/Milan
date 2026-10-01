@@ -845,43 +845,39 @@ const Usuarios = () => {
         ====================================== */}
 
         <div className="usuarios-header">
-          <div>
-            <div className="usuarios-title">
-              <div className="usuarios-title-icon">
+          <div className="usuarios-header-content">
+            <div className="usuarios-header-title">
+              <div className="usuarios-header-icon">
                 <FiShield />
               </div>
 
               <div>
-                <h1>
-                  Usuarios
-                </h1>
-
+                <h2>Usuarios</h2>
                 <p>
-                  Administración de usuarios y
-                  permisos del sistema
+                  Administración de usuarios y permisos del sistema
                 </p>
               </div>
             </div>
-          </div>
 
-          <div className="usuarios-header-actions">
-            <Button
-              variant="light"
-              className="btn-refresh"
-              onClick={cargarDatos}
-              disabled={cargando}
-            >
-              <FiRefreshCw />
-              Actualizar
-            </Button>
+            <div className="usuarios-header-actions">
+              <Button
+                variant="light"
+                className="btn-refresh"
+                onClick={cargarDatos}
+                disabled={cargando}
+              >
+                <FiRefreshCw />
+                Actualizar
+              </Button>
 
-            <Button
-              className="btn-primary-custom"
-              onClick={abrirModalCrear}
-            >
-              <FiPlus />
-              Nuevo usuario
-            </Button>
+              <Button
+                className="btn-primary-custom"
+                onClick={abrirModalCrear}
+              >
+                <FiPlus />
+                Nuevo usuario
+              </Button>
+            </div>
           </div>
         </div>
 
