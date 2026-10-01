@@ -142,6 +142,18 @@ const App = () => {
           />
 
           <Route
+            path="/especialidades"
+            element={
+              <ProtectedRoute>
+                <div className="p-4">
+                  <h2>Especialidades</h2>
+                  <p>Módulo en desarrollo.</p>
+                </div>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
             path="/expedientes"
             element={
               <ProtectedRoute>
