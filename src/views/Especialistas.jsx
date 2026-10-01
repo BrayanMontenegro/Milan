@@ -13,7 +13,7 @@ import EspecialistaCard from "../components/especialistas/EspecialistaCard";
 import EspecialistaDetalle from "../components/especialistas/EspecialistaDetalle";
 import EspecialistaModal from "../components/especialistas/EspecialistaModal";
 
-import "../styles/especialistas.css";
+import "../styles/Especialistas.css";
 
 // =========================================================
 // FORMULARIO INICIAL

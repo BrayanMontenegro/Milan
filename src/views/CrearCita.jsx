@@ -14,12 +14,12 @@ import { toast } from "react-toastify";
 
 import { supabase } from "../database/supabase";
 
-import CitaPacienteSelector from "../components/citas/crear/CitaPacienteSelector";
-import CitaEspecialidadSelector from "../components/citas/crear/CitaEspecialidadSelector";
-import CitaEspecialistasDisponibles from "../components/citas/crear/CitaEspecialistasDisponibles";
-import CitaCalendario from "../components/citas/crear/CitaCalendario";
-import CitaHorariosDisponibles from "../components/citas/crear/CitaHorariosDisponibles";
-import CitaForm from "../components/citas/crear/CitaForm";
+import CitaPacienteSelector from "../components/Citas/crear/CitaPacienteSelector";
+import CitaEspecialidadSelector from "../components/Citas/crear/CitaEspecialidadSelector";
+import CitaEspecialistasDisponibles from "../components/Citas/crear/CitaEspecialistasDisponibles";
+import CitaCalendario from "../components/Citas/crear/CitaCalendario";
+import CitaHorariosDisponibles from "../components/Citas/crear/CitaHorariosDisponibles";
+import CitaForm from "../components/Citas/crear/CitaForm";
 
 import "../styles/CrearCita.css";
 

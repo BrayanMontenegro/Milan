@@ -4,15 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { FaCalendarCheck, FaExclamationTriangle } from "react-icons/fa";
 import { supabase } from "../database/supabase";
 
-import CitasHeader from "../components/citas/CitasHeader";
-import CitaFiltros from "../components/citas/CitaFiltros";
-import CitaCard from "../components/citas/CitaCard";
-import CitaPaginacion from "../components/citas/CitaPaginacion";
+import CitasHeader from "../components/Citas/CitasHeader";
+import CitaFiltros from "../components/Citas/CitaFiltros";
+import CitaCard from "../components/Citas/CitaCard";
+import CitaPaginacion from "../components/Citas/CitaPaginacion";
 
 // Si todavía no tienes estos componentes,
 // puedes comentar temporalmente sus imports.
-import CitaDetalle from "../components/citas/CitaDetalles";
-import CitaModal from "../components/citas/CitaModal";
+import CitaDetalle from "../components/Citas/CitaDetalles";
+import CitaModal from "../components/Citas/CitaModal";
 
 import "../styles/Citas.css";
 

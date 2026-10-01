@@ -6,7 +6,7 @@ import {
   FaStethoscope,
   FaTimes,
 } from "react-icons/fa";
-import "../../styles/especialistas.css";
+import "../../styles/Especialistas.css";
 
 const EspecialidadSelector = ({
   especialidades = [],
