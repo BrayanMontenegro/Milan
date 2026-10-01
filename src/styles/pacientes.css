@@ -7,6 +7,9 @@
   --milan-blue: #002855;
   --milan-blue-light: #164777;
 
+  --milan-green-dark: #003d21;
+  --milan-green: #047142;
+
   --milan-purple: #9063A6;
   --milan-purple-dark: #754B8B;
   --milan-purple-light: #F0EAF4;
@@ -42,52 +45,166 @@
 
 
 /* =========================================================
+    HEADER
+========================================================= */
+
+.pacientes-page {
+  min-height: 100vh;
+  background: var(--milan-background, #f7f8fc);
+  padding-bottom: 30px;
+}
+
+/* =========================================================
    HEADER
    ========================================================= */
-
 .pacientes-header {
+  padding: 24px;
   margin-bottom: 28px;
+  color: var(--milan-white);
+  background: linear-gradient(
+    135deg,
+    var(--milan-blue),
+    var(--milan-purple-dark)
+  );
+  border-radius: var(--milan-radius-sm);
+  box-shadow: var(--milan-shadow-sm);
+}
+
+.usuarios-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.pacientes-header-title {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .pacientes-header-icon {
-  width: 58px;
-  height: 58px;
-
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  border-radius: 15px;
-
-  color: white;
-
-  background:
-    linear-gradient(
-      135deg,
-      var(--milan-purple),
-      var(--milan-fuchsia)
-    );
-
-  font-size: 25px;
-
-  box-shadow:
-    0 7px 18px rgba(144, 99, 166, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 14px;
+  color: var(--milan-white);
+  background: rgba(255, 255, 255, 0.16);
+  font-size: 1.45rem;
 }
 
-.pacientes-title {
-  color: var(--milan-blue);
-
-  font-size: 28px;
-
+.pacientes-header h2 {
+  margin: 0;
+  color: var(--milan-white);
+  font-size: 1.65rem;
   font-weight: 700;
-
-  letter-spacing: -0.4px;
 }
 
-.pacientes-subtitle {
-  color: var(--milan-gray-dark);
+.pacientes-header p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.92rem;
+}
 
-  font-size: 14px;
+.pacientes-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pacientes-header .btn-refresh {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  color: var(--milan-blue);
+  font-weight: 600;
+  border-radius: 9px;
+  padding: 10px 16px;
+}
+
+/* =========================================================
+   BOTÓN PRINCIPAL
+   ========================================================= */
+
+.pacientes-header .btn-milan-primary {
+  background: var(--milan-blue, #007bff);
+  border: 1px solid var(--milan-blue, #007bff);
+  color: #ffffff;
+
+  font-weight: 600;
+  border-radius: 9px;
+
+  padding: 10px 18px;
+
+  transition: all 0.2s ease;
+}
+
+.pacientes-header .btn-milan-primary:hover {
+  background: #0056b3;
+  border-color: #0056b3;
+  color: #ffffff;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 4px 12px rgba(198, 0, 111, 0.25);
+}
+
+.pacientes-header .btn-milan-primary:active {
+  transform: translateY(0);
+}
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 991.98px) {
+  .pacientes-header {
+    padding: 23px 0;
+  }
+
+  .pacientes-header h2 {
+    font-size: 1.45rem;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE - TELÉFONO
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+  .pacientes-page {
+    padding-bottom: 20px;
+  }
+
+  .pacientes-header {
+    padding: 20px 0;
+    margin-bottom: 18px;
+  }
+
+  .pacientes-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .pacientes-header p {
+    font-size: 0.8rem;
+  }
+
+  .pacientes-header-icon {
+    width: 45px;
+    height: 45px;
+    min-width: 45px;
+    font-size: 1.25rem;
+  }
+
+  .pacientes-header .btn-milan-primary {
+    width: 100%;
+  }
 }
 
 
@@ -103,8 +220,8 @@
   background:
     linear-gradient(
       135deg,
-      var(--milan-fuchsia),
-      var(--milan-purple)
+      var(--milan-green),
+      var(--milan-green-dark)
     ) !important;
 
   border-radius: 10px !important;
@@ -1427,42 +1544,6 @@
 
   animation: procedenciaModalEntrada 0.25s ease;
 }
-
-
-/* =========================================================
-   HEADER
-========================================================= */
-
-.procedencia-modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  padding: 20px 22px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #9063a6 0%,
-      #7f5796 100%
-    );
-
-  color: white;
-}
-
-.procedencia-modal-header h5 {
-  margin: 0 0 4px;
-  font-size: 1.05rem;
-  font-weight: 600;
-  letter-spacing: 0.1px;
-}
-
-.procedencia-modal-header small {
-  display: block;
-  color: rgba(255, 255, 255, 0.82);
-  font-size: 0.78rem;
-}
-
 
 /* =========================================================
    BOTÓN CERRAR

@@ -1104,3 +1104,580 @@
   }
 
 }
+
+/* =========================================================
+   MODAL EDITAR CITA
+   ========================================================= */
+
+.cita-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1055;
+
+  background: rgba(0, 0, 0, 0.55);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+}
+
+/* CONTENEDOR DEL MODAL */
+
+.cita-modal {
+  width: 100%;
+  max-width: 850px;
+
+  height: auto;
+  max-height: calc(100vh - 40px);
+
+  background: #ffffff;
+
+  border-radius: 18px;
+
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.cita-modal-header {
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 20px 24px;
+
+  border-bottom: 1px solid #eeeeee;
+
+  background: #ffffff;
+}
+
+.cita-modal-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.cita-modal-header-icon {
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: rgba(198, 0, 111, 0.1);
+  color: #c6006f;
+
+  font-size: 20px;
+}
+
+.cita-modal-title h4 {
+  margin: 0;
+
+  font-size: 20px;
+  font-weight: 700;
+
+  color: #222222;
+}
+
+.cita-modal-title p {
+  margin: 3px 0 0;
+
+  font-size: 13px;
+  color: #777777;
+}
+
+.cita-modal-close {
+  width: 38px;
+  height: 38px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #f5f5f5;
+  color: #666666;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.cita-modal-close:hover {
+  background: #eeeeee;
+  color: #c6006f;
+}
+
+.cita-modal-close:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   INFORMACIÓN PACIENTE / ESPECIALISTA
+   ========================================================= */
+
+.cita-modal-paciente,
+.cita-modal-especialista {
+  flex-shrink: 0;
+
+  margin: 16px 24px 0;
+
+  padding: 14px 16px;
+
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+}
+
+.cita-modal-paciente {
+  background: rgba(198, 0, 111, 0.06);
+}
+
+.cita-modal-especialista {
+  background: rgba(144, 99, 166, 0.08);
+}
+
+.cita-modal-paciente-icon,
+.cita-modal-especialista-icon {
+  width: 42px;
+  height: 42px;
+
+  min-width: 42px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cita-modal-paciente-icon {
+  background: rgba(198, 0, 111, 0.12);
+  color: #c6006f;
+}
+
+.cita-modal-especialista-icon {
+  background: rgba(144, 99, 166, 0.15);
+  color: #9063a6;
+}
+
+.cita-modal-paciente span,
+.cita-modal-especialista span {
+  display: block;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  color: #777777;
+}
+
+.cita-modal-paciente strong,
+.cita-modal-especialista strong {
+  display: block;
+
+  font-size: 15px;
+
+  color: #333333;
+}
+
+.cita-modal-paciente small,
+.cita-modal-especialista small {
+  display: block;
+
+  margin-top: 2px;
+
+  font-size: 12px;
+
+  color: #777777;
+}
+
+/* =========================================================
+   FORMULARIO
+   ========================================================= */
+
+/*
+   ESTA PARTE ES IMPORTANTE:
+   El formulario ocupa el espacio disponible y el body
+   es el único elemento que hace scroll.
+*/
+
+.cita-modal > form {
+  display: flex;
+  flex-direction: column;
+
+  flex: 1 1 auto;
+
+  min-height: 0;
+}
+
+/* =========================================================
+   CUERPO DEL FORMULARIO
+   ========================================================= */
+
+.cita-modal-body {
+  padding: 20px 24px;
+
+  flex: 1 1 auto;
+
+  min-height: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Scroll */
+
+.cita-modal-body::-webkit-scrollbar {
+  width: 7px;
+}
+
+.cita-modal-body::-webkit-scrollbar-track {
+  background: #f5f5f5;
+
+  border-radius: 10px;
+}
+
+.cita-modal-body::-webkit-scrollbar-thumb {
+  background: #cccccc;
+
+  border-radius: 10px;
+}
+
+.cita-modal-body::-webkit-scrollbar-thumb:hover {
+  background: #aaaaaa;
+}
+
+/* Firefox */
+
+.cita-modal-body {
+  scrollbar-width: thin;
+  scrollbar-color: #cccccc #f5f5f5;
+}
+
+/* =========================================================
+   SECCIONES
+   ========================================================= */
+
+.cita-modal-section {
+  padding: 18px 0;
+
+  border-bottom: 1px solid #eeeeee;
+}
+
+.cita-modal-section:first-child {
+  padding-top: 0;
+}
+
+.cita-modal-section:last-child {
+  border-bottom: none;
+}
+
+.cita-modal-section-title {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  margin-bottom: 15px;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  color: #333333;
+}
+
+.cita-modal-section-title svg {
+  color: #c6006f;
+}
+
+/* =========================================================
+   CAMPOS
+   ========================================================= */
+
+.cita-modal .form-label {
+  margin-bottom: 6px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  color: #444444;
+}
+
+.cita-modal .form-control,
+.cita-modal .form-select {
+  min-height: 42px;
+
+  border: 1px solid #dddddd;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+
+  color: #333333;
+
+  transition: all 0.2s ease;
+}
+
+.cita-modal .form-control:focus,
+.cita-modal .form-select:focus {
+  border-color: #c6006f;
+
+  box-shadow: 0 0 0 0.2rem rgba(198, 0, 111, 0.1);
+}
+
+.cita-modal textarea.form-control {
+  min-height: 90px;
+
+  resize: vertical;
+}
+
+.cita-modal .input-group-text {
+  min-width: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f8f8f8;
+
+  border-color: #dddddd;
+
+  color: #c6006f;
+}
+
+.cita-modal .text-muted {
+  display: block;
+
+  margin-top: 5px;
+
+  font-size: 11px;
+
+  color: #777777 !important;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.cita-modal-footer {
+  flex-shrink: 0;
+
+  padding: 16px 24px;
+
+  border-top: 1px solid #eeeeee;
+
+  background: #fafafa;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+}
+
+/* BOTONES */
+
+.cita-modal-footer .btn {
+  min-height: 40px;
+
+  padding: 8px 18px;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  transition: all 0.2s ease;
+}
+
+/* CANCELAR */
+
+.cita-modal-footer .btn-outline-secondary {
+  background: #ffffff;
+
+  border-color: #d5d5d5;
+
+  color: #555555;
+}
+
+.cita-modal-footer .btn-outline-secondary:hover {
+  background: #f2f2f2;
+
+  border-color: #c5c5c5;
+}
+
+/* GUARDAR */
+
+.cita-modal-footer .btn-milan-primary {
+  background: #c6006f;
+
+  border-color: #c6006f;
+
+  color: #ffffff;
+}
+
+.cita-modal-footer .btn-milan-primary:hover {
+  background: #a9005e;
+
+  border-color: #a9005e;
+
+  color: #ffffff;
+}
+
+.cita-modal-footer .btn-milan-primary:disabled {
+  opacity: 0.7;
+
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   SPINNER
+   ========================================================= */
+
+.cita-modal-footer .spinner-border {
+  width: 15px;
+  height: 15px;
+
+  border-width: 2px;
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .cita-modal-overlay {
+    padding: 10px;
+  }
+
+  .cita-modal {
+    max-width: 100%;
+
+    height: calc(100vh - 20px);
+
+    max-height: calc(100vh - 20px);
+
+    border-radius: 14px;
+  }
+
+  .cita-modal-header {
+    padding: 16px;
+  }
+
+  .cita-modal-header-icon {
+    width: 40px;
+    height: 40px;
+
+    font-size: 17px;
+  }
+
+  .cita-modal-title {
+    gap: 10px;
+  }
+
+  .cita-modal-title h4 {
+    font-size: 17px;
+  }
+
+  .cita-modal-title p {
+    font-size: 11px;
+  }
+
+  .cita-modal-paciente,
+  .cita-modal-especialista {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+
+  .cita-modal-body {
+    padding: 16px;
+  }
+
+  .cita-modal-footer {
+    padding: 12px 16px;
+  }
+}
+
+/* =========================================================
+   MÓVIL
+   ========================================================= */
+
+@media (max-width: 576px) {
+
+  .cita-modal-title p {
+    display: none;
+  }
+
+  .cita-modal-title h4 {
+    font-size: 16px;
+  }
+
+  .cita-modal-paciente,
+  .cita-modal-especialista {
+    margin-top: 10px;
+
+    padding: 11px 12px;
+  }
+
+  .cita-modal-paciente-icon,
+  .cita-modal-especialista-icon {
+    width: 38px;
+    height: 38px;
+
+    min-width: 38px;
+  }
+
+  .cita-modal-paciente strong,
+  .cita-modal-especialista strong {
+    font-size: 14px;
+  }
+
+  .cita-modal-body {
+    padding: 14px;
+  }
+
+  .cita-modal-section {
+    padding: 15px 0;
+  }
+
+  .cita-modal-footer {
+    padding: 10px 14px;
+
+    flex-direction: column-reverse;
+
+    gap: 8px;
+  }
+
+  .cita-modal-footer .btn {
+    width: 100%;
+  }
+}

@@ -152,8 +152,8 @@
 
   background: linear-gradient(
     135deg,
-    var(--milan-fuchsia),
-    var(--milan-purple)
+    var(--milan-green),
+    var(--milan-green-dark)
   ) !important;
 
   border-radius: 10px !important;
