@@ -173,6 +173,7 @@ const Encabezado = () => {
       expand="lg"
       className="encabezado"
       sticky="top"
+      expanded={false}
     >
       <Container fluid className="px-3 px-lg-4">
 

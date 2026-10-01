@@ -263,52 +263,138 @@
 ========================================== */
 
 .encabezado-toggle {
+  display: none !important;
+
   border: none !important;
   box-shadow: none !important;
-  font-size: 24px;
+
   color: #4e5969;
-  padding: 5px;
+  background: transparent !important;
+
+  padding: 7px !important;
+  margin: 0;
+
+  font-size: 23px;
+
+  border-radius: 9px;
+
+  transition: all 0.2s ease;
 }
 
-.encabezado-toggle::after {
-  display: none;
+.encabezado-toggle:hover {
+  background: #f4f6f9 !important;
+  color: #0d6efd;
 }
+
+.encabezado-toggle:focus {
+  box-shadow: none !important;
+}
+
 
 /* ==========================================
    MOBILE OFFCANVAS
 ========================================== */
 
 .encabezado-mobile {
-  width: 285px !important;
+  width: min(320px, 88vw) !important;
+
+  border: none !important;
+
+  box-shadow: 10px 0 35px rgba(0, 0, 0, 0.12);
 }
 
 .encabezado-mobile .offcanvas-header {
+  min-height: 70px;
+
+  padding: 14px 17px;
+
+  background: #ffffff;
+
   border-bottom: 1px solid #edf0f4;
-  padding: 17px;
 }
+
+.encabezado-mobile .offcanvas-title {
+  width: 100%;
+}
+
+.encabezado-mobile .btn-close {
+  width: 32px;
+  height: 32px;
+
+  margin: 0;
+
+  border-radius: 8px;
+
+  opacity: 0.65;
+
+  transition: all 0.2s ease;
+}
+
+.encabezado-mobile .btn-close:hover {
+  background-color: #f3f5f8;
+
+  opacity: 1;
+}
+
+.encabezado-mobile .offcanvas-body {
+  padding: 14px;
+
+  background: #ffffff;
+
+  overflow-y: auto;
+}
+
+
+/* ==========================================
+   MARCA MOBILE
+========================================== */
 
 .mobile-brand {
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 10px;
+}
+
+.mobile-brand .logo-icon {
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  border-radius: 11px;
+
+  background: #0d6efd;
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 19px;
+  font-weight: 700;
 }
 
 .mobile-brand strong {
   display: block;
+
   color: #172033;
+
   font-size: 14px;
+  font-weight: 700;
+
+  line-height: 1.1;
 }
 
 .mobile-brand span {
   display: block;
+
   color: #8a94a7;
+
   font-size: 10px;
-  margin-top: 3px;
+
+  margin-top: 4px;
 }
 
-.encabezado-mobile .offcanvas-body {
-  padding: 15px;
-}
 
 /* ==========================================
    USUARIO MOBILE
@@ -317,23 +403,43 @@
 .mobile-user {
   display: flex;
   align-items: center;
+
   gap: 11px;
-  padding: 10px 8px 18px;
+
+  padding: 12px 8px 17px;
+
   border-bottom: 1px solid #edf0f4;
+}
+
+.mobile-user > div:last-child {
+  min-width: 0;
 }
 
 .mobile-user strong {
   display: block;
+
+  max-width: 205px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
   color: #273142;
+
   font-size: 13px;
+  font-weight: 600;
 }
 
 .mobile-user span {
   display: block;
+
   color: #8a94a7;
+
   font-size: 11px;
+
   margin-top: 4px;
 }
+
 
 /* ==========================================
    MENÚ MOBILE
@@ -341,43 +447,75 @@
 
 .mobile-menu {
   padding-top: 12px;
+
   display: flex;
   flex-direction: column;
+
   gap: 3px;
 }
 
 .mobile-menu-item {
   display: flex !important;
   align-items: center;
+
   gap: 11px;
+
+  width: 100%;
+
   padding: 11px 12px !important;
-  border-radius: 8px;
+
+  border-radius: 9px;
+
   color: #596476 !important;
+
   font-size: 13px;
   font-weight: 500;
+
+  text-decoration: none;
+
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
 }
 
 .mobile-menu-item svg {
+  width: 18px;
+  min-width: 18px;
+
   font-size: 17px;
 }
 
 .mobile-menu-item:hover {
   background: #f3f6fa;
+
   color: #0d6efd !important;
 }
 
 .mobile-menu-item.active {
   background: #eaf2ff;
+
   color: #0d6efd !important;
+
   font-weight: 600;
 }
 
+
+/* ==========================================
+   TÍTULOS DE SECCIÓN
+========================================== */
+
 .mobile-section-title {
   color: #9aa3b2;
+
   font-size: 10px;
   font-weight: 700;
-  padding: 18px 12px 6px;
+
+  letter-spacing: 0.06em;
+
+  padding: 18px 12px 7px;
 }
+
 
 /* ==========================================
    CERRAR SESIÓN MOBILE
@@ -385,26 +523,54 @@
 
 .mobile-logout {
   width: 100%;
-  margin-top: 25px;
+
+  margin-top: 24px;
+
   padding: 11px 12px;
-  border: none;
-  border-radius: 8px;
-  background: #fff0f0;
+
+  border: 1px solid #ffe0e0;
+
+  border-radius: 9px;
+
+  background: #fff5f5;
+
   color: #dc3545;
+
   display: flex;
   align-items: center;
+
   gap: 10px;
+
   font-size: 13px;
   font-weight: 600;
+
   text-align: left;
+
+  transition: all 0.18s ease;
 }
 
 .mobile-logout:hover {
-  background: #ffe4e4;
+  background: #ffe8e8;
+
+  border-color: #ffd0d0;
 }
 
+
 /* ==========================================
-   RESPONSIVE
+   OVERLAY DEL OFFCANVAS
+========================================== */
+
+.offcanvas-backdrop {
+  background-color: #172033 !important;
+}
+
+.offcanvas-backdrop.show {
+  opacity: 0.35 !important;
+}
+
+
+/* ==========================================
+   TABLET
 ========================================== */
 
 @media (max-width: 1199px) {
@@ -415,40 +581,101 @@
 
   .menu-item {
     padding: 8px 7px !important;
+
     font-size: 12px;
   }
-
-  .usuario-info {
-    display: none;
-  }
-
 }
 
-@media (max-width: 991px) {
+
+/* ==========================================
+   TABLET PEQUEÑA
+========================================== */
+
+@media (max-width: 991.98px) {
 
   .encabezado {
     height: 62px;
+
+    min-height: 62px;
   }
+
+  /*
+     En este tamaño dejamos únicamente:
+     LOGO + USUARIO + HAMBURGUESA
+  */
 
   .encabezado-logo {
     margin-right: 0;
   }
 
+  .encabezado .navbar-collapse {
+    display: none !important;
+  }
+
   .usuario-dropdown {
     margin-left: auto;
-    margin-right: 8px;
+
+    margin-right: 4px;
   }
 
   .encabezado-toggle {
+    display: flex !important;
+
+    align-items: center;
+    justify-content: center;
+
     order: 3;
   }
 
+  /*
+     Evita que el botón quede pegado
+     al borde de la pantalla.
+  */
+
+  .encabezado .container-fluid {
+    min-height: 62px;
+  }
 }
 
-@media (max-width: 576px) {
 
-  .logo-text {
-    display: none;
+/* ==========================================
+   TELÉFONO
+========================================== */
+
+@media (max-width: 767.98px) {
+
+  .encabezado {
+    height: 60px;
+
+    min-height: 60px;
+  }
+
+  .encabezado .container-fluid {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+
+    min-height: 60px;
+  }
+
+  /*
+     Logo reducido
+  */
+
+  .logo-icon {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 10px;
+
+    font-size: 18px;
+  }
+
+  /*
+     Usuario
+  */
+
+  .usuario-dropdown {
+    margin-right: 2px;
   }
 
   .usuario-avatar {
@@ -456,4 +683,102 @@
     height: 36px;
   }
 
+  .usuario-toggle {
+    padding: 3px !important;
+
+    gap: 6px;
+  }
+
+  .usuario-toggle > svg {
+    display: none;
+  }
+
+  /*
+     Hamburguesa
+  */
+
+  .encabezado-toggle {
+    width: 40px;
+    height: 40px;
+
+    padding: 6px !important;
+
+    margin-left: 2px;
+  }
+
+  /*
+     Ocultamos el texto del logo
+  */
+
+  .logo-text {
+    display: none;
+  }
+
+  /*
+     Menú de escritorio completamente oculto
+  */
+
+  .encabezado-menu {
+    display: none !important;
+  }
+}
+
+
+/* ==========================================
+   TELÉFONOS MUY PEQUEÑOS
+========================================== */
+
+@media (max-width: 400px) {
+
+  .encabezado {
+    height: 58px;
+
+    min-height: 58px;
+  }
+
+  .encabezado .container-fluid {
+    min-height: 58px;
+
+    padding-left: 9px !important;
+    padding-right: 9px !important;
+  }
+
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+
+    font-size: 17px;
+  }
+
+  .usuario-avatar {
+    width: 34px;
+    height: 34px;
+
+    font-size: 11px;
+  }
+
+  .encabezado-toggle {
+    width: 38px;
+    height: 38px;
+  }
+
+  .encabezado-mobile {
+    width: 90vw !important;
+    max-width: 310px !important;
+  }
+}
+
+
+/* ==========================================
+   ACCESIBILIDAD
+========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .mobile-menu-item,
+  .mobile-logout,
+  .encabezado-toggle,
+  .encabezado-mobile .btn-close {
+    transition: none !important;
+  }
 }
