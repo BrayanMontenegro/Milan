@@ -15,7 +15,7 @@ import EspecialistaDetalle from "../components/especialistas/EspecialistaDetalle
 import EspecialistaModal from "../components/especialistas/EspecialistaModal";
 import EspecialistasEstadisticas from "../components/especialistas/EspecialistasEstadisticas";
 
-import "../styles/especialistas.css";
+import "../styles/Especialistas.css";
 
 // =========================================================
 // FORMULARIO INICIAL

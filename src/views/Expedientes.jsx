@@ -14,7 +14,7 @@ import ExpedienteTabla from "../components/expedientes/ExpedienteTabla";
 import ExpedienteCard from "../components/expedientes/ExpedienteCard";
 import ExpedienteModal from "../components/expedientes/ExpedienteModal";
 import ExpedienteDetalle from "../components/expedientes/ExpedienteDetalle";
-import "../styles/expedientes.css";
+import "../styles/Expedientes.css";
 
 const formularioInicial = {
   grupo_sanguineo: "",
