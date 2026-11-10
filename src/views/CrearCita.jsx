@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import useCrearCita from "./useCrearCita";
-import CrearCitaPageContent from "../components/citas/crear/CrearCitaPageContent";
+import CrearCitaPageContent from "../components/Citas/crear/CrearCitaPageContent";
 
 import "../styles/CrearCita.css";
 

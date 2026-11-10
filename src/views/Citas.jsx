@@ -1,10 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import useCitas from "./useCitas";
-import CitasHeader from "../components/citas/CitasHeader";
-import CitasSearchPanel from "../components/citas/CitasSearchPanel";
-import CitasResultsPanel from "../components/citas/CitasResultsPanel";
-import CitasDialogs from "../components/citas/CitasDialogs";
+import CitasHeader from "../components/Citas/CitasHeader";
+import CitasSearchPanel from "../components/Citas/CitasSearchPanel";
+import CitasResultsPanel from "../components/Citas/CitasResultsPanel";
+import CitasDialogs from "../components/Citas/CitasDialogs";
 import "../styles/Citas.css";
 
 const Citas = () => {
