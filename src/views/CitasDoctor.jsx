@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { FaExclamationTriangle } from "react-icons/fa";
 import { useAuth } from "../context/AuthContextValue";
 import useCitasDoctor from "./useCitasDoctor";
-import CitasDoctorHeader from "../components/citas/doctores/CitaDoctorHeader";
-import CitasDoctorAgendaPanel from "../components/citas/doctores/CitasDoctorAgendaPanel";
-import CitasDoctorDialogs from "../components/citas/doctores/CitasDoctorDialogs";
+import CitasDoctorHeader from "../components/Citas/doctores/CitaDoctorHeader";
+import CitasDoctorAgendaPanel from "../components/Citas/doctores/CitasDoctorAgendaPanel";
+import CitasDoctorDialogs from "../components/Citas/doctores/CitasDoctorDialogs";
 import "../styles/Citas.css";
 
 const CitasDoctor = () => {

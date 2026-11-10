@@ -15,7 +15,7 @@ import AtenderConsultaForm from "../components/consultas/AtenderConsultaForm";
 import AtenderConsultaSidebar from "../components/consultas/AtenderConsultaSidebar";
 
 import "../styles/AtenderConsulta.css";
-import "../styles/Expedientes.css";
+import "../styles/expedientes.css";
 
 const AtenderConsulta = () => {
   const { id_cita } = useParams();
