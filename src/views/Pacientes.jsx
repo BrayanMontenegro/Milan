@@ -13,7 +13,7 @@ import PacienteCard from "../components/pacientes/PacienteCard";
 import PacienteModal from "../components/pacientes/PacienteModal";
 import PacienteDetalle from "../components/pacientes/PacienteDetalle";
 
-import "../styles/Pacientes.css";
+import "../styles/pacientes.css";
 
 const formularioInicial = {
   nombres: "",
