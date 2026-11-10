@@ -4,7 +4,7 @@ import {
   FaChevronRight,
   FaCalendarAlt,
 } from "react-icons/fa";
-import CitaCalendarioGrid from "../../citas/crear/CitaCalendarioGrid";
+import CitaCalendarioGrid from "./CitaCalendarioGrid";
 
 const diasSemana = [
   "Lun",
