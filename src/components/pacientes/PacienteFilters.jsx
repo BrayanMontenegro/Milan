@@ -27,9 +27,13 @@ const PacienteFiltros = ({
       {/* Búsqueda */}
       <div className="pacientes-search">
 
+        <label className="form-label" htmlFor="pacientes-busqueda">
+          Buscar pacientes
+        </label>
         <FaSearch className="pacientes-search-icon" />
 
         <input
+          id="pacientes-busqueda"
           type="text"
           className="form-control"
           placeholder="Buscar por nombre o expediente..."
@@ -42,7 +46,11 @@ const PacienteFiltros = ({
       {/* Procedencia */}
       <div className="pacientes-filter-select">
 
+        <label className="form-label" htmlFor="pacientes-procedencia">
+          Procedencia
+        </label>
         <select
+          id="pacientes-procedencia"
           className="form-select"
           value={procedencia}
           onChange={(e) => setProcedencia(e.target.value)}
@@ -51,9 +59,9 @@ const PacienteFiltros = ({
             Todas las procedencias
           </option>
 
-          {procedencias.map((item, index) => (
+          {procedencias.map((item) => (
             <option
-              key={index}
+              key={item}
               value={item}
             >
               {item}
@@ -67,7 +75,11 @@ const PacienteFiltros = ({
       {/* Estado */}
       <div className="pacientes-filter-select">
 
+        <label className="form-label" htmlFor="pacientes-estado">
+          Estado
+        </label>
         <select
+          id="pacientes-estado"
           className="form-select"
           value={estado}
           onChange={(e) => setEstado(e.target.value)}

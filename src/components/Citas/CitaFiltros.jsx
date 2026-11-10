@@ -20,6 +20,7 @@ const CitaFiltros = ({
   setEspecialista,
   especialistas = [],
   onLimpiar,
+  mostrarEspecialista = true,
 }) => {
   const meses = [
     { value: "1", label: "Enero" },
@@ -69,7 +70,7 @@ const CitaFiltros = ({
 
         {/* BUSCAR */}
         <div className="col-12 col-lg-4">
-          <label className="form-label">
+          <label className="form-label" htmlFor="cita-busqueda-paciente">
             Buscar paciente
           </label>
 
@@ -79,6 +80,7 @@ const CitaFiltros = ({
             </span>
 
             <input
+              id="cita-busqueda-paciente"
               type="text"
               className="form-control"
               placeholder="Nombre o código de expediente..."
@@ -90,7 +92,7 @@ const CitaFiltros = ({
 
         {/* FECHA */}
         <div className="col-12 col-md-6 col-lg-2">
-          <label className="form-label">
+          <label className="form-label" htmlFor="cita-fecha">
             Fecha
           </label>
 
@@ -100,6 +102,7 @@ const CitaFiltros = ({
             </span>
 
             <input
+              id="cita-fecha"
               type="date"
               className="form-control"
               value={fecha}
@@ -110,11 +113,12 @@ const CitaFiltros = ({
 
         {/* MES */}
         <div className="col-12 col-md-6 col-lg-2">
-          <label className="form-label">
+          <label className="form-label" htmlFor="cita-mes">
             Mes
           </label>
 
           <select
+            id="cita-mes"
             className="form-select"
             value={mes}
             onChange={(e) => setMes(e.target.value)}
@@ -134,11 +138,12 @@ const CitaFiltros = ({
 
         {/* DÍA */}
         <div className="col-12 col-md-6 col-lg-2">
-          <label className="form-label">
+          <label className="form-label" htmlFor="cita-dia-semana">
             Día de la semana
           </label>
 
           <select
+            id="cita-dia-semana"
             className="form-select"
             value={diaSemana}
             onChange={(e) => setDiaSemana(e.target.value)}
@@ -157,38 +162,41 @@ const CitaFiltros = ({
         </div>
 
         {/* ESPECIALISTA */}
-        <div className="col-12 col-md-6 col-lg-2">
-          <label className="form-label">
-            Especialista
-          </label>
+        {mostrarEspecialista && (
+          <div className="col-12 col-md-6 col-lg-2">
+            <label className="form-label" htmlFor="cita-especialista">
+              Especialista
+            </label>
 
-          <div className="input-group">
-            <span className="input-group-text">
-              <FaUserMd />
-            </span>
+            <div className="input-group">
+              <span className="input-group-text">
+                <FaUserMd />
+              </span>
 
-            <select
-              className="form-select"
-              value={especialista}
-              onChange={(e) =>
-                setEspecialista(e.target.value)
-              }
-            >
-              <option value="">
-                Todos
-              </option>
-
-              {especialistas.map((item) => (
-                <option
-                  key={item.id_especialista}
-                  value={item.id_especialista}
-                >
-                  Dr. {item.nombres} {item.apellidos}
+              <select
+                id="cita-especialista"
+                className="form-select"
+                value={especialista}
+                onChange={(e) =>
+                  setEspecialista(e.target.value)
+                }
+              >
+                <option value="">
+                  Todos
                 </option>
-              ))}
-            </select>
+
+                {especialistas.map((item) => (
+                  <option
+                    key={item.id_especialista}
+                    value={item.id_especialista}
+                  >
+                    Dr. {item.nombres} {item.apellidos}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
-        </div>
+        )}
 
       </div>
     </div>

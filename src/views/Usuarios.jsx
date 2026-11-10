@@ -1,38 +1,164 @@
 import { useEffect, useMemo, useState } from "react";
-import {
-  Alert,
-  Badge,
-  Button,
-  Card,
-  Col,
-  Form,
-  InputGroup,
-  Modal,
-  Row,
-  Spinner,
-  Table,
-} from "react-bootstrap";
-
-import {
-  FiEdit,
-  FiEye,
-  FiPlus,
-  FiRefreshCw,
-  FiSearch,
-  FiShield,
-  FiUser,
-  FiUserCheck,
-  FiUserX,
-  FiX,
-} from "react-icons/fi";
+import { Alert, Card, Spinner } from "react-bootstrap";
 
 import { supabase } from "../database/supabase";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContextValue";
+import UsuariosEncabezado from "../components/usuarios/UsuariosEncabezado";
+import UsuariosFiltros from "../components/usuarios/UsuariosFiltros";
+import UsuariosTabla from "../components/usuarios/UsuariosTabla";
+import UsuarioCrearModal from "../components/usuarios/UsuarioCrearModal";
+import UsuarioEditarModal from "../components/usuarios/UsuarioEditarModal";
+import UsuarioDetallesModal from "../components/usuarios/UsuarioDetallesModal";
 
 import "../styles/Usuarios.css";
 
 const Usuarios = () => {
-  const { usuario, perfil } = useAuth();
+  const {
+    roles,
+    cargando,
+    guardando,
+    error,
+    setError,
+    mensaje,
+    setMensaje,
+    busqueda,
+    setBusqueda,
+    filtroRol,
+    setFiltroRol,
+    filtroEstado,
+    setFiltroEstado,
+    mostrarModal,
+    mostrarModalEditar,
+    setMostrarModalEditar,
+    mostrarModalDetalles,
+    setMostrarModalDetalles,
+    usuarioSeleccionado,
+    formulario,
+    cambiarFormulario,
+    formularioEditar,
+    setFormularioEditar,
+    esAdministrador,
+    cargarDatos,
+    crearUsuario,
+    cerrarModalCrear,
+    abrirModalCrear,
+    editarUsuario,
+    abrirEditar,
+    cambiarEstado,
+    verDetalles,
+    obtenerNombreRol,
+    nombreRolMostrar,
+    usuariosFiltrados,
+    usuarios,
+    totalUsuarios,
+    usuariosActivos,
+    usuariosInactivos,
+    especialistas
+  } = useUsuariosController();
+
+  if (!cargando && !esAdministrador) {
+    return (
+      <div className="usuarios-page">
+        <div className="container-fluid">
+          <Alert variant="danger" className="mt-4">
+            <strong>Acceso restringido</strong>
+            <br />
+            Solo los administradores pueden acceder a la gestión de usuarios.
+          </Alert>
+        </div>
+      </div>
+    );
+  }
+
+  if (cargando) {
+    return (
+      <div className="usuarios-page">
+        <div className="usuarios-loading">
+          <Spinner animation="border" variant="primary" />
+          <p>Cargando usuarios...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="usuarios-page">
+      <div className="container-fluid px-3 px-lg-4">
+        <UsuariosEncabezado
+          error={error}
+          mensaje={mensaje}
+          onDismissError={() => setError("")}
+          onDismissMessage={() => setMensaje("")}
+          onRefresh={() => cargarDatos()}
+          onCreate={abrirModalCrear}
+          cargando={cargando}
+          total={totalUsuarios}
+          activos={usuariosActivos}
+          inactivos={usuariosInactivos}
+          especialistas={especialistas}
+        />
+
+        <Card className="usuarios-main-card">
+          <Card.Body>
+            <UsuariosFiltros
+              busqueda={busqueda}
+              setBusqueda={setBusqueda}
+              filtroRol={filtroRol}
+              setFiltroRol={setFiltroRol}
+              filtroEstado={filtroEstado}
+              setFiltroEstado={setFiltroEstado}
+              roles={roles}
+              nombreRolMostrar={nombreRolMostrar}
+            />
+            <UsuariosTabla
+              usuariosFiltrados={usuariosFiltrados}
+              usuarios={usuarios}
+              obtenerNombreRol={obtenerNombreRol}
+              nombreRolMostrar={nombreRolMostrar}
+              onVerDetalles={verDetalles}
+              onEditar={abrirEditar}
+              onCambiarEstado={cambiarEstado}
+            />
+          </Card.Body>
+        </Card>
+      </div>
+
+      <UsuarioCrearModal
+        mostrar={mostrarModal}
+        onCerrar={cerrarModalCrear}
+        formulario={formulario}
+        cambiarFormulario={cambiarFormulario}
+        onSubmit={crearUsuario}
+        guardando={guardando}
+        error={error}
+        roles={roles}
+        nombreRolMostrar={nombreRolMostrar}
+      />
+      <UsuarioEditarModal
+        mostrar={mostrarModalEditar}
+        onCerrar={() => setMostrarModalEditar(false)}
+        formulario={formularioEditar}
+        setFormulario={setFormularioEditar}
+        onSubmit={editarUsuario}
+        guardando={guardando}
+        error={error}
+        roles={roles}
+        nombreRolMostrar={nombreRolMostrar}
+      />
+      <UsuarioDetallesModal
+        mostrar={mostrarModalDetalles}
+        onCerrar={() => setMostrarModalDetalles(false)}
+        usuario={usuarioSeleccionado}
+        obtenerNombreRol={obtenerNombreRol}
+        nombreRolMostrar={nombreRolMostrar}
+      />
+    </div>
+  );
+};
+
+
+const useUsuariosController = () => {
+  const { perfil } = useAuth();
 
   // ==========================================
   // ESTADOS
@@ -96,31 +222,28 @@ const Usuarios = () => {
   // ==========================================
 
   useEffect(() => {
-    if (esAdministrador) {
-      cargarDatos();
-    } else {
+    let vigente = true;
+
+    if (!esAdministrador) {
       setCargando(false);
+      return () => {
+        vigente = false;
+      };
     }
+
+    cargarDatos(() => vigente);
+
+    return () => {
+      vigente = false;
+    };
   }, [esAdministrador]);
-
-  const cargarDatos = async () => {
-    setCargando(true);
-    setError("");
-
-    await Promise.all([
-      cargarUsuarios(),
-      cargarRoles(),
-    ]);
-
-    setCargando(false);
-  };
 
   // ==========================================
   // CARGAR USUARIOS
   // ==========================================
 
-  const cargarUsuarios = async () => {
-    const { data, error } = await supabase
+  async function obtenerUsuarios() {
+    return supabase
       .from("usuarios")
       .select(`
         id_usuario,
@@ -140,6 +263,10 @@ const Usuarios = () => {
       .order("created_at", {
         ascending: false,
       });
+  }
+
+  const cargarUsuarios = async () => {
+    const { data, error } = await obtenerUsuarios();
 
     if (error) {
       console.error(
@@ -161,8 +288,8 @@ const Usuarios = () => {
   // CARGAR ROLES
   // ==========================================
 
-  const cargarRoles = async () => {
-    const { data, error } = await supabase
+  async function obtenerRoles() {
+    return supabase
       .from("roles")
       .select(`
         id_rol,
@@ -173,22 +300,44 @@ const Usuarios = () => {
       .eq("activo", true)
       .neq("nombre", "ADMINISTRADOR")
       .order("nombre");
+  }
 
-    if (error) {
-      console.error(
-        "Error cargando roles:",
-        error
-      );
+  async function cargarDatos(estaVigente = () => true) {
+    setCargando(true);
+    setError("");
 
-      setError(
-        "No se pudieron cargar los roles."
-      );
+    try {
+      const [usuariosResp, rolesResp] = await Promise.all([
+        obtenerUsuarios(),
+        obtenerRoles(),
+      ]);
 
-      return;
+      if (!estaVigente()) return;
+
+      if (usuariosResp.error) {
+        console.error("Error cargando usuarios:", usuariosResp.error);
+        setError("No se pudieron cargar los usuarios.");
+      } else {
+        setUsuarios(usuariosResp.data || []);
+      }
+
+      if (rolesResp.error) {
+        console.error("Error cargando roles:", rolesResp.error);
+        setError("No se pudieron cargar los roles.");
+      } else {
+        setRoles(rolesResp.data || []);
+      }
+    } catch (error) {
+      if (!estaVigente()) return;
+
+      console.error("Error cargando datos de usuarios:", error);
+      setError("No se pudieron cargar los datos.");
+    } finally {
+      if (estaVigente()) {
+        setCargando(false);
+      }
     }
-
-    setRoles(data || []);
-  };
+  }
 
   // ==========================================
   // CAMBIAR FORMULARIO
@@ -787,1064 +936,47 @@ const Usuarios = () => {
         ) === "ESPECIALISTA"
     ).length;
 
-  // ==========================================
-  // CONTROL DE ACCESO
-  // ==========================================
-
-  if (!cargando && !esAdministrador) {
-    return (
-      <div className="usuarios-page">
-        <div className="container-fluid">
-          <Alert
-            variant="danger"
-            className="mt-4"
-          >
-            <strong>
-              Acceso restringido
-            </strong>
-            <br />
-            Solo los administradores pueden
-            acceder a la gestión de usuarios.
-          </Alert>
-        </div>
-      </div>
-    );
-  }
-
-  // ==========================================
-  // CARGANDO
-  // ==========================================
-
-  if (cargando) {
-    return (
-      <div className="usuarios-page">
-        <div className="usuarios-loading">
-          <Spinner
-            animation="border"
-            variant="primary"
-          />
-
-          <p>
-            Cargando usuarios...
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  // ==========================================
-  // RENDER
-  // ==========================================
-
-  return (
-    <div className="usuarios-page">
-      <div className="container-fluid px-3 px-lg-4">
-
-        {/* =====================================
-            ENCABEZADO
-        ====================================== */}
-
-        <div className="usuarios-header">
-          <div className="usuarios-header-content">
-            <div className="usuarios-header-title">
-              <div className="usuarios-header-icon">
-                <FiShield />
-              </div>
-
-              <div>
-                <h2>Usuarios</h2>
-                <p>
-                  Administración de usuarios y permisos del sistema
-                </p>
-              </div>
-            </div>
-
-            <div className="usuarios-header-actions">
-              <Button
-                variant="light"
-                className="btn-refresh"
-                onClick={cargarDatos}
-                disabled={cargando}
-              >
-                <FiRefreshCw />
-                Actualizar
-              </Button>
-
-              <Button
-                className="btn-primary-custom"
-                onClick={abrirModalCrear}
-              >
-                <FiPlus />
-                Nuevo usuario
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        {/* =====================================
-            ALERTAS
-        ====================================== */}
-
-        {error && (
-          <Alert
-            variant="danger"
-            dismissible
-            onClose={() =>
-              setError("")
-            }
-          >
-            {error}
-          </Alert>
-        )}
-
-        {mensaje && (
-          <Alert
-            variant="success"
-            dismissible
-            onClose={() =>
-              setMensaje("")
-            }
-          >
-            {mensaje}
-          </Alert>
-        )}
-
-        {/* =====================================
-            ESTADÍSTICAS
-        ====================================== */}
-
-        <Row className="g-3 mb-4">
-
-          <Col
-            xs={12}
-            sm={6}
-            xl={3}
-          >
-            <Card className="usuario-stat-card">
-              <Card.Body>
-                <div className="stat-icon">
-                  <FiUser />
-                </div>
-
-                <div className="usuario-stat-content">
-                  <span>
-                    Total usuarios:
-                  </span>
-
-                  <strong>
-                    {totalUsuarios}
-                  </strong>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-
-          <Col
-            xs={12}
-            sm={6}
-            xl={3}
-          >
-            <Card className="usuario-stat-card">
-              <Card.Body>
-                <div className="stat-icon success">
-                  <FiUserCheck />
-                </div>
-
-                <div className="usuario-stat-content">
-                  <span>
-                    Usuarios activos:
-                  </span>
-
-                  <strong>
-                    {usuariosActivos}
-                  </strong>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-
-          <Col
-            xs={12}
-            sm={6}
-            xl={3}
-          >
-            <Card className="usuario-stat-card">
-              <Card.Body>
-                <div className="stat-icon danger">
-                  <FiUserX />
-                </div>
-
-                <div className="usuario-stat-content">
-                  <span>
-                    Usuarios inactivos:
-                  </span>
-
-                  <strong>
-                    {usuariosInactivos}
-                  </strong>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-
-          <Col
-            xs={12}
-            sm={6}
-            xl={3}
-          >
-            <Card className="usuario-stat-card">
-              <Card.Body>
-                <div className="stat-icon specialist">
-                  <FiShield />
-                </div>
-
-                <div className="usuario-stat-content">
-                  <span>
-                    Especialistas: 
-                  </span>
-
-                  <strong>
-                    {especialistas}
-                  </strong>
-                </div>
-              </Card.Body>
-            </Card>
-          </Col>
-
-        </Row>
-
-        {/* =====================================
-            FILTROS
-        ====================================== */}
-
-        <Card className="usuarios-main-card">
-
-          <Card.Body>
-
-            <div className="usuarios-filtros">
-
-              <InputGroup className="usuarios-search">
-                <InputGroup.Text>
-                  <FiSearch />
-                </InputGroup.Text>
-
-                <Form.Control
-                  type="text"
-                  placeholder="Buscar por nombre..."
-                  value={busqueda}
-                  onChange={(e) =>
-                    setBusqueda(
-                      e.target.value
-                    )
-                  }
-                />
-
-                {busqueda && (
-                  <Button
-                    variant="light"
-                    onClick={() =>
-                      setBusqueda("")
-                    }
-                  >
-                    <FiX />
-                  </Button>
-                )}
-              </InputGroup>
-
-              <Form.Select
-                value={filtroRol}
-                onChange={(e) =>
-                  setFiltroRol(
-                    e.target.value
-                  )
-                }
-              >
-                <option value="">
-                  Todos los roles
-                </option>
-
-                {roles.map((rol) => (
-                  <option
-                    key={rol.id_rol}
-                    value={rol.id_rol}
-                  >
-                    {nombreRolMostrar(
-                      rol.nombre
-                    )}
-                  </option>
-                ))}
-              </Form.Select>
-
-              <Form.Select
-                value={filtroEstado}
-                onChange={(e) =>
-                  setFiltroEstado(
-                    e.target.value
-                  )
-                }
-              >
-                <option value="">
-                  Todos los estados
-                </option>
-
-                <option value="ACTIVO">
-                  Activos
-                </option>
-
-                <option value="INACTIVO">
-                  Inactivos
-                </option>
-              </Form.Select>
-
-            </div>
-
-            {/* =================================
-                TABLA
-            ================================== */}
-
-            <div className="table-responsive usuarios-table-wrapper">
-
-              <Table
-                hover
-                className="usuarios-table"
-              >
-                <thead>
-                  <tr>
-                    <th>
-                      Usuario
-                    </th>
-
-                    <th>
-                      Rol
-                    </th>
-
-                    <th>
-                      Estado
-                    </th>
-
-                    <th>
-                      Fecha de registro
-                    </th>
-
-                    <th className="text-end">
-                      Acciones
-                    </th>
-                  </tr>
-                </thead>
-
-                <tbody>
-
-                  {usuariosFiltrados.length ===
-                    0 ? (
-                    <tr>
-                      <td
-                        colSpan="5"
-                        className="usuarios-empty"
-                      >
-                        <FiUser />
-
-                        <strong>
-                          No se encontraron usuarios
-                        </strong>
-
-                        <span>
-                          Intenta modificar los
-                          filtros de búsqueda.
-                        </span>
-                      </td>
-                    </tr>
-                  ) : (
-                    usuariosFiltrados.map(
-                      (usuarioActual) => {
-                        const nombreRol =
-                          obtenerNombreRol(
-                            usuarioActual
-                          );
-
-                        const iniciales =
-                          `${
-                            usuarioActual.nombres?.charAt(
-                              0
-                            ) || ""
-                          }${
-                            usuarioActual.apellidos?.charAt(
-                              0
-                            ) || ""
-                          }`.toUpperCase();
-
-                        return (
-                          <tr
-                            key={
-                              usuarioActual.id_usuario
-                            }
-                          >
-
-                            <td>
-                              <div className="usuario-cell">
-
-                                <div className="usuario-table-avatar">
-                                  {iniciales}
-                                </div>
-
-                                <div>
-                                  <strong>
-                                    {
-                                      usuarioActual.nombres
-                                    }{" "}
-                                    {
-                                      usuarioActual.apellidos
-                                    }
-                                  </strong>
-
-                                  <small>
-                                    Usuario del sistema
-                                  </small>
-                                </div>
-
-                              </div>
-                            </td>
-
-                            <td>
-                              <span className="rol-badge">
-                                {nombreRolMostrar(
-                                  nombreRol
-                                )}
-                              </span>
-                            </td>
-
-                            <td>
-                              {usuarioActual.activo ? (
-                                <Badge
-                                  bg="success"
-                                  className="estado-badge"
-                                >
-                                  Activo
-                                </Badge>
-                              ) : (
-                                <Badge
-                                  bg="secondary"
-                                  className="estado-badge"
-                                >
-                                  Inactivo
-                                </Badge>
-                              )}
-                            </td>
-
-                            <td>
-                              {usuarioActual.created_at
-                                ? new Date(
-                                    usuarioActual.created_at
-                                  ).toLocaleDateString(
-                                    "es-NI",
-                                    {
-                                      day: "2-digit",
-                                      month: "2-digit",
-                                      year: "numeric",
-                                    }
-                                  )
-                                : "—"}
-                            </td>
-
-                            <td>
-                              <div className="usuarios-actions">
-
-                                <Button
-                                  variant="light"
-                                  className="action-btn"
-                                  title="Ver detalles"
-                                  onClick={() =>
-                                    verDetalles(
-                                      usuarioActual
-                                    )
-                                  }
-                                >
-                                  <FiEye />
-                                </Button>
-
-                                <Button
-                                  variant="light"
-                                  className="action-btn"
-                                  title="Editar"
-                                  onClick={() =>
-                                    abrirEditar(
-                                      usuarioActual
-                                    )
-                                  }
-                                >
-                                  <FiEdit />
-                                </Button>
-
-                                <Button
-                                  variant="light"
-                                  className={
-                                    usuarioActual.activo
-                                      ? "action-btn danger"
-                                      : "action-btn success"
-                                  }
-                                  title={
-                                    usuarioActual.activo
-                                      ? "Desactivar"
-                                      : "Activar"
-                                  }
-                                  onClick={() =>
-                                    cambiarEstado(
-                                      usuarioActual
-                                    )
-                                  }
-                                >
-                                  {usuarioActual.activo ? (
-                                    <FiUserX />
-                                  ) : (
-                                    <FiUserCheck />
-                                  )}
-                                </Button>
-
-                              </div>
-                            </td>
-
-                          </tr>
-                        );
-                      }
-                    )
-                  )}
-
-                </tbody>
-              </Table>
-
-            </div>
-
-            <div className="usuarios-footer">
-              Mostrando{" "}
-              <strong>
-                {usuariosFiltrados.length}
-              </strong>{" "}
-              de{" "}
-              <strong>
-                {usuarios.length}
-              </strong>{" "}
-              usuarios
-            </div>
-
-          </Card.Body>
-        </Card>
-
-      </div>
-
-      {/* =======================================
-          MODAL CREAR USUARIO
-      ======================================== */}
-
-      <Modal
-        show={mostrarModal}
-        onHide={cerrarModalCrear}
-        centered
-        size="lg"
-      >
-        <Form onSubmit={crearUsuario}>
-
-          <Modal.Header closeButton>
-            <Modal.Title>
-              <FiUser />
-              Nuevo usuario
-            </Modal.Title>
-          </Modal.Header>
-
-          <Modal.Body>
-
-            {error && (
-              <Alert
-                variant="danger"
-                className="mb-3"
-              >
-                {error}
-              </Alert>
-            )}
-
-            <Row className="g-3">
-
-              <Col md={6}>
-                <Form.Group>
-                  <Form.Label>
-                    Nombres
-                  </Form.Label>
-
-                  <Form.Control
-                    type="text"
-                    placeholder="Ingrese los nombres"
-                    value={
-                      formulario.nombres
-                    }
-                    onChange={(e) =>
-                      cambiarFormulario(
-                        "nombres",
-                        e.target.value
-                      )
-                    }
-                    disabled={guardando}
-                  />
-                </Form.Group>
-              </Col>
-
-              <Col md={6}>
-                <Form.Group>
-                  <Form.Label>
-                    Apellidos
-                  </Form.Label>
-
-                  <Form.Control
-                    type="text"
-                    placeholder="Ingrese los apellidos"
-                    value={
-                      formulario.apellidos
-                    }
-                    onChange={(e) =>
-                      cambiarFormulario(
-                        "apellidos",
-                        e.target.value
-                      )
-                    }
-                    disabled={guardando}
-                  />
-                </Form.Group>
-              </Col>
-
-              <Col md={12}>
-                <Form.Group>
-                  <Form.Label>
-                    Correo electrónico
-                  </Form.Label>
-
-                  <Form.Control
-                    type="email"
-                    placeholder="usuario@clinicamilan.com"
-                    value={
-                      formulario.email
-                    }
-                    onChange={(e) =>
-                      cambiarFormulario(
-                        "email",
-                        e.target.value
-                      )
-                    }
-                    disabled={guardando}
-                  />
-                </Form.Group>
-              </Col>
-
-              <Col md={6}>
-                <Form.Group>
-                  <Form.Label>
-                    Contraseña
-                  </Form.Label>
-
-                  <Form.Control
-                    type="password"
-                    placeholder="Mínimo 6 caracteres"
-                    value={
-                      formulario.password
-                    }
-                    onChange={(e) =>
-                      cambiarFormulario(
-                        "password",
-                        e.target.value
-                      )
-                    }
-                    disabled={guardando}
-                  />
-                </Form.Group>
-              </Col>
-
-              <Col md={6}>
-                <Form.Group>
-                  <Form.Label>
-                    Rol
-                  </Form.Label>
-
-                  <Form.Select
-                    value={
-                      formulario.id_rol
-                    }
-                    onChange={(e) =>
-                      cambiarFormulario(
-                        "id_rol",
-                        e.target.value
-                      )
-                    }
-                    disabled={guardando}
-                  >
-                    <option value="">
-                      Seleccione un rol
-                    </option>
-
-                    {roles.map((rol) => (
-                      <option
-                        key={rol.id_rol}
-                        value={rol.id_rol}
-                      >
-                        {nombreRolMostrar(
-                          rol.nombre
-                        )}
-                      </option>
-                    ))}
-                  </Form.Select>
-                </Form.Group>
-              </Col>
-
-            </Row>
-
-            <div className="usuario-form-info">
-              <FiShield />
-
-              <span>
-                El usuario podrá iniciar sesión
-                utilizando el correo y contraseña
-                registrados.
-              </span>
-            </div>
-
-          </Modal.Body>
-
-          <Modal.Footer>
-
-            <Button
-              variant="light"
-              onClick={
-                cerrarModalCrear
-              }
-              disabled={guardando}
-            >
-              Cancelar
-            </Button>
-
-            <Button
-              type="submit"
-              className="btn-primary-custom"
-              disabled={guardando}
-            >
-              {guardando ? (
-                <>
-                  <Spinner
-                    size="sm"
-                    className="me-2"
-                  />
-
-                  Creando...
-                </>
-              ) : (
-                <>
-                  <FiPlus />
-
-                  Crear usuario
-                </>
-              )}
-            </Button>
-
-          </Modal.Footer>
-
-        </Form>
-      </Modal>
-
-      {/* =======================================
-          MODAL EDITAR
-      ======================================== */}
-
-      <Modal
-        show={mostrarModalEditar}
-        onHide={() =>
-          setMostrarModalEditar(false)
-        }
-        centered
-      >
-        <Form onSubmit={editarUsuario}>
-
-          <Modal.Header closeButton>
-            <Modal.Title>
-              <FiEdit />
-              Editar usuario
-            </Modal.Title>
-          </Modal.Header>
-
-          <Modal.Body>
-
-            {error && (
-              <Alert variant="danger">
-                {error}
-              </Alert>
-            )}
-
-            <Row className="g-3">
-
-              <Col md={6}>
-                <Form.Group>
-                  <Form.Label>
-                    Nombres
-                  </Form.Label>
-
-                  <Form.Control
-                    type="text"
-                    value={
-                      formularioEditar.nombres
-                    }
-                    onChange={(e) =>
-                      setFormularioEditar({
-                        ...formularioEditar,
-                        nombres:
-                          e.target.value,
-                      })
-                    }
-                    disabled={guardando}
-                  />
-                </Form.Group>
-              </Col>
-
-              <Col md={6}>
-                <Form.Group>
-                  <Form.Label>
-                    Apellidos
-                  </Form.Label>
-
-                  <Form.Control
-                    type="text"
-                    value={
-                      formularioEditar.apellidos
-                    }
-                    onChange={(e) =>
-                      setFormularioEditar({
-                        ...formularioEditar,
-                        apellidos:
-                          e.target.value,
-                      })
-                    }
-                    disabled={guardando}
-                  />
-                </Form.Group>
-              </Col>
-
-              <Col md={12}>
-                <Form.Group>
-                  <Form.Label>
-                    Rol
-                  </Form.Label>
-
-                  <Form.Select
-                    value={
-                      formularioEditar.id_rol
-                    }
-                    onChange={(e) =>
-                      setFormularioEditar({
-                        ...formularioEditar,
-                        id_rol:
-                          e.target.value,
-                      })
-                    }
-                    disabled={guardando}
-                  >
-                    <option value="">
-                      Seleccione un rol
-                    </option>
-
-                    {roles.map((rol) => (
-                      <option
-                        key={rol.id_rol}
-                        value={rol.id_rol}
-                      >
-                        {nombreRolMostrar(
-                          rol.nombre
-                        )}
-                      </option>
-                    ))}
-                  </Form.Select>
-                </Form.Group>
-              </Col>
-
-            </Row>
-
-          </Modal.Body>
-
-          <Modal.Footer>
-
-            <Button
-              variant="light"
-              onClick={() =>
-                setMostrarModalEditar(false)
-              }
-              disabled={guardando}
-            >
-              Cancelar
-            </Button>
-
-            <Button
-              type="submit"
-              className="btn-primary-custom"
-              disabled={guardando}
-            >
-              {guardando ? (
-                <>
-                  <Spinner
-                    size="sm"
-                    className="me-2"
-                  />
-
-                  Guardando...
-                </>
-              ) : (
-                <>
-                  <FiEdit />
-
-                  Guardar cambios
-                </>
-              )}
-            </Button>
-
-          </Modal.Footer>
-
-        </Form>
-      </Modal>
-
-      {/* =======================================
-          MODAL DETALLES
-      ======================================== */}
-
-      <Modal
-        show={mostrarModalDetalles}
-        onHide={() =>
-          setMostrarModalDetalles(false)
-        }
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>
-            <FiEye />
-            Detalles del usuario
-          </Modal.Title>
-        </Modal.Header>
-
-        <Modal.Body>
-
-          {usuarioSeleccionado && (
-            <div className="usuario-detalles">
-
-              <div className="usuario-detalle-avatar">
-                {`${
-                  usuarioSeleccionado.nombres?.charAt(
-                    0
-                  ) || ""
-                }${
-                  usuarioSeleccionado.apellidos?.charAt(
-                    0
-                  ) || ""
-                }`.toUpperCase()}
-              </div>
-
-              <h4>
-                {
-                  usuarioSeleccionado.nombres
-                }{" "}
-                {
-                  usuarioSeleccionado.apellidos
-                }
-              </h4>
-
-              <span className="rol-badge">
-                {nombreRolMostrar(
-                  obtenerNombreRol(
-                    usuarioSeleccionado
-                  )
-                )}
-              </span>
-
-              <div className="usuario-detalle-list">
-
-                <div>
-                  <span>
-                    ID de usuario:
-                  </span>
-
-                  <strong>
-                    {
-                      usuarioSeleccionado.id_usuario
-                    }
-                  </strong>
-                </div>
-
-                <div>
-                  <span>
-                    Teléfono:
-                  </span>
-
-                  <strong>
-                    {
-                      usuarioSeleccionado.telefono ||
-                      "No registrado"
-                    }
-                  </strong>
-                </div>
-
-                <div>
-                  <span>
-                    Estado:
-                  </span>
-
-                  <strong>
-                    {usuarioSeleccionado.activo
-                      ? "Activo"
-                      : "Inactivo"}
-                  </strong>
-                </div>
-
-                <div>
-                  <span>
-                    Fecha de registro:
-                  </span>
-
-                  <strong>
-                    {usuarioSeleccionado.created_at
-                      ? new Date(
-                          usuarioSeleccionado.created_at
-                        ).toLocaleString(
-                          "es-NI"
-                        )
-                      : "No disponible"}
-                  </strong>
-                </div>
-
-                <div>
-                  <span>
-                    Última actualización:
-                  </span>
-
-                  <strong>
-                    {usuarioSeleccionado.updated_at
-                      ? new Date(
-                          usuarioSeleccionado.updated_at
-                        ).toLocaleString(
-                          "es-NI"
-                        )
-                      : "No disponible"}
-                  </strong>
-                </div>
-
-              </div>
-
-            </div>
-          )}
-
-        </Modal.Body>
-
-        <Modal.Footer>
-          <Button
-            variant="light"
-            onClick={() =>
-              setMostrarModalDetalles(false)
-            }
-          >
-            Cerrar
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-    </div>
-  );
+  return {
+    roles,
+    cargando,
+    guardando,
+    error,
+    setError,
+    mensaje,
+    setMensaje,
+    busqueda,
+    setBusqueda,
+    filtroRol,
+    setFiltroRol,
+    filtroEstado,
+    setFiltroEstado,
+    mostrarModal,
+    mostrarModalEditar,
+    setMostrarModalEditar,
+    mostrarModalDetalles,
+    setMostrarModalDetalles,
+    usuarioSeleccionado,
+    formulario,
+    cambiarFormulario,
+    formularioEditar,
+    setFormularioEditar,
+    esAdministrador,
+    cargarDatos,
+    crearUsuario,
+    cerrarModalCrear,
+    abrirModalCrear,
+    editarUsuario,
+    abrirEditar,
+    cambiarEstado,
+    verDetalles,
+    obtenerNombreRol,
+    nombreRolMostrar,
+    usuariosFiltrados,
+    usuarios,
+    totalUsuarios,
+    usuariosActivos,
+    usuariosInactivos,
+    especialistas
+  };
 };
-
 export default Usuarios;

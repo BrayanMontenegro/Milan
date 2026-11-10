@@ -1,0 +1,1162 @@
+
+/* =========================================================
+   EXPEDIENTES - CLÍNICA MILÁN
+   ========================================================= */
+
+.expedientes-page {
+  --exp-turquesa: #00a89c;
+  --exp-turquesa-dark: #008f85;
+  --exp-fucsia: #c6006f;
+  --exp-azul: #002855;
+  --exp-lila: #9063a6;
+  --exp-amarillo: #f2c100;
+  --exp-texto: #293548;
+  --exp-muted: #778195;
+  --exp-border: #e6eaf0;
+  --exp-fondo: #f5f8fb;
+
+  padding: 24px;
+  color: var(--exp-texto);
+  min-height: 100%;
+  background: var(--exp-fondo);
+  border-radius: 14px;
+}
+
+/* Encabezado */
+
+.expedientes-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 25px;
+  margin-bottom: 24px;
+  color: #fff;
+  background: linear-gradient(115deg, var(--exp-turquesa), #008e9a);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 168, 156, 0.16);
+}
+
+.expedientes-header-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 58px;
+  height: 58px;
+  color: var(--exp-turquesa);
+  background: #fff;
+  border-radius: 15px;
+  font-size: 27px;
+}
+
+.expedientes-header-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.expedientes-header-text h1 {
+  margin: 0 0 6px;
+  font-size: clamp(1.35rem, 2.5vw, 1.9rem);
+  font-weight: 750;
+}
+
+.expedientes-header-text p {
+  margin: 0;
+  font-size: 0.92rem;
+  opacity: 0.94;
+  line-height: 1.5;
+}
+
+.expedientes-refresh {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  flex-shrink: 0;
+  padding: 10px 15px;
+  border: none;
+  font-weight: 600;
+  color: var(--exp-azul);
+}
+
+.expedientes-refresh:hover {
+  color: var(--exp-turquesa-dark);
+  background: #f0fffd;
+}
+
+.expedientes-spin {
+  animation: expedientes-rotate 0.8s linear infinite;
+}
+
+@keyframes expedientes-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Estadísticas */
+
+.expedientes-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.expedientes-stat {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  min-width: 0;
+  padding: 21px;
+  background: #fff;
+  border: 1px solid var(--exp-border);
+  border-radius: 14px;
+  box-shadow: 0 3px 12px rgba(0, 40, 85, 0.035);
+}
+
+.expedientes-stat-icon {
+  display: grid;
+  place-items: center;
+  width: 49px;
+  height: 49px;
+  flex-shrink: 0;
+  border-radius: 13px;
+  font-size: 21px;
+}
+
+.expedientes-stat-icon.total {
+  color: var(--exp-azul);
+  background: #eaf1fc;
+}
+
+.expedientes-stat-icon.registrados {
+  color: var(--exp-turquesa-dark);
+  background: #e1f8f5;
+}
+
+.expedientes-stat-icon.pendientes {
+  color: #a17d00;
+  background: #fff5cb;
+}
+
+.expedientes-stat-label {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--exp-muted);
+  font-size: 0.84rem;
+}
+
+.expedientes-stat strong {
+  display: block;
+  color: var(--exp-azul);
+  font-size: 1.65rem;
+  line-height: 1.2;
+}
+
+/* Filtros */
+
+.expedientes-filtros {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  padding: 18px;
+  margin-bottom: 20px;
+  background: #fff;
+  border: 1px solid var(--exp-border);
+  border-radius: 14px;
+}
+
+.expedientes-search,
+.expedientes-filter-select {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+  color: var(--exp-muted);
+}
+
+.expedientes-search {
+  flex: 1 1 320px;
+}
+
+.expedientes-search .form-control,
+.expedientes-filter-select .form-select {
+  min-height: 43px;
+  border-color: var(--exp-border);
+  color: var(--exp-texto);
+  font-size: 0.91rem;
+  box-shadow: none;
+}
+
+.expedientes-search .form-control:focus,
+.expedientes-filter-select .form-select:focus {
+  border-color: var(--exp-turquesa);
+  box-shadow: 0 0 0 3px rgba(0, 168, 156, 0.1);
+}
+
+.expedientes-filter-select {
+  flex: 0 1 245px;
+}
+
+.expedientes-filter-select .form-select {
+  flex: 1;
+}
+
+.expedientes-results {
+  margin-left: auto;
+  color: var(--exp-muted);
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+/* Tabla */
+
+.expedientes-desktop {
+  display: block;
+}
+
+.expedientes-mobile {
+  display: none;
+}
+
+.expedientes-table-wrapper {
+  overflow-x: auto;
+  background: #fff;
+  border: 1px solid var(--exp-border);
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(0, 40, 85, 0.035);
+}
+
+.expedientes-table {
+  min-width: 900px;
+  margin-bottom: 0;
+}
+
+.expedientes-table thead th {
+  padding: 17px 15px;
+  color: var(--exp-azul);
+  background: #f0f8f8;
+  border-bottom: 1px solid var(--exp-border);
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.expedientes-table tbody td {
+  padding: 15px;
+  border-color: #edf0f4;
+  color: var(--exp-texto);
+  font-size: 0.88rem;
+}
+
+.expedientes-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.expedientes-table tbody tr:hover {
+  background: #f9fcfc;
+}
+
+.expedientes-paciente-cell {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 190px;
+}
+
+.expedientes-paciente-cell strong {
+  display: block;
+  color: var(--exp-azul);
+  font-size: 0.9rem;
+}
+
+.expedientes-paciente-cell small {
+  display: block;
+  margin-top: 4px;
+  color: var(--exp-muted);
+  font-size: 0.77rem;
+}
+
+.expedientes-avatar {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  color: var(--exp-turquesa-dark);
+  background: #e1f8f5;
+  border-radius: 50%;
+  font-size: 16px;
+}
+
+.expedientes-code {
+  display: inline-block;
+  padding: 5px 9px;
+  color: var(--exp-azul);
+  background: #eef3fa;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.expedientes-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: 30px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.expedientes-status.con-expediente {
+  color: #087d70;
+  background: #def7ef;
+}
+
+.expedientes-status.sin-expediente {
+  color: #946b00;
+  background: #fff2c7;
+}
+
+.expedientes-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+.expedientes-actions .btn {
+  display: grid;
+  place-items: center;
+  width: 35px;
+  height: 35px;
+  padding: 0;
+  border-radius: 9px;
+}
+
+.expedientes-action-view {
+  color: var(--exp-turquesa-dark);
+  background: #e5f8f5;
+}
+
+.expedientes-action-view:hover {
+  color: #fff;
+  background: var(--exp-turquesa-dark);
+}
+
+.expedientes-action-edit {
+  color: var(--exp-azul);
+  background: #eaf1fc;
+}
+
+.expedientes-action-edit:hover {
+  color: #fff;
+  background: var(--exp-azul);
+}
+
+.expedientes-action-create {
+  color: #fff;
+  background: var(--exp-turquesa);
+}
+
+.expedientes-action-create:hover {
+  color: #fff;
+  background: var(--exp-turquesa-dark);
+}
+
+/* Carga y lista vacía */
+
+.expedientes-loading,
+.expedientes-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 260px;
+  padding: 35px 20px;
+  color: var(--exp-muted);
+  text-align: center;
+  background: #fff;
+  border: 1px solid var(--exp-border);
+  border-radius: 14px;
+}
+
+.expedientes-loading .spinner-border {
+  margin-bottom: 15px;
+  color: var(--exp-turquesa);
+}
+
+.expedientes-loading p {
+  margin: 0;
+}
+
+.expedientes-empty > svg {
+  margin-bottom: 16px;
+  color: #9aa9b8;
+  font-size: 40px;
+}
+
+.expedientes-empty h3 {
+  color: var(--exp-azul);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.expedientes-empty p {
+  margin-bottom: 0;
+}
+
+/* Modal común: crear y editar ficha */
+
+.expedientes-modal-backdrop,
+.expedientes-detail-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1055;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 24, 48, 0.58);
+  backdrop-filter: blur(3px);
+}
+
+.expedientes-modal {
+  display: flex;
+  flex-direction: column;
+  width: min(760px, 100%);
+  max-height: calc(100vh - 40px);
+  overflow: hidden;
+  background: #fff;
+  border-radius: 17px;
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.23);
+}
+
+.expedientes-modal-header,
+.expedientes-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+  padding: 21px 25px;
+  border-bottom: 1px solid var(--exp-border);
+}
+
+.expedientes-modal-heading {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  flex: 1;
+  min-width: 0;
+}
+
+.expedientes-modal-icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  color: var(--exp-turquesa-dark);
+  background: #e1f8f5;
+  border-radius: 12px;
+  font-size: 21px;
+}
+
+.expedientes-modal-heading h2,
+.expedientes-detail-heading h2 {
+  margin: 0 0 5px;
+  color: var(--exp-azul);
+  font-size: 1.2rem;
+  font-weight: 750;
+}
+
+.expedientes-modal-heading p,
+.expedientes-detail-heading p {
+  margin: 0;
+  color: var(--exp-muted);
+  font-size: 0.88rem;
+}
+
+.expedientes-modal-close {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  color: #647084;
+  background: #f1f4f7;
+  border: 0;
+  border-radius: 10px;
+  font-size: 17px;
+}
+
+.expedientes-modal-close:hover:not(:disabled) {
+  color: #fff;
+  background: var(--exp-fucsia);
+}
+
+.expedientes-modal form {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.expedientes-modal-body {
+  min-height: 0;
+  padding: 23px 25px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.expedientes-patient-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 15px;
+  margin-bottom: 23px;
+  background: #f5f9fc;
+  border: 1px solid var(--exp-border);
+  border-radius: 11px;
+}
+
+.expedientes-patient-summary span,
+.expedientes-patient-summary strong {
+  display: block;
+}
+
+.expedientes-patient-summary span {
+  margin-bottom: 5px;
+  color: var(--exp-muted);
+  font-size: 0.76rem;
+}
+
+.expedientes-patient-summary strong {
+  color: var(--exp-azul);
+  font-size: 0.88rem;
+  overflow-wrap: anywhere;
+}
+
+.expedientes-modal .form-label {
+  margin-bottom: 7px;
+  color: var(--exp-azul);
+  font-size: 0.85rem;
+  font-weight: 650;
+}
+
+.expedientes-modal .form-control,
+.expedientes-modal .form-select {
+  padding: 10px 12px;
+  border-color: #dce3eb;
+  font-size: 0.9rem;
+  box-shadow: none;
+}
+
+.expedientes-modal textarea.form-control {
+  min-height: 92px;
+  resize: vertical;
+}
+
+.expedientes-modal .form-control:focus,
+.expedientes-modal .form-select:focus {
+  border-color: var(--exp-turquesa);
+  box-shadow: 0 0 0 3px rgba(0, 168, 156, 0.1);
+}
+
+.expedientes-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 18px;
+}
+
+.expedientes-form-grid .full-width {
+  grid-column: 1 / -1;
+}
+
+.expedientes-form-note {
+  padding: 12px 14px;
+  margin: 0;
+  color: #526477;
+  background: #f0f8f8;
+  border-left: 3px solid var(--exp-turquesa);
+  border-radius: 6px;
+  font-size: 0.81rem;
+  line-height: 1.55;
+}
+
+.expedientes-modal-footer,
+.expedientes-detail-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-shrink: 0;
+  padding: 17px 25px;
+  background: #fff;
+  border-top: 1px solid var(--exp-border);
+}
+
+.expedientes-save-button {
+  color: #fff;
+  background: var(--exp-turquesa);
+  border-color: var(--exp-turquesa);
+}
+
+.expedientes-save-button:hover:not(:disabled) {
+  background: var(--exp-turquesa-dark);
+  border-color: var(--exp-turquesa-dark);
+}
+
+/* Modal de detalle */
+
+.expedientes-detail-backdrop {
+  z-index: 1050;
+}
+
+.expedientes-detail-modal {
+  display: flex;
+  flex-direction: column;
+  width: min(1050px, 100%);
+  max-height: calc(100vh - 40px);
+  overflow: hidden;
+  background: #fff;
+  border-radius: 17px;
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.23);
+}
+
+.expedientes-detail-header {
+  background: #fff;
+}
+
+.expedientes-detail-header-icon {
+  display: grid;
+  place-items: center;
+  width: 47px;
+  height: 47px;
+  flex-shrink: 0;
+  color: var(--exp-turquesa-dark);
+  background: #e1f8f5;
+  border-radius: 12px;
+  font-size: 22px;
+}
+
+.expedientes-detail-heading {
+  flex: 1;
+  min-width: 0;
+}
+
+.expedientes-detail-body {
+  min-height: 0;
+  padding: 24px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.expedientes-detail-patient {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 19px;
+  margin-bottom: 23px;
+  background: #f5f9fc;
+  border: 1px solid var(--exp-border);
+  border-radius: 13px;
+}
+
+.expedientes-detail-avatar {
+  display: grid;
+  place-items: center;
+  width: 59px;
+  height: 59px;
+  flex-shrink: 0;
+  color: var(--exp-turquesa-dark);
+  background: #def7f3;
+  border-radius: 50%;
+  font-size: 24px;
+}
+
+.expedientes-detail-patient-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.expedientes-detail-patient-main h3 {
+  margin: 0 0 7px;
+  color: var(--exp-azul);
+  font-size: 1.1rem;
+  font-weight: 750;
+  overflow-wrap: anywhere;
+}
+
+.expedientes-detail-badges {
+  margin-top: 9px;
+}
+
+.expedientes-detail-edit {
+  flex-shrink: 0;
+  background: var(--exp-turquesa);
+  border-color: var(--exp-turquesa);
+}
+
+.expedientes-detail-edit:hover {
+  background: var(--exp-turquesa-dark);
+  border-color: var(--exp-turquesa-dark);
+}
+
+.expedientes-detail-section {
+  padding: 20px;
+  margin-bottom: 18px;
+  background: #fff;
+  border: 1px solid var(--exp-border);
+  border-radius: 13px;
+}
+
+.expedientes-detail-section:last-child {
+  margin-bottom: 0;
+}
+
+.expedientes-detail-section > h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 13px;
+  margin: 0 0 18px;
+  color: var(--exp-azul);
+  border-bottom: 1px solid var(--exp-border);
+  font-size: 1rem;
+  font-weight: 750;
+}
+
+.expedientes-detail-section > h3 svg {
+  color: var(--exp-turquesa-dark);
+}
+
+.expedientes-detail-grid,
+.expedientes-vitals-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 24px;
+}
+
+.expedientes-detail-field {
+  min-width: 0;
+}
+
+.expedientes-detail-field > span {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--exp-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.expedientes-detail-field > p {
+  margin: 0;
+  color: var(--exp-texto);
+  font-size: 0.89rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.expedientes-no-record {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  padding: 16px;
+  color: #7c5e00;
+  background: #fff8dc;
+  border: 1px solid #f4e4a2;
+  border-radius: 10px;
+}
+
+.expedientes-no-record > svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+  font-size: 22px;
+}
+
+.expedientes-no-record strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.expedientes-no-record p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.expedientes-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.expedientes-history-item {
+  padding: 15px;
+  background: #f8fafc;
+  border: 1px solid var(--exp-border);
+  border-radius: 10px;
+}
+
+.expedientes-history-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 12px;
+}
+
+.expedientes-history-top strong {
+  color: var(--exp-azul);
+  font-size: 0.91rem;
+}
+
+.expedientes-history-top > span {
+  flex-shrink: 0;
+  color: var(--exp-muted);
+  font-size: 0.78rem;
+}
+
+.expedientes-history-item > p {
+  margin: 0 0 8px;
+  color: var(--exp-texto);
+  font-size: 0.88rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+.expedientes-history-item > small {
+  color: var(--exp-muted);
+  font-size: 0.81rem;
+  white-space: pre-wrap;
+}
+
+.expedientes-history-item .expedientes-detail-field {
+  margin-top: 12px;
+}
+
+.expedientes-detail-empty {
+  padding: 15px;
+  margin: 0;
+  color: var(--exp-muted);
+  background: #f8fafc;
+  border-radius: 9px;
+  font-size: 0.86rem;
+}
+
+/* Responsive */
+
+@media (max-width: 1050px) {
+  .expedientes-page {
+    padding: 18px;
+  }
+
+  .expedientes-stats {
+    gap: 12px;
+  }
+
+  .expedientes-stat {
+    padding: 16px;
+  }
+
+  .expedientes-stat-icon {
+    width: 43px;
+    height: 43px;
+  }
+}
+
+@media (max-width: 767px) {
+  .expedientes-page {
+    padding: 12px;
+    border-radius: 10px;
+  }
+
+  .expedientes-header {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 18px;
+    margin-bottom: 16px;
+    border-radius: 13px;
+  }
+
+  .expedientes-header-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 11px;
+    font-size: 22px;
+  }
+
+  .expedientes-header-text {
+    flex: 1 1 calc(100% - 60px);
+  }
+
+  .expedientes-header-text h1 {
+    font-size: 1.25rem;
+  }
+
+  .expedientes-header-text p {
+    font-size: 0.82rem;
+  }
+
+  .expedientes-refresh {
+    margin-left: auto;
+    padding: 8px 12px;
+    font-size: 0.83rem;
+  }
+
+  .expedientes-stats {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .expedientes-stat {
+    gap: 13px;
+    padding: 13px 15px;
+  }
+
+  .expedientes-stat strong {
+    font-size: 1.35rem;
+  }
+
+  .expedientes-filtros {
+    align-items: stretch;
+    gap: 12px;
+    padding: 13px;
+    margin-bottom: 15px;
+  }
+
+  .expedientes-search,
+  .expedientes-filter-select {
+    flex: 1 1 100%;
+  }
+
+  .expedientes-search .form-control,
+  .expedientes-filter-select .form-select {
+    min-width: 0;
+    font-size: 0.84rem;
+  }
+
+  .expedientes-results {
+    margin-left: 0;
+  }
+
+  .expedientes-desktop {
+    display: none;
+  }
+
+  .expedientes-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+  }
+
+  .expedientes-mobile-card {
+    padding: 15px;
+    background: #fff;
+    border: 1px solid var(--exp-border);
+    border-radius: 13px;
+    box-shadow: 0 3px 12px rgba(0, 40, 85, 0.035);
+  }
+
+  .expedientes-mobile-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .expedientes-mobile-card-header .expedientes-avatar {
+    width: 39px;
+    height: 39px;
+  }
+
+  .expedientes-mobile-paciente {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .expedientes-mobile-paciente h3 {
+    margin: 2px 0 5px;
+    color: var(--exp-azul);
+    font-size: 0.93rem;
+    font-weight: 750;
+    overflow-wrap: anywhere;
+  }
+
+  .expedientes-mobile-paciente > span {
+    color: var(--exp-muted);
+    font-size: 0.78rem;
+  }
+
+  .expedientes-mobile-card-header .expedientes-status {
+    padding: 5px 7px;
+    font-size: 0.68rem;
+  }
+
+  .expedientes-mobile-info {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 14px 0;
+    margin-top: 12px;
+    border-top: 1px solid var(--exp-border);
+    border-bottom: 1px solid var(--exp-border);
+  }
+
+  .expedientes-mobile-info span,
+  .expedientes-mobile-info strong {
+    display: block;
+    overflow-wrap: anywhere;
+  }
+
+  .expedientes-mobile-info span {
+    margin-bottom: 5px;
+    color: var(--exp-muted);
+    font-size: 0.75rem;
+  }
+
+  .expedientes-mobile-info strong {
+    color: var(--exp-texto);
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  .expedientes-mobile-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding-top: 13px;
+  }
+
+  .expedientes-mobile-actions .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    flex: 1 1 auto;
+    min-height: 38px;
+    padding: 8px 10px;
+    font-size: 0.79rem;
+  }
+
+  .expedientes-modal-backdrop,
+  .expedientes-detail-backdrop {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .expedientes-modal,
+  .expedientes-detail-modal {
+    width: 100%;
+    max-height: 94dvh;
+    border-radius: 18px 18px 0 0;
+  }
+
+  .expedientes-modal-header,
+  .expedientes-detail-header {
+    gap: 10px;
+    padding: 16px;
+  }
+
+  .expedientes-modal-heading h2,
+  .expedientes-detail-heading h2 {
+    font-size: 1rem;
+  }
+
+  .expedientes-modal-heading p,
+  .expedientes-detail-heading p {
+    font-size: 0.8rem;
+  }
+
+  .expedientes-modal-body,
+  .expedientes-detail-body {
+    padding: 16px;
+  }
+
+  .expedientes-patient-summary {
+    padding: 12px;
+  }
+
+  .expedientes-form-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .expedientes-form-grid .full-width {
+    grid-column: auto;
+  }
+
+  .expedientes-modal-footer,
+  .expedientes-detail-footer {
+    padding: 13px 16px;
+  }
+
+  .expedientes-modal-footer .btn,
+  .expedientes-detail-footer .btn {
+    flex: 1;
+    font-size: 0.85rem;
+  }
+
+  .expedientes-detail-patient {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .expedientes-detail-avatar {
+    width: 46px;
+    height: 46px;
+    font-size: 20px;
+  }
+
+  .expedientes-detail-patient-main {
+    flex: 1 1 calc(100% - 65px);
+  }
+
+  .expedientes-detail-patient-main h3 {
+    font-size: 0.97rem;
+  }
+
+  .expedientes-detail-edit {
+    width: 100%;
+  }
+
+  .expedientes-detail-section {
+    padding: 15px;
+    margin-bottom: 13px;
+  }
+
+  .expedientes-detail-section > h3 {
+    font-size: 0.92rem;
+  }
+
+  .expedientes-detail-grid,
+  .expedientes-vitals-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .expedientes-history-top {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .expedientes-history-top > span {
+    white-space: normal;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .expedientes-spin {
+    animation: none;
+  }
+}

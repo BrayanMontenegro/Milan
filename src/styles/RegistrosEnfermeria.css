@@ -1,0 +1,982 @@
+/* =========================================================
+   REGISTROS DE ENFERMERÍA
+   ========================================================= */
+
+.registros-enfermeria-page {
+  min-height: 100vh;
+  background: #f8f9fa;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.registros-enfermeria-header {
+  padding: 22px 0;
+
+  color: #fff;
+
+  background: linear-gradient(
+    135deg,
+    #00a89c 0%,
+    #008f86 55%,
+    #006f69 100%
+  );
+
+  box-shadow:
+    0 4px 15px rgba(0, 168, 156, 0.15);
+}
+
+.registros-enfermeria-header-icon {
+  width: 58px;
+  height: 58px;
+  min-width: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 16px;
+
+  background: rgba(255, 255, 255, 0.16);
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  font-size: 1.45rem;
+}
+
+.registros-enfermeria-header h2 {
+  margin: 0 0 4px;
+
+  font-size: 1.65rem;
+  font-weight: 700;
+}
+
+.registros-enfermeria-header p {
+  margin: 0;
+
+  font-size: 0.88rem;
+
+  opacity: 0.9;
+}
+
+
+/* =========================================================
+   FILTROS
+   ========================================================= */
+
+.registro-enfermeria-filtros {
+  padding: 20px;
+
+  margin-bottom: 20px;
+
+  background: #fff;
+
+  border: 1px solid #e6eaed;
+  border-radius: 16px;
+
+  box-shadow:
+    0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+.registro-enfermeria-filtros-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 15px;
+}
+
+.registro-enfermeria-filtros-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  color: #002855;
+
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.registro-enfermeria-filtros-title svg {
+  color: #00a89c;
+}
+
+.registro-enfermeria-resultados {
+  color: #6c757d;
+
+  font-size: 0.8rem;
+}
+
+.registro-enfermeria-busqueda,
+.registro-enfermeria-fecha {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+}
+
+.registro-enfermeria-busqueda > svg,
+.registro-enfermeria-fecha > svg {
+  position: absolute;
+
+  left: 14px;
+
+  color: #8a9298;
+
+  z-index: 2;
+}
+
+.registro-enfermeria-busqueda input,
+.registro-enfermeria-fecha input {
+  width: 100%;
+  height: 45px;
+
+  padding: 0 42px;
+
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+
+  background: #fff;
+
+  font-size: 0.85rem;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.registro-enfermeria-busqueda input:focus,
+.registro-enfermeria-fecha input:focus {
+  border-color: #00a89c;
+
+  box-shadow:
+    0 0 0 3px rgba(0, 168, 156, 0.1);
+}
+
+.registro-enfermeria-busqueda button,
+.registro-enfermeria-fecha button {
+  position: absolute;
+
+  right: 10px;
+
+  width: 28px;
+  height: 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 0;
+
+  background: transparent;
+
+  color: #8a9298;
+
+  cursor: pointer;
+}
+
+.registro-enfermeria-limpiar-filtros {
+  margin-top: 13px;
+
+  padding: 5px 0;
+
+  border: 0;
+
+  background: transparent;
+
+  color: #00a89c;
+
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   TABLA
+   ========================================================= */
+
+.registro-enfermeria-tabla-wrapper {
+  overflow: hidden;
+
+  background: #fff;
+
+  border: 1px solid #e5e9ec;
+  border-radius: 16px;
+
+  box-shadow:
+    0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+.registro-enfermeria-tabla {
+  margin: 0;
+
+  vertical-align: middle;
+}
+
+.registro-enfermeria-tabla thead th {
+  padding: 15px 16px;
+
+  background: #f7f9fa;
+
+  border-bottom: 1px solid #e1e5e8;
+
+  color: #68727a;
+
+  font-size: 0.72rem;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.35px;
+
+  white-space: nowrap;
+}
+
+.registro-enfermeria-tabla tbody td {
+  padding: 15px 16px;
+
+  border-bottom: 1px solid #edf0f2;
+
+  color: #495057;
+
+  font-size: 0.82rem;
+}
+
+.registro-enfermeria-tabla tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.registro-enfermeria-tabla tbody tr {
+  transition: background 0.15s ease;
+}
+
+.registro-enfermeria-tabla tbody tr:hover {
+  background: #fbfdfd;
+}
+
+
+/* =========================================================
+   PACIENTE
+   ========================================================= */
+
+.registro-paciente-celda {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  min-width: 190px;
+}
+
+.registro-paciente-icon {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: rgba(0, 168, 156, 0.1);
+
+  color: #00a89c;
+}
+
+.registro-paciente-celda strong {
+  display: block;
+
+  color: #002855;
+
+  font-size: 0.84rem;
+}
+
+.registro-paciente-celda small {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #00a89c;
+
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   FECHA
+   ========================================================= */
+
+.registro-fecha-celda strong {
+  display: block;
+
+  color: #002855;
+
+  font-size: 0.8rem;
+}
+
+.registro-fecha-celda small {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #7a8288;
+
+  font-size: 0.72rem;
+}
+
+
+/* =========================================================
+   USUARIO
+   ========================================================= */
+
+.registro-usuario-celda {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  min-width: 150px;
+}
+
+.registro-usuario-icon {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background: rgba(144, 99, 166, 0.1);
+
+  color: #9063a6;
+
+  font-size: 0.78rem;
+}
+
+.registro-usuario-celda span {
+  color: #495057;
+
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   SIGNOS
+   ========================================================= */
+
+.registro-signos-resumen {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 5px;
+
+  min-width: 190px;
+}
+
+.registro-signos-resumen span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+
+  padding: 4px 7px;
+
+  border-radius: 6px;
+
+  background: #f4f7f7;
+
+  color: #495057;
+
+  font-size: 0.68rem;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+.registro-signos-resumen svg {
+  color: #00a89c;
+}
+
+
+/* =========================================================
+   MOTIVO
+   ========================================================= */
+
+.registro-motivo-celda {
+  max-width: 190px;
+
+  color: #6c757d;
+
+  font-size: 0.76rem;
+  line-height: 1.4;
+
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   BOTÓN VER
+   ========================================================= */
+
+.registro-btn-ver {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 7px 11px;
+
+  border: 1px solid #dfe5e7;
+  border-radius: 8px;
+
+  background: #fff;
+
+  color: #00a89c;
+
+  font-size: 0.76rem;
+  font-weight: 600;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.registro-btn-ver:hover {
+  background: rgba(0, 168, 156, 0.08);
+
+  border-color: #00a89c;
+}
+
+
+/* =========================================================
+   ESTADO
+   ========================================================= */
+
+.registros-enfermeria-estado {
+  min-height: 300px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  background: #fff;
+
+  border: 1px solid #e6eaed;
+  border-radius: 16px;
+
+  padding: 40px;
+}
+
+.registros-enfermeria-estado p {
+  margin: 12px 0 0;
+
+  color: #6c757d;
+
+  font-size: 0.85rem;
+}
+
+.registros-enfermeria-vacio-icon {
+  width: 65px;
+  height: 65px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 15px;
+
+  border-radius: 50%;
+
+  background: rgba(0, 168, 156, 0.1);
+
+  color: #00a89c;
+
+  font-size: 1.5rem;
+}
+
+.registros-enfermeria-estado h4 {
+  margin: 0;
+
+  color: #002855;
+
+  font-size: 1.05rem;
+}
+
+
+/* =========================================================
+   PAGINACIÓN
+   ========================================================= */
+
+.registro-enfermeria-paginacion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 25px;
+
+  margin-top: 25px;
+}
+
+.registro-enfermeria-paginacion-info {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  color: #6c757d;
+
+  font-size: 0.82rem;
+}
+
+.registro-enfermeria-paginacion-info strong {
+  color: #002855;
+}
+
+
+/* =========================================================
+   MODAL DETALLE
+   ========================================================= */
+
+.registro-detalle-overlay {
+  position: fixed;
+  inset: 0;
+
+  z-index: 1060;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.registro-detalle-modal {
+  width: 100%;
+  max-width: 850px;
+
+  max-height: calc(100vh - 40px);
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  background: #fff;
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+
+/* HEADER MODAL */
+
+.registro-detalle-header {
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 18px 22px;
+
+  background: linear-gradient(
+    135deg,
+    #00a89c,
+    #008f86
+  );
+
+  color: #fff;
+}
+
+.registro-detalle-header-content {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.registro-detalle-header-icon {
+  width: 45px;
+  height: 45px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.registro-detalle-header h4 {
+  margin: 0;
+
+  font-size: 1.05rem;
+}
+
+.registro-detalle-header p {
+  margin: 3px 0 0;
+
+  font-size: 0.73rem;
+
+  opacity: 0.9;
+}
+
+.registro-detalle-close {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 0;
+  border-radius: 9px;
+
+  background: rgba(255, 255, 255, 0.12);
+
+  color: #fff;
+
+  cursor: pointer;
+}
+
+
+/* BODY */
+
+.registro-detalle-body {
+  flex: 1;
+
+  min-height: 0;
+
+  padding: 22px;
+
+  overflow-y: auto;
+}
+
+
+/* PACIENTE */
+
+.registro-detalle-paciente {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+
+  padding: 17px;
+
+  margin-bottom: 18px;
+
+  border: 1px solid #e5eaec;
+  border-radius: 13px;
+
+  background: #f8fafb;
+}
+
+.registro-detalle-paciente-avatar {
+  width: 50px;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  background: #00a89c;
+
+  color: #fff;
+}
+
+.registro-detalle-paciente span {
+  display: block;
+
+  color: #7a8288;
+
+  font-size: 0.68rem;
+
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.registro-detalle-paciente strong {
+  display: block;
+
+  color: #002855;
+
+  font-size: 1rem;
+}
+
+.registro-detalle-paciente small {
+  display: block;
+
+  color: #00a89c;
+
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+
+/* META */
+
+.registro-detalle-meta {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 12px;
+
+  margin-bottom: 20px;
+}
+
+.registro-detalle-meta > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 13px;
+
+  border: 1px solid #e7ecee;
+  border-radius: 11px;
+}
+
+.registro-detalle-meta > div > svg {
+  color: #00a89c;
+}
+
+.registro-detalle-meta span {
+  display: block;
+
+  color: #7a8288;
+
+  font-size: 0.66rem;
+  font-weight: 600;
+}
+
+.registro-detalle-meta strong {
+  display: block;
+
+  color: #002855;
+
+  font-size: 0.76rem;
+}
+
+
+/* SECCIONES */
+
+.registro-detalle-seccion {
+  padding: 18px;
+
+  margin-bottom: 16px;
+
+  border: 1px solid #e5eaec;
+  border-radius: 13px;
+}
+
+.registro-detalle-seccion-header {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  margin-bottom: 16px;
+}
+
+.registro-detalle-seccion-header > svg {
+  color: #00a89c;
+}
+
+.registro-detalle-seccion-header h5 {
+  margin: 0;
+
+  color: #002855;
+
+  font-size: 0.92rem;
+}
+
+.registro-detalle-seccion-header span {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #7a8288;
+
+  font-size: 0.7rem;
+}
+
+
+/* SIGNOS */
+
+.registro-signos-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 10px;
+}
+
+.registro-signo-item {
+  padding: 13px;
+
+  border-radius: 10px;
+
+  background: #f8fafb;
+}
+
+.registro-signo-item > svg {
+  margin-bottom: 6px;
+
+  color: #00a89c;
+
+  font-size: 0.9rem;
+}
+
+.registro-signo-item span {
+  display: block;
+
+  color: #7a8288;
+
+  font-size: 0.68rem;
+}
+
+.registro-signo-item strong {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #002855;
+
+  font-size: 0.8rem;
+}
+
+
+/* TEXTO */
+
+.registro-texto {
+  padding: 13px;
+
+  min-height: 55px;
+
+  border-radius: 9px;
+
+  background: #f8fafb;
+
+  color: #495057;
+
+  font-size: 0.8rem;
+
+  line-height: 1.5;
+}
+
+
+/* FOOTER */
+
+.registro-detalle-footer {
+  flex-shrink: 0;
+
+  display: flex;
+  justify-content: flex-end;
+
+  padding: 14px 22px;
+
+  background: #fafafa;
+
+  border-top: 1px solid #e9ecef;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .registro-detalle-overlay {
+    padding: 10px;
+  }
+
+  .registro-detalle-modal {
+    max-height: calc(100vh - 20px);
+  }
+
+  .registro-detalle-body {
+    padding: 16px;
+  }
+
+  .registro-detalle-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .registro-signos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+@media (max-width: 576px) {
+
+  .registros-enfermeria-header {
+    padding: 17px 0;
+  }
+
+  .registros-enfermeria-header-icon {
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+  }
+
+  .registros-enfermeria-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .registros-enfermeria-header p {
+    font-size: 0.75rem;
+  }
+
+  .registro-enfermeria-filtros {
+    padding: 15px;
+  }
+
+  .registro-enfermeria-filtros-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .registro-enfermeria-paginacion {
+    gap: 10px;
+
+    justify-content: space-between;
+  }
+
+  .registro-enfermeria-paginacion button {
+    font-size: 0.75rem;
+  }
+
+  .registro-signos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .registro-detalle-header {
+    padding: 15px;
+  }
+
+  .registro-detalle-body {
+    padding: 14px;
+  }
+
+}

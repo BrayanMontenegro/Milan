@@ -30,7 +30,7 @@ const EspecialistaFiltros = ({
 
         {/* BUSCAR */}
         <div className="col-12 col-lg-5">
-          <label className="form-label">
+          <label className="form-label" htmlFor="especialistas-busqueda">
             Buscar
           </label>
 
@@ -40,6 +40,7 @@ const EspecialistaFiltros = ({
             </span>
 
             <input
+              id="especialistas-busqueda"
               type="text"
               className="form-control"
               placeholder="Nombre, código, teléfono o especialidad..."
@@ -51,11 +52,12 @@ const EspecialistaFiltros = ({
 
         {/* ESPECIALIDAD */}
         <div className="col-12 col-md-6 col-lg-3">
-          <label className="form-label">
+          <label className="form-label" htmlFor="especialistas-especialidad">
             Especialidad
           </label>
 
           <select
+            id="especialistas-especialidad"
             className="form-select"
             value={especialidad}
             onChange={(e) => setEspecialidad(e.target.value)}
@@ -77,11 +79,12 @@ const EspecialistaFiltros = ({
 
         {/* ESTADO */}
         <div className="col-12 col-md-6 col-lg-2">
-          <label className="form-label">
+          <label className="form-label" htmlFor="especialistas-estado">
             Estado
           </label>
 
           <select
+            id="especialistas-estado"
             className="form-select"
             value={estado}
             onChange={(e) => setEstado(e.target.value)}

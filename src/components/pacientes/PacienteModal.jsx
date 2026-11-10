@@ -2,6 +2,7 @@ import React from "react";
 import { FaTimes, FaUserInjured } from "react-icons/fa";
 
 import PacienteForm from "./PacienteForm";
+import useNativeDialog from "../../hooks/useNativeDialog";
 
 const PacienteModal = ({
   mostrar,
@@ -13,30 +14,30 @@ const PacienteModal = ({
   modoEdicion,
   procedencias
 }) => {
+  const dialogRef = useNativeDialog(mostrar, onCerrar);
 
   if (!mostrar) {
     return null;
   }
 
   return (
-    <div
-      className="paciente-modal-backdrop"
-      onMouseDown={(e) => {
-
-        if (
-          e.target === e.currentTarget &&
-          !guardando
-        ) {
-          onCerrar();
-        }
-
+    <dialog
+      ref={dialogRef}
+      className="paciente-modal-backdrop native-modal-root"
+      aria-labelledby="paciente-modal-title"
+      onCancel={(event) => {
+        if (guardando) event.preventDefault();
       }}
     >
-
+      <button
+        type="button"
+        className="modal-backdrop-dismiss"
+        aria-label="Cerrar formulario de paciente"
+        disabled={guardando}
+        onClick={() => dialogRef.current?.close()}
+      />
       <div
-        className="paciente-modal-container"
-        role="dialog"
-        aria-modal="true"
+        className="paciente-modal-container modal-backdrop-content"
       >
 
         {/* Header */}
@@ -51,7 +52,7 @@ const PacienteModal = ({
 
             <div>
 
-              <h4>
+              <h4 id="paciente-modal-title">
                 {modoEdicion
                   ? "Editar paciente"
                   : "Nuevo paciente"}
@@ -98,7 +99,7 @@ const PacienteModal = ({
 
       </div>
 
-    </div>
+    </dialog>
   );
 };
 

@@ -2,7 +2,10 @@ import React from "react";
 import { FaCalendarAlt, FaPlus } from "react-icons/fa";
 import "../../styles/Citas.css";
 
-const CitasHeader = ({ onNuevaCita }) => {
+const CitasHeader = ({
+    onNuevaCita,
+    descripcion = "Gestión de citas médicas y profesionales de la clínica",
+}) => {
     return (
         <div className="citas-header">
             <div className="container-fluid px-3 px-md-4">
@@ -16,9 +19,7 @@ const CitasHeader = ({ onNuevaCita }) => {
 
                             <div>
                                 <h2 className="mb-1">Citas</h2>
-                                <p className="mb-0">
-                                    Gestión de citas médicas y profesionales de la clínica
-                                </p>
+                                <p className="mb-0">{descripcion}</p>
                             </div>
                         </div>
                     </div>

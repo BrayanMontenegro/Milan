@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { supabase } from "../database/supabase";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContextValue";
 import { toast } from "react-toastify";
 import {
-  FaCalendarAlt,
-  FaClock,
-  FaPlus,
-  FaEdit,
-  FaTrash,
   FaUserMd,
 } from "react-icons/fa";
 
 import HorarioModal from "../components/especialistas/especialistaHorario/HorarioModal";
+import EspecialistaHorarioPanel from "../components/especialistas/especialistaHorario/EspecialistaHorarioPanel";
 import "../styles/EspecialistaHorario.css";
 
 const diasSemana = [
@@ -26,8 +22,110 @@ const diasSemana = [
 
 const EspecialistaHorario = () => {
   const {
+    cargandoAuth,
+    cargando,
+    especialista,
+    diasSemana,
+    obtenerHorariosDia,
+    formatearHora,
+    abrirNuevoHorario,
+    abrirEditarHorario,
+    eliminarHorario,
+    mostrarModal,
+    horarioEditar,
+    horarios,
+    cerrarModal,
+    guardarHorario
+  } = useEspecialistaHorarioController();
+  // =========================================================
+  // CARGANDO
+  // =========================================================
+
+  if (cargandoAuth || cargando) {
+    return (
+      <div className="especialista-horario-loading">
+
+        <div
+          className="spinner-border"
+          role="status"
+        >
+          <span className="visually-hidden">
+            Cargando...
+          </span>
+        </div>
+
+        <p>
+          Cargando horario...
+        </p>
+
+      </div>
+    );
+  }
+
+  // =========================================================
+  // SIN ESPECIALISTA
+  // =========================================================
+
+  if (!especialista) {
+    return (
+      <div className="especialista-horario-empty">
+
+        <FaUserMd />
+
+        <h4>
+          No se encontró el perfil
+          de especialista
+        </h4>
+
+        <p>
+          El usuario actual no está asociado
+          a un especialista.
+        </p>
+
+      </div>
+    );
+  }
+
+  // =========================================================
+  // VISTA PRINCIPAL
+  // =========================================================
+
+  return (
+    <div className="especialista-horario-container">
+
+      <EspecialistaHorarioPanel
+        especialista={especialista}
+        diasSemana={diasSemana}
+        obtenerHorariosDia={obtenerHorariosDia}
+        formatearHora={formatearHora}
+        abrirNuevoHorario={abrirNuevoHorario}
+        abrirEditarHorario={abrirEditarHorario}
+        eliminarHorario={eliminarHorario}
+      />
+
+      {/* ===================================================
+          MODAL
+      ==================================================== */}
+
+      <HorarioModal
+        key={mostrarModal
+          ? `abierto-${horarioEditar?.id_horario ?? "nuevo"}`
+          : "cerrado"}
+        mostrar={mostrarModal}
+        horarioEditar={horarioEditar}
+        horarios={horarios}
+        onCerrar={cerrarModal}
+        onGuardar={guardarHorario}
+      />
+
+    </div>
+  );
+};
+
+
+const useEspecialistaHorarioController = () => {
+  const {
     usuario,
-    perfil,
     cargando: cargandoAuth,
   } = useAuth();
 
@@ -43,20 +141,61 @@ const EspecialistaHorario = () => {
     useState(null);
 
   // =========================================================
-  // CARGA INICIAL
+  // OBTENER HORARIOS
   // =========================================================
 
-  useEffect(() => {
-    if (!cargandoAuth && usuario?.id) {
-      cargarEspecialista();
+  const cargarHorarios = useCallback(async (
+    idEspecialista
+  ) => {
+    try {
+      const { data, error } = await supabase
+        .from("horarios_especialistas")
+        .select(`
+          id_horario,
+          id_especialista,
+          dia_semana,
+          hora_inicio,
+          hora_fin,
+          activo
+        `)
+        .eq(
+          "id_especialista",
+          idEspecialista
+        )
+        .eq("activo", true)
+        .order("dia_semana", {
+          ascending: true,
+        })
+        .order("hora_inicio", {
+          ascending: true,
+        });
+
+      if (error) {
+        console.error(
+          "Error obteniendo horarios:",
+          error
+        );
+
+        throw error;
+      }
+
+      setHorarios(data || []);
+    } catch (error) {
+      console.error(error);
+
+      toast.error(
+        "No se pudieron cargar los horarios."
+      );
+
+      setHorarios([]);
     }
-  }, [usuario, cargandoAuth]);
+  }, []);
 
   // =========================================================
   // OBTENER ESPECIALISTA
   // =========================================================
 
-  const cargarEspecialista = async () => {
+  const cargarEspecialista = useCallback(async () => {
     try {
       setCargando(true);
 
@@ -105,58 +244,17 @@ const EspecialistaHorario = () => {
     } finally {
       setCargando(false);
     }
-  };
+  }, [usuario, cargarHorarios]);
 
   // =========================================================
-  // OBTENER HORARIOS
+  // CARGA INICIAL
   // =========================================================
 
-  const cargarHorarios = async (
-    idEspecialista
-  ) => {
-    try {
-      const { data, error } = await supabase
-        .from("horarios_especialistas")
-        .select(`
-          id_horario,
-          id_especialista,
-          dia_semana,
-          hora_inicio,
-          hora_fin,
-          activo
-        `)
-        .eq(
-          "id_especialista",
-          idEspecialista
-        )
-        .eq("activo", true)
-        .order("dia_semana", {
-          ascending: true,
-        })
-        .order("hora_inicio", {
-          ascending: true,
-        });
-
-      if (error) {
-        console.error(
-          "Error obteniendo horarios:",
-          error
-        );
-
-        throw error;
-      }
-
-      setHorarios(data || []);
-    } catch (error) {
-      console.error(error);
-
-      toast.error(
-        "No se pudieron cargar los horarios."
-      );
-
-      setHorarios([]);
+  useEffect(() => {
+    if (!cargandoAuth && usuario?.id) {
+      cargarEspecialista();
     }
-  };
+  }, [usuario, cargandoAuth, cargarEspecialista]);
 
   // =========================================================
   // ABRIR MODAL NUEVO
@@ -371,269 +469,21 @@ const EspecialistaHorario = () => {
     );
   };
 
-  // =========================================================
-  // CARGANDO
-  // =========================================================
-
-  if (cargandoAuth || cargando) {
-    return (
-      <div className="especialista-horario-loading">
-
-        <div
-          className="spinner-border"
-          role="status"
-        >
-          <span className="visually-hidden">
-            Cargando...
-          </span>
-        </div>
-
-        <p>
-          Cargando horario...
-        </p>
-
-      </div>
-    );
-  }
-
-  // =========================================================
-  // SIN ESPECIALISTA
-  // =========================================================
-
-  if (!especialista) {
-    return (
-      <div className="especialista-horario-empty">
-
-        <FaUserMd />
-
-        <h4>
-          No se encontró el perfil
-          de especialista
-        </h4>
-
-        <p>
-          El usuario actual no está asociado
-          a un especialista.
-        </p>
-
-      </div>
-    );
-  }
-
-  // =========================================================
-  // VISTA PRINCIPAL
-  // =========================================================
-
-  return (
-    <div className="especialista-horario-container">
-
-      {/* ===================================================
-          ENCABEZADO
-      ==================================================== */}
-
-      <div className="especialista-horario-header">
-
-        <div className="especialista-horario-titulo">
-
-          <span className="especialista-horario-label">
-            <FaCalendarAlt />
-            Mi horario de atención
-          </span>
-
-          <h2>
-            {especialista.nombres}{" "}
-            {especialista.apellidos}
-          </h2>
-
-          <p>
-            {especialista.especialidades?.nombre ||
-              "Especialidad no asignada"}
-          </p>
-
-        </div>
-
-        <div className="especialista-horario-info">
-
-          <span>
-            Código profesional
-          </span>
-
-          <strong>
-            {especialista.codigo_profesional ||
-              "No asignado"}
-          </strong>
-
-        </div>
-
-      </div>
-
-      {/* ===================================================
-          BOTÓN AGREGAR
-      ==================================================== */}
-
-      <div className="especialista-horario-toolbar">
-
-        <div>
-          <h4>
-            Horarios de atención
-          </h4>
-
-          <p>
-            Configure los días y horas en los
-            que estará disponible para atender.
-          </p>
-        </div>
-
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={abrirNuevoHorario}
-        >
-          <FaPlus />
-          Agregar horario
-        </button>
-
-      </div>
-
-      {/* ===================================================
-          DÍAS
-      ==================================================== */}
-
-      <div className="especialista-horario-grid">
-
-        {diasSemana.map((dia) => {
-
-          const horariosDia =
-            obtenerHorariosDia(
-              dia.valor
-            );
-
-          return (
-            <div
-              className="especialista-horario-dia"
-              key={dia.valor}
-            >
-
-              <div className="especialista-horario-dia-header">
-
-                <h5>
-                  {dia.nombre}
-                </h5>
-
-                <button
-                  type="button"
-                  className="btn btn-sm btn-primary"
-                  onClick={abrirNuevoHorario}
-                  title={`Agregar horario para ${dia.nombre}`}
-                >
-                  <FaPlus />
-                </button>
-
-              </div>
-
-              <div className="especialista-horario-dia-body">
-
-                {horariosDia.length === 0 ? (
-
-                  <div className="horario-sin-registro">
-
-                    <FaClock />
-
-                    <span>
-                      No hay horario configurado
-                    </span>
-
-                  </div>
-
-                ) : (
-
-                  horariosDia.map(
-                    (horario) => (
-
-                      <div
-                        className="horario-bloque"
-                        key={
-                          horario.id_horario
-                        }
-                      >
-
-                        <div className="horario-bloque-horas">
-
-                          <FaClock />
-
-                          <span>
-                            {formatearHora(
-                              horario.hora_inicio
-                            )}
-
-                            {" - "}
-
-                            {formatearHora(
-                              horario.hora_fin
-                            )}
-                          </span>
-
-                        </div>
-
-                        <div className="horario-bloque-acciones">
-
-                          <button
-                            type="button"
-                            className="btn btn-sm btn-light"
-                            title="Editar horario"
-                            onClick={() =>
-                              abrirEditarHorario(
-                                horario
-                              )
-                            }
-                          >
-                            <FaEdit />
-                          </button>
-
-                          <button
-                            type="button"
-                            className="btn btn-sm btn-light text-danger"
-                            title="Eliminar horario"
-                            onClick={() =>
-                              eliminarHorario(
-                                horario
-                              )
-                            }
-                          >
-                            <FaTrash />
-                          </button>
-
-                        </div>
-
-                      </div>
-
-                    )
-                  )
-
-                )}
-
-              </div>
-
-            </div>
-          );
-        })}
-
-      </div>
-
-      {/* ===================================================
-          MODAL
-      ==================================================== */}
-
-      <HorarioModal
-        mostrar={mostrarModal}
-        horarioEditar={horarioEditar}
-        horarios={horarios}
-        onCerrar={cerrarModal}
-        onGuardar={guardarHorario}
-      />
-
-    </div>
-  );
+  return {
+    cargandoAuth,
+    cargando,
+    especialista,
+    diasSemana,
+    obtenerHorariosDia,
+    formatearHora,
+    abrirNuevoHorario,
+    abrirEditarHorario,
+    eliminarHorario,
+    mostrarModal,
+    horarioEditar,
+    horarios,
+    cerrarModal,
+    guardarHorario
+  };
 };
-
 export default EspecialistaHorario;

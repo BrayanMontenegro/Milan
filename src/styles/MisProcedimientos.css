@@ -1,0 +1,240 @@
+.mis-procedimientos {
+  padding: 24px;
+  color: #002855;
+}
+
+.procedimientos-encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.procedimientos-encabezado h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 8px;
+  font-size: 1.6rem;
+}
+
+.procedimientos-encabezado h2 svg {
+  color: #c6006f;
+}
+
+.procedimientos-encabezado p {
+  margin: 0;
+  color: #64748b;
+}
+
+.btn-agregar-procedimiento {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  border-radius: 8px;
+  padding: 11px 16px;
+  background: #c6006f;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-agregar-procedimiento:hover {
+  background: #a8005d;
+}
+
+.btn-agregar-procedimiento:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.procedimiento-formulario-contenedor {
+  margin-bottom: 24px;
+  padding: 22px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 14px rgb(0 40 85 / 6%);
+}
+
+.procedimiento-formulario-titulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.procedimiento-formulario-titulo h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.btn-cerrar-procedimiento {
+  border: none;
+  background: transparent;
+  color: #64748b;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.campo-procedimiento {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 16px;
+}
+
+.campo-procedimiento label {
+  font-weight: 600;
+}
+
+.campo-procedimiento input,
+.campo-procedimiento textarea {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  outline: none;
+  font: inherit;
+}
+
+.campo-procedimiento input:focus,
+.campo-procedimiento textarea:focus {
+  border-color: #00a89c;
+  box-shadow: 0 0 0 3px rgb(0 168 156 / 12%);
+}
+
+.campo-procedimiento textarea {
+  resize: vertical;
+}
+
+.procedimiento-formulario-acciones {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-cancelar-procedimiento {
+  padding: 10px 15px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  color: #334155;
+  cursor: pointer;
+}
+
+.procedimientos-tabla-contenedor {
+  overflow-x: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.procedimientos-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 680px;
+}
+
+.procedimientos-tabla th,
+.procedimientos-tabla td {
+  padding: 15px;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: left;
+}
+
+.procedimientos-tabla th {
+  background: #f8fafc;
+  font-size: 0.9rem;
+}
+
+.procedimientos-tabla tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.procedimiento-estado {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.procedimiento-estado.activo {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.procedimiento-estado.inactivo {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.procedimiento-acciones {
+  display: flex;
+  gap: 8px;
+}
+
+.procedimiento-acciones button {
+  display: grid;
+  place-items: center;
+  width: 35px;
+  height: 35px;
+  border: 1px solid #e2e8f0;
+  border-radius: 7px;
+  background: #fff;
+  color: #754b8b;
+  cursor: pointer;
+}
+
+.procedimiento-acciones button:hover {
+  background: #f5f0f8;
+}
+
+.procedimientos-vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 20px;
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.procedimientos-vacio > svg {
+  color: #9063a6;
+  font-size: 2rem;
+}
+
+.procedimientos-vacio h3 {
+  margin: 16px 0 8px;
+}
+
+.procedimientos-vacio p,
+.procedimientos-mensaje {
+  color: #64748b;
+}
+
+@media (max-width: 700px) {
+  .mis-procedimientos {
+    padding: 15px;
+  }
+
+  .procedimientos-encabezado {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .btn-agregar-procedimiento {
+    width: 100%;
+  }
+
+  .procedimiento-formulario-contenedor {
+    padding: 16px;
+  }
+}

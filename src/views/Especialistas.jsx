@@ -1,6 +1,7 @@
 import {
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import { FaUserMd } from "react-icons/fa";
@@ -12,8 +13,9 @@ import EspecialistaTabla from "../components/especialistas/EspecialistaTabla";
 import EspecialistaCard from "../components/especialistas/EspecialistaCard";
 import EspecialistaDetalle from "../components/especialistas/EspecialistaDetalle";
 import EspecialistaModal from "../components/especialistas/EspecialistaModal";
+import EspecialistasEstadisticas from "../components/especialistas/EspecialistasEstadisticas";
 
-import "../styles/Especialistas.css";
+import "../styles/especialistas.css";
 
 // =========================================================
 // FORMULARIO INICIAL
@@ -75,6 +77,235 @@ const validarPassword = (password = "") => {
 // =========================================================
 
 const Especialistas = () => {
+  const {
+    estadisticas,
+    nuevoEspecialista,
+    busqueda,
+    setBusqueda,
+    especialidadFiltro,
+    setEspecialidadFiltro,
+    estadoFiltro,
+    setEstadoFiltro,
+    especialidades,
+    limpiarFiltros,
+    especialistasFiltrados,
+    cargando,
+    verEspecialista,
+    editarEspecialista,
+    cambiarEstado,
+    mostrarDetalle,
+    setMostrarDetalle,
+    especialistaSeleccionado,
+    mostrarModal,
+    guardando,
+    setMostrarModal,
+    limpiarFormulario,
+    formulario,
+    setFormulario,
+    guardarEspecialista,
+    modoEdicion,
+    agregarEspecialidad,
+    errores,
+    setErrores,
+    mostrarValidacion
+  } = useEspecialistasController();
+
+  return (
+    <div className="especialistas-page">
+
+      <EspecialistaHeader
+        onNuevoEspecialista={
+          nuevoEspecialista
+        }
+      />
+
+      <div className="container-fluid px-3 px-md-4 pb-4">
+
+        <EspecialistasEstadisticas estadisticas={estadisticas} />
+
+        {/* FILTROS */}
+
+        <EspecialistaFiltros
+          busqueda={busqueda}
+          setBusqueda={setBusqueda}
+          especialidad={
+            especialidadFiltro
+          }
+          setEspecialidad={
+            setEspecialidadFiltro
+          }
+          estado={estadoFiltro}
+          setEstado={setEstadoFiltro}
+          especialidades={
+            especialidades
+          }
+          onLimpiar={
+            limpiarFiltros
+          }
+        />
+
+        {/* TABLA */}
+
+        <div className="especialistas-main-card">
+
+          <div className="especialistas-section-title">
+
+            <div>
+
+              <h5>
+                Especialistas
+              </h5>
+
+              <span>
+                {
+                  especialistasFiltrados.length
+                }{" "}
+                resultado
+                {
+                  especialistasFiltrados.length !==
+                  1
+                    ? "s"
+                    : ""
+                }
+              </span>
+
+            </div>
+
+          </div>
+
+          {cargando ? (
+
+            <div className="especialistas-loading">
+
+              <div
+                className="spinner-border"
+                role="status"
+              />
+
+              <p>
+                Cargando especialistas...
+              </p>
+
+            </div>
+
+          ) : (
+
+            <>
+
+              <div className="especialistas-table-wrapper">
+
+                <EspecialistaTabla
+                  especialistas={
+                    especialistasFiltrados
+                  }
+                  onVer={
+                    verEspecialista
+                  }
+                  onEditar={
+                    editarEspecialista
+                  }
+                  onCambiarEstado={
+                    cambiarEstado
+                  }
+                />
+
+              </div>
+
+              <div className="especialistas-mobile-list">
+
+                {especialistasFiltrados.map(
+                  (
+                    especialista
+                  ) => (
+
+                    <EspecialistaCard
+                      key={
+                        especialista.id_especialista
+                      }
+                      especialista={
+                        especialista
+                      }
+                      onVer={
+                        verEspecialista
+                      }
+                      onEditar={
+                        editarEspecialista
+                      }
+                      onCambiarEstado={
+                        cambiarEstado
+                      }
+                    />
+
+                  )
+                )}
+
+              </div>
+
+              {!especialistasFiltrados.length && (
+
+                <div className="text-center py-5">
+
+                  <FaUserMd
+                    size={42}
+                    className="mb-3 opacity-50"
+                  />
+
+                  <h6>
+                    No hay especialistas
+                  </h6>
+
+                  <p className="text-muted mb-0">
+                    No se encontraron
+                    especialistas con
+                    los filtros
+                    seleccionados.
+                  </p>
+
+                </div>
+
+              )}
+
+            </>
+
+          )}
+
+        </div>
+
+      </div>
+
+      {/* MODAL */}
+
+        <EspecialistaModal
+          mostrar={mostrarModal}
+          onCerrar={() => {
+            if (!guardando) {
+              setMostrarModal(false);
+              limpiarFormulario();
+            }
+          }}
+          formulario={formulario}
+          setFormulario={setFormulario}
+          onSubmit={guardarEspecialista}
+          guardando={guardando}
+          modoEdicion={modoEdicion}
+          especialidades={especialidades}
+          onAgregarEspecialidad={agregarEspecialidad}
+          errores={errores}
+          setErrores={setErrores}
+          mostrarValidacion={mostrarValidacion}
+        />
+      {/* MODAL DETALLE */}
+      <EspecialistaDetalle
+        mostrar={mostrarDetalle}
+        especialista={especialistaSeleccionado}
+        onCerrar={() => setMostrarDetalle(false)}
+      />
+    </div>
+  );
+};
+
+
+const useEspecialistasController = () => {
   // =======================================================
   // ESTADOS
   // =======================================================
@@ -85,8 +316,7 @@ const Especialistas = () => {
   const [especialidades, setEspecialidades] =
     useState([]);
 
-  const [rolEspecialista, setRolEspecialista] =
-    useState(null);
+  const rolEspecialista = useRef(null);
 
   const [busqueda, setBusqueda] =
     useState("");
@@ -265,7 +495,7 @@ const Especialistas = () => {
         return;
       }
 
-      setRolEspecialista(data);
+      rolEspecialista.current = data;
 
     } catch (error) {
       console.error(error);
@@ -525,7 +755,7 @@ const Especialistas = () => {
     // -------------------------------------------------------
 
     if (
-      !rolEspecialista?.id_rol
+      !rolEspecialista.current?.id_rol
     ) {
       toast.error(
         "No se encontró el rol ESPECIALISTA."
@@ -568,7 +798,7 @@ const Especialistas = () => {
                 formulario.password,
 
               id_rol:
-                rolEspecialista.id_rol,
+                rolEspecialista.current.id_rol,
 
               id_especialidad:
                 formulario.id_especialidad,
@@ -1049,276 +1279,37 @@ const Especialistas = () => {
   // RENDER
   // =========================================================
 
-  return (
-    <div className="especialistas-page">
-
-      <EspecialistaHeader
-        onNuevoEspecialista={
-          nuevoEspecialista
-        }
-      />
-
-      <div className="container-fluid px-3 px-md-4 pb-4">
-
-        {/* ESTADÍSTICAS */}
-
-        <div className="row g-3 mb-4">
-
-          <div className="col-6 col-xl-3">
-            <div className="especialista-stat-card">
-
-              <div className="especialista-stat-icon purple">
-                <FaUserMd />
-              </div>
-
-              <div>
-                <span>Total</span>
-
-                <strong>
-                  {estadisticas.total}
-                </strong>
-              </div>
-
-            </div>
-          </div>
-
-          <div className="col-6 col-xl-3">
-            <div className="especialista-stat-card">
-
-              <div className="especialista-stat-icon turquoise">
-                <FaUserMd />
-              </div>
-
-              <div>
-                <span>Activos</span>
-
-                <strong>
-                  {estadisticas.activos}
-                </strong>
-              </div>
-
-            </div>
-          </div>
-
-          <div className="col-6 col-xl-3">
-            <div className="especialista-stat-card">
-
-              <div className="especialista-stat-icon yellow">
-                <FaUserMd />
-              </div>
-
-              <div>
-                <span>Inactivos</span>
-
-                <strong>
-                  {estadisticas.inactivos}
-                </strong>
-              </div>
-
-            </div>
-          </div>
-
-          <div className="col-6 col-xl-3">
-            <div className="especialista-stat-card">
-
-              <div className="especialista-stat-icon fuchsia">
-                <FaUserMd />
-              </div>
-
-              <div>
-                <span>Especialidades</span>
-
-                <strong>
-                  {
-                    estadisticas.especialidadesUsadas
-                  }
-                </strong>
-              </div>
-
-            </div>
-          </div>
-
-        </div>
-
-        {/* FILTROS */}
-
-        <EspecialistaFiltros
-          busqueda={busqueda}
-          setBusqueda={setBusqueda}
-          especialidad={
-            especialidadFiltro
-          }
-          setEspecialidad={
-            setEspecialidadFiltro
-          }
-          estado={estadoFiltro}
-          setEstado={setEstadoFiltro}
-          especialidades={
-            especialidades
-          }
-          onLimpiar={
-            limpiarFiltros
-          }
-        />
-
-        {/* TABLA */}
-
-        <div className="especialistas-main-card">
-
-          <div className="especialistas-section-title">
-
-            <div>
-
-              <h5>
-                Especialistas
-              </h5>
-
-              <span>
-                {
-                  especialistasFiltrados.length
-                }{" "}
-                resultado
-                {
-                  especialistasFiltrados.length !==
-                  1
-                    ? "s"
-                    : ""
-                }
-              </span>
-
-            </div>
-
-          </div>
-
-          {cargando ? (
-
-            <div className="especialistas-loading">
-
-              <div
-                className="spinner-border"
-                role="status"
-              />
-
-              <p>
-                Cargando especialistas...
-              </p>
-
-            </div>
-
-          ) : (
-
-            <>
-
-              <div className="especialistas-table-wrapper">
-
-                <EspecialistaTabla
-                  especialistas={
-                    especialistasFiltrados
-                  }
-                  onVer={
-                    verEspecialista
-                  }
-                  onEditar={
-                    editarEspecialista
-                  }
-                  onCambiarEstado={
-                    cambiarEstado
-                  }
-                />
-
-              </div>
-
-              <div className="especialistas-mobile-list">
-
-                {especialistasFiltrados.map(
-                  (
-                    especialista
-                  ) => (
-
-                    <EspecialistaCard
-                      key={
-                        especialista.id_especialista
-                      }
-                      especialista={
-                        especialista
-                      }
-                      onVer={
-                        verEspecialista
-                      }
-                      onEditar={
-                        editarEspecialista
-                      }
-                      onCambiarEstado={
-                        cambiarEstado
-                      }
-                    />
-
-                  )
-                )}
-
-              </div>
-
-              {!especialistasFiltrados.length && (
-
-                <div className="text-center py-5">
-
-                  <FaUserMd
-                    size={42}
-                    className="mb-3 opacity-50"
-                  />
-
-                  <h6>
-                    No hay especialistas
-                  </h6>
-
-                  <p className="text-muted mb-0">
-                    No se encontraron
-                    especialistas con
-                    los filtros
-                    seleccionados.
-                  </p>
-
-                </div>
-
-              )}
-
-            </>
-
-          )}
-
-        </div>
-
-      </div>
-
-      {/* MODAL */}
-
-        <EspecialistaModal
-          mostrar={mostrarModal}
-          onCerrar={() => {
-            if (!guardando) {
-              setMostrarModal(false);
-              limpiarFormulario();
-            }
-          }}
-          formulario={formulario}
-          setFormulario={setFormulario}
-          onSubmit={guardarEspecialista}
-          guardando={guardando}
-          modoEdicion={modoEdicion}
-          especialidades={especialidades}
-          onAgregarEspecialidad={agregarEspecialidad}
-          errores={errores}
-          setErrores={setErrores}
-          mostrarValidacion={mostrarValidacion}
-        />
-      {/* MODAL DETALLE */}
-      <EspecialistaDetalle
-        mostrar={mostrarDetalle}
-        especialista={especialistaSeleccionado}
-        onCerrar={() => setMostrarDetalle(false)}
-      />
-    </div>
-  );
+  return {
+    estadisticas,
+    nuevoEspecialista,
+    busqueda,
+    setBusqueda,
+    especialidadFiltro,
+    setEspecialidadFiltro,
+    estadoFiltro,
+    setEstadoFiltro,
+    especialidades,
+    limpiarFiltros,
+    especialistasFiltrados,
+    cargando,
+    verEspecialista,
+    editarEspecialista,
+    cambiarEstado,
+    mostrarDetalle,
+    setMostrarDetalle,
+    especialistaSeleccionado,
+    mostrarModal,
+    guardando,
+    setMostrarModal,
+    limpiarFormulario,
+    formulario,
+    setFormulario,
+    guardarEspecialista,
+    modoEdicion,
+    agregarEspecialidad,
+    errores,
+    setErrores,
+    mostrarValidacion
+  };
 };
-
 export default Especialistas;

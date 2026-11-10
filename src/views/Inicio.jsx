@@ -1,6 +1,6 @@
 import { Card, Col, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContextValue";
 import "../styles/Inicio.css";
 
 const Inicio = () => {

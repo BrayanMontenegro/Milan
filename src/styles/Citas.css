@@ -394,7 +394,7 @@
   line-height: 1.45;
 
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -702,130 +702,281 @@
   }
 
 }
-
 /* =========================================================
    DETALLE DE CITA
-   ========================================================= */
+========================================================= */
 
 .cita-detalle-overlay {
-  background: rgba(0, 0, 0, 0.48);
+  position: fixed;
+  inset: 0;
   z-index: 1060;
-}
 
-.cita-detalle-modal {
-  border: none;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.2);
-}
-
-/* HEADER */
-
-.cita-detalle-header {
-  background: linear-gradient(
-    135deg,
-    #c6006f,
-    #a90060
-  );
-  color: #ffffff;
-  border-bottom: none;
-  padding: 1.1rem 1.25rem;
-}
-
-.cita-detalle-header-icon {
-  width: 43px;
-  height: 43px;
-  min-width: 43px;
-  border-radius: 11px;
-  background: rgba(255, 255, 255, 0.16);
   display: flex;
   align-items: center;
   justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
 }
 
+/* CONTENEDOR */
+
+.cita-detalle-overlay .modal-dialog {
+  width: 100%;
+  max-width: 850px;
+  margin: auto;
+}
+
+.cita-detalle-modal {
+  width: 100%;
+  border: none;
+  border-radius: 18px;
+  overflow: hidden;
+
+  background: #ffffff;
+
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.22);
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.cita-detalle-header {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  padding: 18px 22px;
+
+  background: linear-gradient(
+    135deg,
+    #c6006f,
+    #9063a6
+  );
+
+  color: #ffffff;
+
+  border: none;
+}
+
+/* Contenido izquierdo del header */
+
+.cita-detalle-header > div:first-child {
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  min-width: 0;
+}
+
+/* Icono */
+
+.cita-detalle-header-icon {
+  width: 46px;
+  height: 46px;
+
+  min-width: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.16);
+
+  color: #ffffff;
+
+  font-size: 19px;
+}
+
+/* Texto */
+
 .cita-detalle-header .modal-title {
-  font-size: 1.05rem;
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 18px;
   font-weight: 700;
+
+  line-height: 1.2;
 }
 
 .cita-detalle-header small {
-  font-size: 0.74rem;
-  opacity: 0.85;
+  display: block;
+
+  margin-top: 3px;
+
+  color: rgba(255, 255, 255, 0.82);
+
+  font-size: 12px;
+
+  line-height: 1.3;
 }
 
+/* Botón cerrar */
+
 .cita-detalle-close {
-  color: #ffffff;
-  font-size: 1rem;
+  width: 38px;
+  height: 38px;
+
+  min-width: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-left: auto;
+  padding: 0;
+
   border: none;
-  opacity: 0.85;
+  border-radius: 10px;
+
+  color: #ffffff !important;
+
+  background: rgba(255, 255, 255, 0.12);
+
+  opacity: 1;
+
+  font-size: 16px;
+
+  transition: all 0.2s ease;
 }
 
 .cita-detalle-close:hover {
-  color: #ffffff;
-  opacity: 1;
+  background: rgba(255, 255, 255, 0.22);
+
+  color: #ffffff !important;
+
+  transform: scale(1.04);
 }
 
-/* RESUMEN */
+.cita-detalle-close:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+/* =========================================================
+   BODY
+========================================================= */
+
+.cita-detalle-modal .modal-body {
+  padding: 22px;
+
+  background: #ffffff;
+
+  overflow-x: hidden;
+}
+
+/* =========================================================
+   RESUMEN
+========================================================= */
 
 .cita-detalle-resumen {
-  display: flex;
+  display: grid;
+
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+
   align-items: center;
-  gap: 1.5rem;
-  padding: 1rem;
+
+  gap: 16px;
+
+  padding: 16px;
+
+  margin-bottom: 22px;
+
   background: #fff8fc;
-  border: 1px solid #f5dce9;
-  border-radius: 12px;
-  margin-bottom: 1.5rem;
+
+  border: 1px solid #f3dce8;
+
+  border-radius: 14px;
 }
 
 .cita-detalle-fecha,
 .cita-detalle-hora {
+  min-width: 0;
+
   display: flex;
   align-items: center;
-  gap: 0.7rem;
-  min-width: 0;
+
+  gap: 10px;
 }
 
 .cita-detalle-icon {
-  width: 38px;
-  height: 38px;
-  min-width: 38px;
-  border-radius: 9px;
-  background: rgba(198, 0, 111, 0.1);
-  color: #c6006f;
+  width: 40px;
+  height: 40px;
+
+  min-width: 40px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  border-radius: 10px;
+
+  background: rgba(198, 0, 111, 0.1);
+
+  color: #c6006f;
+
+  font-size: 15px;
 }
 
 .cita-detalle-label {
   display: block;
+
+  margin-bottom: 2px;
+
   color: #888;
-  font-size: 0.67rem;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
   text-transform: uppercase;
-  font-weight: 600;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
 }
 
 .cita-detalle-fecha strong,
 .cita-detalle-hora strong {
   display: block;
+
   color: #343a40;
-  font-size: 0.82rem;
-  margin-top: 0.12rem;
+
+  font-size: 13px;
+
+  line-height: 1.35;
 }
 
+/* Estado */
+
 .cita-detalle-estado {
-  margin-left: auto;
   display: inline-flex;
+
   align-items: center;
   justify-content: center;
-  padding: 0.4rem 0.7rem;
-  border-radius: 20px;
-  font-size: 0.68rem;
-  font-weight: 700;
-  text-transform: uppercase;
+
+  min-height: 32px;
+
+  padding: 6px 12px;
+
+  border-radius: 50px;
+
   white-space: nowrap;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  text-transform: uppercase;
 }
 
 .cita-detalle-estado.programada {
@@ -834,275 +985,703 @@
 }
 
 .cita-detalle-estado.confirmada {
-  background: #d1ecf1;
-  color: #0c5460;
+  background: #cff4fc;
+  color: #087990;
 }
 
 .cita-detalle-estado.atendida {
-  background: #d4edda;
-  color: #155724;
+  background: #d1e7dd;
+  color: #0f5132;
 }
 
 .cita-detalle-estado.cancelada {
   background: #f8d7da;
-  color: #721c24;
+  color: #842029;
 }
 
 .cita-detalle-estado.no-asistio {
   background: #e2e3e5;
-  color: #495057;
+  color: #41464b;
 }
 
 .cita-detalle-estado.pendiente {
-  background: #e9ecef;
-  color: #495057;
+  background: #e2e3e5;
+  color: #41464b;
 }
 
-/* SECCIONES */
+/* =========================================================
+   SECCIONES
+========================================================= */
 
 .cita-detalle-section {
-  padding-bottom: 1.4rem;
-  margin-bottom: 1.4rem;
+  margin-bottom: 22px;
+
+  padding-bottom: 20px;
+
   border-bottom: 1px solid #eeeeee;
 }
 
 .cita-detalle-section:last-of-type {
-  margin-bottom: 1rem;
+  margin-bottom: 15px;
 }
 
 .cita-detalle-section-title {
   display: flex;
   align-items: center;
-  gap: 0.55rem;
-  color: #c6006f;
-  font-size: 0.86rem;
+
+  gap: 8px;
+
+  margin-bottom: 13px;
+
+  color: #002855;
+
+  font-size: 14px;
+
   font-weight: 700;
-  margin-bottom: 1rem;
 }
 
 .cita-detalle-section-title svg {
-  font-size: 0.85rem;
+  color: #c6006f;
 }
 
-/* PACIENTE */
+/* =========================================================
+   PACIENTE
+========================================================= */
 
 .cita-detalle-paciente {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+
+  gap: 13px;
+
+  padding: 13px;
+
+  margin-bottom: 10px;
+
+  background: #fafafa;
+
+  border-radius: 12px;
 }
 
 .cita-detalle-avatar {
-  width: 48px;
-  height: 48px;
-  min-width: 48px;
-  border-radius: 50%;
-  background: rgba(198, 0, 111, 0.1);
-  color: #c6006f;
+  width: 46px;
+  height: 46px;
+
+  min-width: 46px;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  border-radius: 50%;
+
+  background: rgba(198, 0, 111, 0.1);
+
+  color: #c6006f;
+}
+
+.cita-detalle-paciente-main {
+  min-width: 0;
 }
 
 .cita-detalle-paciente-main h5 {
-  margin: 0 0 0.25rem;
-  font-size: 0.95rem;
-  color: #343a40;
+  margin: 0 0 4px;
+
+  color: #002855;
+
+  font-size: 15px;
+  font-weight: 700;
 }
 
 .cita-detalle-expediente {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
+
+  gap: 5px;
+
   color: #777;
-  font-size: 0.73rem;
+
+  font-size: 12px;
 }
 
-/* ESPECIALISTA */
+/* =========================================================
+   ESPECIALISTA
+========================================================= */
 
 .cita-detalle-especialista {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
-  padding: 0.8rem;
-  background: #f8f9fa;
-  border-radius: 10px;
+
+  gap: 13px;
+
+  padding: 13px;
+
+  margin-bottom: 10px;
+
+  background: #fafafa;
+
+  border-radius: 12px;
 }
 
 .cita-detalle-especialista-icon {
-  width: 42px;
-  height: 42px;
-  min-width: 42px;
-  border-radius: 9px;
-  background: #ffffff;
-  color: #9063a6;
+  width: 46px;
+  height: 46px;
+
+  min-width: 46px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+
+  border-radius: 50%;
+
+  background: rgba(144, 99, 166, 0.12);
+
+  color: #9063a6;
 }
 
 .cita-detalle-especialista h5 {
-  margin: 0 0 0.15rem;
-  font-size: 0.88rem;
-  color: #343a40;
+  margin: 0 0 3px;
+
+  color: #002855;
+
+  font-size: 15px;
+  font-weight: 700;
 }
 
 .cita-detalle-especialista span {
-  color: #9063a6;
-  font-size: 0.74rem;
+  color: #777;
+
+  font-size: 12px;
 }
 
-/* CONTACTO */
+/* =========================================================
+   CONTACTO
+========================================================= */
 
 .cita-detalle-contacto {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
-  padding: 0.7rem;
+
+  gap: 10px;
+
+  height: 100%;
+
+  padding: 11px 13px;
+
   background: #f8f9fa;
-  border-radius: 8px;
+
+  border-radius: 10px;
 }
 
 .cita-detalle-contacto > svg {
-  color: #00a89c;
-  font-size: 0.85rem;
+  color: #c6006f;
+
+  min-width: 15px;
 }
 
 .cita-detalle-contacto span {
   display: block;
+
   color: #888;
-  font-size: 0.67rem;
+
+  font-size: 10px;
 }
 
 .cita-detalle-contacto strong {
   display: block;
+
   color: #343a40;
-  font-size: 0.76rem;
-  font-weight: 600;
+
+  font-size: 12px;
+
   word-break: break-word;
 }
 
-/* DATOS DE CONSULTA */
+/* =========================================================
+   DATOS DE CONSULTA
+========================================================= */
 
 .cita-detalle-dato {
-  padding: 0.75rem;
+  height: 100%;
+
+  padding: 12px 14px;
+
   background: #f8f9fa;
-  border-radius: 8px;
+
+  border-radius: 10px;
 }
 
-.cita-detalle-dato > span {
+.cita-detalle-dato > span,
+.cita-detalle-dato > div span {
+  color: #777;
+
+  font-size: 11px;
+}
+
+.cita-detalle-dato > strong {
   display: block;
-  color: #888;
-  font-size: 0.67rem;
-  text-transform: uppercase;
-  font-weight: 600;
-  margin-bottom: 0.2rem;
-}
 
-.cita-detalle-dato strong {
-  color: #343a40;
-  font-size: 0.8rem;
-}
+  margin-top: 4px;
 
-.cita-detalle-dato svg {
-  color: #00a89c;
-  font-size: 0.8rem;
+  color: #002855;
+
+  font-size: 13px;
 }
 
 .cita-detalle-dato p {
-  margin: 0;
-  color: #666;
-  font-size: 0.78rem;
-  line-height: 1.5;
+  margin: 7px 0 0;
+
+  color: #555;
+
+  font-size: 13px;
+
+  line-height: 1.55;
+
+  white-space: pre-wrap;
+
+  word-break: break-word;
 }
 
-/* IDENTIFICADOR */
+.cita-detalle-dato svg {
+  color: #c6006f;
+}
+
+/* =========================================================
+   IDENTIFICADOR
+========================================================= */
 
 .cita-detalle-identificador {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
-  padding: 0.75rem;
+
+  gap: 10px;
+
+  padding: 12px 14px;
+
   background: #f8f9fa;
-  border-radius: 8px;
+
+  border-radius: 10px;
 }
 
 .cita-detalle-identificador > svg {
   color: #00a89c;
+
+  font-size: 17px;
 }
 
 .cita-detalle-identificador span {
   display: block;
+
   color: #888;
-  font-size: 0.65rem;
+
+  font-size: 10px;
 }
 
 .cita-detalle-identificador strong {
   display: block;
+
+  margin-top: 2px;
+
   color: #555;
-  font-size: 0.68rem;
+
+  font-size: 11px;
+
+  font-family: monospace;
+
   word-break: break-all;
 }
 
-/* FOOTER */
+/* =========================================================
+   FOOTER
+========================================================= */
 
 .cita-detalle-footer {
+  display: flex;
+  justify-content: flex-end;
+
+  padding: 14px 22px;
+
   background: #fafafa;
+
   border-top: 1px solid #eeeeee;
 }
 
 .cita-detalle-footer .btn {
-  border-radius: 8px;
-  font-size: 0.8rem;
-  padding: 0.5rem 1rem;
+  min-width: 100px;
 }
 
-/* RESPONSIVE */
+/* =========================================================
+   MÓVIL
+========================================================= */
 
-@media (max-width: 767.98px) {
+@media (max-width: 767px) {
 
-  .cita-detalle-modal {
-    margin: 0.75rem;
+  .cita-detalle-overlay {
+    padding: 10px;
   }
 
-  .cita-detalle-resumen {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.9rem;
-  }
-
-  .cita-detalle-estado {
-    margin-left: 0;
-  }
-
-}
-
-@media (max-width: 480px) {
-
-  .cita-detalle-modal {
+  .cita-detalle-overlay .modal-dialog {
+    max-width: 100%;
     margin: 0;
-    border-radius: 12px;
+  }
+
+  .cita-detalle-modal {
+    border-radius: 14px;
   }
 
   .cita-detalle-header {
-    padding: 0.9rem;
+    padding: 15px 16px;
   }
 
   .cita-detalle-header-icon {
-    width: 38px;
-    height: 38px;
-    min-width: 38px;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
   }
 
   .cita-detalle-header .modal-title {
-    font-size: 0.92rem;
+    font-size: 16px;
+  }
+
+  .cita-detalle-header small {
+    font-size: 10px;
+  }
+
+  .cita-detalle-modal .modal-body {
+    padding: 16px;
+  }
+
+  .cita-detalle-resumen {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .cita-detalle-estado {
+    justify-self: flex-start;
+  }
+
+  .cita-detalle-footer {
+    padding: 12px 16px;
+  }
+
+  .cita-detalle-footer .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 400px) {
+
+  .cita-detalle-header > div:first-child {
+    gap: 9px;
+  }
+
+  .cita-detalle-header-icon {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    font-size: 15px;
+  }
+
+  .cita-detalle-header .modal-title {
+    font-size: 14px;
   }
 
   .cita-detalle-header small {
     display: none;
   }
 
+  .cita-detalle-modal .modal-body {
+    padding: 13px;
+  }
+}
+
+/* =========================================================
+   INFORMACIÓN DEL ESPECIALISTA
+========================================================= */
+
+.citas-doctor-info {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  padding: 18px 22px;
+
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #faf7fc 100%
+  );
+
+  border: 1px solid #e8dced;
+  border-left: 5px solid #9063A6;
+  border-radius: 16px;
+
+  box-shadow: 0 4px 15px rgba(117, 75, 139, 0.08);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.citas-doctor-info:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 22px rgba(117, 75, 139, 0.12);
+}
+
+
+/* Icono */
+
+.citas-doctor-info-icon {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background: linear-gradient(
+    135deg,
+    #9063A6,
+    #754B8B
+  );
+
+  color: #ffffff;
+
+  font-size: 1.35rem;
+
+  box-shadow:
+    0 5px 12px rgba(117, 75, 139, 0.22);
+}
+
+
+/* Contenido */
+
+.citas-doctor-info-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.citas-doctor-info-content > span {
+  font-size: 0.76rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+
+  color: #9063A6;
+
+  margin-bottom: 3px;
+}
+
+.citas-doctor-info-content > strong {
+  font-size: 1.1rem;
+  font-weight: 700;
+
+  color: #002855;
+
+  line-height: 1.3;
+}
+
+.citas-doctor-info-content > small {
+  margin-top: 3px;
+
+  font-size: 0.85rem;
+
+  color: #6c757d;
+}
+
+
+/* =========================================================
+   ESTADÍSTICAS
+========================================================= */
+
+.citas-stat-card {
+  position: relative;
+
+  height: 100%;
+
+  min-height: 105px;
+
+  padding: 18px 20px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  background: #ffffff;
+
+  border: 1px solid #e9ecef;
+  border-radius: 15px;
+
+  box-shadow:
+    0 3px 12px rgba(0, 0, 0, 0.05);
+
+  overflow: hidden;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.citas-stat-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 4px;
+
+  background: #9063A6;
+}
+
+.citas-stat-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.08);
+
+  border-color: #d9c7df;
+}
+
+
+/* Texto */
+
+.citas-stat-card span {
+  display: block;
+
+  margin-bottom: 7px;
+
+  font-size: 0.78rem;
+  font-weight: 600;
+
+  color: #6c757d;
+
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.citas-stat-card strong {
+  display: block;
+
+  font-size: 1.8rem;
+  font-weight: 700;
+
+  line-height: 1;
+
+  color: #002855;
+}
+
+
+/* =========================================================
+   COLORES INDIVIDUALES DE ESTADÍSTICAS
+========================================================= */
+
+.citas-stat-card:nth-child(1) .citas-stat-card::before {
+  background: #9063A6;
+}
+
+.citas-stat-card:nth-child(2) .citas-stat-card::before {
+  background: #F2C100;
+}
+
+.citas-stat-card:nth-child(3) .citas-stat-card::before {
+  background: #00A89C;
+}
+
+.citas-stat-card:nth-child(4) .citas-stat-card::before {
+  background: #C6006F;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .citas-doctor-info {
+    gap: 14px;
+    padding: 16px;
+  }
+
+  .citas-doctor-info-icon {
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+
+    font-size: 1.15rem;
+  }
+
+  .citas-doctor-info-content > strong {
+    font-size: 1rem;
+  }
+
+  .citas-doctor-info-content > small {
+    font-size: 0.8rem;
+  }
+
+  .citas-stat-card {
+    min-height: 95px;
+    padding: 15px;
+  }
+
+  .citas-stat-card strong {
+    font-size: 1.55rem;
+  }
+}
+
+
+@media (max-width: 576px) {
+
+  .citas-doctor-info {
+    padding: 14px;
+    border-left-width: 4px;
+  }
+
+  .citas-doctor-info-icon {
+    width: 46px;
+    height: 46px;
+    min-width: 46px;
+
+    border-radius: 12px;
+
+    font-size: 1rem;
+  }
+
+  .citas-doctor-info-content > span {
+    font-size: 0.68rem;
+  }
+
+  .citas-doctor-info-content > strong {
+    font-size: 0.92rem;
+  }
+
+  .citas-doctor-info-content > small {
+    font-size: 0.76rem;
+  }
+
+  .citas-stat-card {
+    min-height: 90px;
+    padding: 13px;
+  }
+
+  .citas-stat-card span {
+    font-size: 0.68rem;
+  }
+
+  .citas-stat-card strong {
+    font-size: 1.4rem;
+  }
 }
 
 /* =========================================================

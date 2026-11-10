@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   FaSearch,
   FaUser,
@@ -18,11 +18,8 @@ const CitaPacienteSelector = ({
   const [mostrarResultados, setMostrarResultados] =
     useState(false);
 
-  useEffect(() => {
-    if (busqueda.trim()) {
-      setMostrarResultados(true);
-    }
-  }, [busqueda]);
+  const resultadosVisibles =
+    mostrarResultados || Boolean(busqueda.trim());
 
   const seleccionarPaciente = (item) => {
     onSeleccionar(item);
@@ -88,11 +85,15 @@ const CitaPacienteSelector = ({
   return (
     <div className="cita-paciente-selector">
 
+      <label className="form-label" htmlFor="cita-paciente-busqueda">
+        Buscar paciente
+      </label>
       <div className="cita-paciente-buscador">
 
         <FaSearch />
 
         <input
+          id="cita-paciente-busqueda"
           type="text"
           className="form-control"
           placeholder="Buscar por nombre, expediente o teléfono..."
@@ -118,7 +119,7 @@ const CitaPacienteSelector = ({
 
       </div>
 
-      {mostrarResultados && (
+      {resultadosVisibles && (
         <div className="cita-paciente-resultados">
 
           {cargando ? (

@@ -1,6 +1,150 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaClock, FaCalendarAlt, FaTimes, FaSave } from "react-icons/fa";
 import "../../../styles/EspecialistaHorario.css";
+
+const HorarioModalEncabezado = ({ horarioEditar, cerrarModal, guardando }) => (
+  <div className="modal-header horario-modal-header">
+    <div className="horario-modal-titulo">
+      <div className="horario-modal-icono">
+        <FaClock />
+      </div>
+      <div>
+        <h5 className="modal-title" id="horario-modal-titulo">
+          {horarioEditar ? "Editar horario" : "Agregar horario"}
+        </h5>
+        <span>Configure su horario de atención</span>
+      </div>
+    </div>
+    <button
+      type="button"
+      className="btn-close"
+      onClick={cerrarModal}
+      disabled={guardando}
+      aria-label="Cerrar"
+    />
+  </div>
+);
+
+const HorarioModalCampos = ({
+  error,
+  diaSemana,
+  setDiaSemana,
+  horaInicio,
+  setHoraInicio,
+  horaFin,
+  setHoraFin,
+  guardando,
+}) => (
+  <div className="modal-body">
+    {error && (
+      <div
+        className="alert alert-danger horario-modal-error"
+        role="alert"
+      >
+        {error}
+      </div>
+    )}
+    <div className="mb-3">
+      <label htmlFor="diaSemana" className="form-label">
+        <FaCalendarAlt />
+        Día de la semana
+      </label>
+      <select
+        id="diaSemana"
+        className="form-select"
+        value={diaSemana}
+        onChange={(e) => setDiaSemana(e.target.value)}
+        disabled={guardando}
+      >
+        <option value="">Seleccione un día</option>
+        {diasSemana.map((dia) => (
+          <option key={dia.valor} value={dia.valor}>
+            {dia.nombre}
+          </option>
+        ))}
+      </select>
+    </div>
+    <div className="row g-3">
+      <div className="col-12 col-sm-6">
+        <label htmlFor="horaInicio" className="form-label">
+          <FaClock />
+          Hora de inicio
+        </label>
+        <input
+          type="time"
+          id="horaInicio"
+          className="form-control"
+          value={horaInicio}
+          onChange={(e) => setHoraInicio(e.target.value)}
+          disabled={guardando}
+        />
+      </div>
+      <div className="col-12 col-sm-6">
+        <label htmlFor="horaFin" className="form-label">
+          <FaClock />
+          Hora de finalización
+        </label>
+        <input
+          type="time"
+          id="horaFin"
+          className="form-control"
+          value={horaFin}
+          onChange={(e) => setHoraFin(e.target.value)}
+          disabled={guardando}
+        />
+      </div>
+    </div>
+    <div className="horario-modal-info mt-4">
+      <FaClock />
+      <div>
+        <strong>Horario de atención</strong>
+        <p>
+          Este horario será utilizado para determinar las horas disponibles
+          al momento de crear una cita.
+        </p>
+      </div>
+    </div>
+  </div>
+);
+
+const HorarioModalAcciones = ({
+  cerrarModal,
+  guardando,
+  horarioEditar,
+}) => (
+  <div className="modal-footer horario-modal-footer">
+    <button
+      type="button"
+      className="btn btn-light"
+      onClick={cerrarModal}
+      disabled={guardando}
+    >
+      <FaTimes />
+      Cancelar
+    </button>
+    <button
+      type="submit"
+      className="btn btn-primary horario-btn-guardar"
+      disabled={guardando}
+    >
+      {guardando ? (
+        <>
+          <span
+            className="spinner-border spinner-border-sm me-2"
+            role="status"
+            aria-hidden="true"
+          />
+          Guardando...
+        </>
+      ) : (
+        <>
+          <FaSave />
+          {horarioEditar ? "Guardar cambios" : "Agregar horario"}
+        </>
+      )}
+    </button>
+  </div>
+);
 
 const diasSemana = [
   { valor: 1, nombre: "Lunes" },
@@ -19,31 +163,33 @@ const HorarioModal = ({
   onCerrar,
   onGuardar,
 }) => {
-  const [diaSemana, setDiaSemana] = useState("");
-  const [horaInicio, setHoraInicio] = useState("");
-  const [horaFin, setHoraFin] = useState("");
+  const [diaSemana, setDiaSemana] = useState(() =>
+    horarioEditar ? String(horarioEditar.dia_semana) : ""
+  );
+  const [horaInicio, setHoraInicio] = useState(() =>
+    horarioEditar?.hora_inicio?.slice(0, 5) || ""
+  );
+  const [horaFin, setHoraFin] = useState(() =>
+    horarioEditar?.hora_fin?.slice(0, 5) || ""
+  );
   const [guardando, setGuardando] = useState(false);
   const [error, setError] = useState("");
-
-  /* =========================================================
-     CARGAR DATOS AL EDITAR
-  ========================================================= */
+  const dialogRef = useRef(null);
 
   useEffect(() => {
-    if (!mostrar) return;
+    const dialog = dialogRef.current;
+    if (!mostrar || !dialog) return undefined;
 
-    setError("");
-
-    if (horarioEditar) {
-      setDiaSemana(String(horarioEditar.dia_semana));
-      setHoraInicio(horarioEditar.hora_inicio?.slice(0, 5) || "");
-      setHoraFin(horarioEditar.hora_fin?.slice(0, 5) || "");
-    } else {
-      setDiaSemana("");
-      setHoraInicio("");
-      setHoraFin("");
+    if (!dialog.open) {
+      dialog.showModal();
     }
-  }, [mostrar, horarioEditar]);
+
+    return () => {
+      if (dialog.open) {
+        dialog.close();
+      }
+    };
+  }, [mostrar]);
 
   /* =========================================================
      CERRAR
@@ -167,20 +313,18 @@ const HorarioModal = ({
     }
   };
 
-  if (!mostrar) {
-    return null;
-  }
-
   return (
-    <div
-      className="modal fade show"
+    <dialog
+      ref={dialogRef}
+      className={`modal fade ${mostrar ? "show" : ""} native-modal-root`}
       style={{
-        display: "block",
         backgroundColor: "rgba(0, 0, 0, 0.5)",
       }}
-      tabIndex="-1"
-      role="dialog"
-      aria-modal="true"
+      aria-labelledby="horario-modal-titulo"
+      onCancel={(event) => {
+        event.preventDefault();
+        cerrarModal();
+      }}
     >
       <div
         className="modal-dialog modal-dialog-centered"
@@ -188,220 +332,33 @@ const HorarioModal = ({
       >
         <div className="modal-content horario-modal">
 
-          {/* =================================================
-              HEADER
-          ================================================== */}
-
-          <div className="modal-header horario-modal-header">
-
-            <div className="horario-modal-titulo">
-
-              <div className="horario-modal-icono">
-                <FaClock />
-              </div>
-
-              <div>
-                <h5 className="modal-title">
-                  {horarioEditar
-                    ? "Editar horario"
-                    : "Agregar horario"}
-                </h5>
-
-                <span>
-                  Configure su horario de atención
-                </span>
-              </div>
-
-            </div>
-
-            <button
-              type="button"
-              className="btn-close"
-              onClick={cerrarModal}
-              disabled={guardando}
-              aria-label="Cerrar"
-            >
-            </button>
-
-          </div>
-
-          {/* =================================================
-              BODY
-          ================================================== */}
+          <HorarioModalEncabezado
+            horarioEditar={horarioEditar}
+            cerrarModal={cerrarModal}
+            guardando={guardando}
+          />
 
           <form onSubmit={handleSubmit}>
-
-            <div className="modal-body">
-
-              {error && (
-                <div
-                  className="alert alert-danger horario-modal-error"
-                  role="alert"
-                >
-                  {error}
-                </div>
-              )}
-
-              {/* DÍA */}
-
-              <div className="mb-3">
-
-                <label
-                  htmlFor="diaSemana"
-                  className="form-label"
-                >
-                  <FaCalendarAlt />
-                  Día de la semana
-                </label>
-
-                <select
-                  id="diaSemana"
-                  className="form-select"
-                  value={diaSemana}
-                  onChange={(e) =>
-                    setDiaSemana(e.target.value)
-                  }
-                  disabled={guardando}
-                >
-                  <option value="">
-                    Seleccione un día
-                  </option>
-
-                  {diasSemana.map((dia) => (
-                    <option
-                      key={dia.valor}
-                      value={dia.valor}
-                    >
-                      {dia.nombre}
-                    </option>
-                  ))}
-                </select>
-
-              </div>
-
-              {/* HORAS */}
-
-              <div className="row g-3">
-
-                <div className="col-12 col-sm-6">
-
-                  <label
-                    htmlFor="horaInicio"
-                    className="form-label"
-                  >
-                    <FaClock />
-                    Hora de inicio
-                  </label>
-
-                  <input
-                    type="time"
-                    id="horaInicio"
-                    className="form-control"
-                    value={horaInicio}
-                    onChange={(e) =>
-                      setHoraInicio(e.target.value)
-                    }
-                    disabled={guardando}
-                  />
-
-                </div>
-
-                <div className="col-12 col-sm-6">
-
-                  <label
-                    htmlFor="horaFin"
-                    className="form-label"
-                  >
-                    <FaClock />
-                    Hora de finalización
-                  </label>
-
-                  <input
-                    type="time"
-                    id="horaFin"
-                    className="form-control"
-                    value={horaFin}
-                    onChange={(e) =>
-                      setHoraFin(e.target.value)
-                    }
-                    disabled={guardando}
-                  />
-
-                </div>
-
-              </div>
-
-              {/* INFORMACIÓN */}
-
-              <div className="horario-modal-info mt-4">
-
-                <FaClock />
-
-                <div>
-                  <strong>
-                    Horario de atención
-                  </strong>
-
-                  <p>
-                    Este horario será utilizado para
-                    determinar las horas disponibles
-                    al momento de crear una cita.
-                  </p>
-                </div>
-
-              </div>
-
-            </div>
-
-            {/* =================================================
-                FOOTER
-            ================================================== */}
-
-            <div className="modal-footer horario-modal-footer">
-
-              <button
-                type="button"
-                className="btn btn-light"
-                onClick={cerrarModal}
-                disabled={guardando}
-              >
-                <FaTimes />
-                Cancelar
-              </button>
-
-              <button
-                type="submit"
-                className="btn btn-primary horario-btn-guardar"
-                disabled={guardando}
-              >
-
-                {guardando ? (
-                  <>
-                    <span
-                      className="spinner-border spinner-border-sm me-2"
-                      role="status"
-                      aria-hidden="true"
-                    />
-                    Guardando...
-                  </>
-                ) : (
-                  <>
-                    <FaSave />
-                    {horarioEditar
-                      ? "Guardar cambios"
-                      : "Agregar horario"}
-                  </>
-                )}
-
-              </button>
-
-            </div>
-
+            <HorarioModalCampos
+              error={error}
+              diaSemana={diaSemana}
+              setDiaSemana={setDiaSemana}
+              horaInicio={horaInicio}
+              setHoraInicio={setHoraInicio}
+              horaFin={horaFin}
+              setHoraFin={setHoraFin}
+              guardando={guardando}
+            />
+            <HorarioModalAcciones
+              cerrarModal={cerrarModal}
+              guardando={guardando}
+              horarioEditar={horarioEditar}
+            />
           </form>
 
         </div>
       </div>
-    </div>
+    </dialog>
   );
 };
 

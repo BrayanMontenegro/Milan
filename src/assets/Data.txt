@@ -1,0 +1,278 @@
+FICHA TECNICA DEL PRODUCTO FINAL
+Sistema de Gestion Clinica - Clinica de Especialidades Milan
+
+1. IDENTIFICACION DEL PRODUCTO
+
+Nombre: Sistema de Gestion Clinica Milan (MilanProyectWeb).
+Tipo: Aplicacion web de gestion clinica, de uso interno.
+Proposito: Centralizar la administracion de usuarios, pacientes, especialistas,
+citas, expedientes y actividades de enfermeria y consulta medica.
+Plataforma: Aplicacion web de una sola pagina (SPA), ejecutada en navegador.
+Idioma de la interfaz: Espanol.
+Usuarios previstos: Personal administrativo, especialistas medicos y personal
+de enfermeria, de acuerdo con las cuentas y roles configurados en el sistema.
+Naturaleza del producto: Software; no incluye componentes fisicos ni equipo
+medico.
+
+2. ARQUITECTURA Y TECNOLOGIAS
+
+Interfaz:
+- React 19 con JavaScript y componentes funcionales.
+- Vite 8 para desarrollo y compilacion de la aplicacion.
+- React Router para navegacion entre vistas.
+- React Bootstrap y Bootstrap 5 para formularios, tablas, tarjetas, modales y
+  adaptacion visual.
+- Bootstrap Icons, React Icons y estilos CSS propios por modulo.
+- React Toastify para notificaciones de operacion.
+
+Servicios y persistencia:
+- Supabase como plataforma de servicios de backend.
+- Supabase Auth para inicio, mantenimiento y cierre de sesion.
+- Supabase Database/PostgREST para consultar y modificar los datos clinicos.
+- Supabase Edge Function "crear-usuario" para operaciones privilegiadas de
+  creacion de cuentas.
+- Archivo de configuracion del cliente: src/database/supabase.js.
+- Variables de entorno requeridas en el cliente: VITE_SUPABASE_URL y
+  VITE_SUPABASE_ANON_KEY. No se deben almacenar claves privadas en el cliente.
+
+Entrada y composicion:
+- src/main.jsx monta React, Bootstrap, estilos globales y el contenedor de
+  notificaciones.
+- src/App.jsx conecta el proveedor de autenticacion, el enrutador, el
+  encabezado y las vistas funcionales.
+- src/index.css, src/App.css y src/styles/ contienen estilos globales y
+  especificos de las pantallas.
+
+3. COMPONENTES FUNCIONALES
+
+3.1 Acceso y control de sesion
+- Inicio de sesion con correo y contrasena mediante Supabase Auth.
+- Validacion de campos, estado de carga, mensajes de error y opcion para
+  mostrar u ocultar la contrasena.
+- AuthContext conserva el usuario autenticado y carga su perfil relacionado
+  desde usuarios, incluyendo el rol.
+- ProtectedRoute evita el acceso a las rutas protegidas sin sesion y presenta
+  un indicador mientras se verifica la autenticacion.
+- Encabezado proporciona la estructura de navegacion general y las acciones
+  asociadas a la sesion.
+
+3.2 Panel principal
+- Vista de bienvenida que muestra el nombre del perfil y el rol disponible.
+- Ofrece accesos rapidos a pacientes, citas, enfermeria y consultas.
+- Las tarjetas de estadisticas de pacientes, citas, consultas y especialistas
+  estan actualmente presentadas con el valor fijo 0; no deben interpretarse
+  como indicadores calculados en tiempo real.
+
+3.3 Administracion de usuarios y roles
+- Pantalla de administracion de usuarios con carga de perfiles y roles
+  disponibles, busqueda y filtros por rol y estado.
+- Permite consultar detalles y abrir formularios para alta y edicion.
+- La pantalla restringe la administracion al rol ADMINISTRADOR.
+- La Edge Function crear-usuario verifica la sesion y el rol administrador
+  en servidor antes de emplear la clave de servicio de Supabase para crear la
+  cuenta y registrar su perfil. La clave de servicio no forma parte del bundle
+  del navegador.
+- Los roles se consultan desde la entidad roles y se excluye ADMINISTRADOR de
+  las opciones asignables desde el formulario de esta pantalla.
+
+3.4 Registro de pacientes
+- Gestiona datos de identificacion y contacto: nombres, apellidos, fecha de
+  nacimiento, sexo, telefono, correo y direccion.
+- Incluye procedencia, ocupacion, estado civil, observaciones y datos de tutor
+  para menores.
+- Calcula la edad a partir de la fecha de nacimiento y utiliza el catalogo
+  local de departamentos y municipios de Nicaragua para sugerir procedencia.
+- Incluye consulta de listado, busqueda, filtros, ficha de detalle y
+  formularios de creacion y edicion. Tambien contempla el estado activo del
+  paciente.
+- Componentes de interfaz relacionados: PacienteHeader, PacienteFiltros,
+  PacienteTabla, PacienteCard, PacienteModal, PacienteForm,
+  PacienteDetalle y ProcedenciaSelector.
+
+3.5 Especialistas y especialidades
+- Mantiene datos de especialistas: nombre, apellidos, especialidad, codigo
+  profesional, telefono, correo y estado.
+- Presenta filtros, tabla o tarjetas, formulario modal y vista de detalle.
+- Al crear especialista, el flujo contempla la cuenta vinculada y asignacion
+  del rol correspondiente; la creacion de usuarios se canaliza a traves de
+  la funcion de servidor.
+- La especialidad se obtiene del catalogo de especialidades, que incluye
+  nombre y descripcion.
+- Componentes de interfaz relacionados: EspecialistaHeader,
+  EspecialistaFiltros, EspecialistaTabla, EspecialistaCard,
+  EspecialistaDetalle, EspecialistaModal y EspecialidadSelector.
+
+3.6 Horarios de especialistas
+- Permite al especialista autenticado consultar, crear y modificar sus
+  horarios recurrentes.
+- Cada horario se compone de dia de la semana, hora de inicio, hora de fin y
+  estado activo.
+- El perfil de especialista se vincula con la cuenta de usuario autenticada;
+  las operaciones de horario se asocian al identificador de ese especialista.
+- Componentes relacionados: EspecialidadesHeader, EspecialidadesTabla y
+  HorarioModal.
+
+3.7 Creacion y gestion de citas
+- El flujo de creacion selecciona paciente, especialidad, especialista,
+  fecha y horario disponible, y recoge tipo de consulta, motivo y
+  observaciones.
+- La disponibilidad se calcula considerando los horarios del especialista y
+  las citas existentes. La duracion definida por la interfaz es de 30 minutos.
+- La pantalla de citas lista y permite buscar, filtrar por fecha, mes, dia de
+  semana y especialista, paginar resultados y abrir detalle o acciones de
+  cita.
+- La vista para especialistas vincula la cuenta autenticada con el perfil
+  profesional y presenta las citas que corresponden a ese especialista, con
+  filtros, paginacion, detalle y edicion.
+- Las citas relacionan paciente, especialista, fecha, hora de inicio y fin,
+  motivo, tipo, estado y observaciones.
+- Estados de cita contemplados en la logica incluyen PROGRAMADA, CONFIRMADA,
+  CANCELADA y NO_ASISTIO.
+- Componentes relacionados: CitasHeader, CitaFiltros, CitaCard,
+  CitaDetalles, CitaModal, CitaPaginacion; para la creacion:
+  CitaPacienteSelector, CitaEspecialidadSelector,
+  CitaEspecialistasDisponibles, CitaCalendario,
+  CitaHorariosDisponibles y CitaForm; para el especialista:
+  CitaDoctorHeader, CitaFiltrosDoctor y CitaDetallesDoctor.
+
+3.8 Enfermeria y signos vitales
+- Presenta las citas programadas para el dia y permite buscar pacientes,
+  especialistas y especialidades.
+- Desde la cita se registra atencion inicial de enfermeria, asociada al
+  paciente y al usuario que la realiza.
+- Los campos de signos vitales disponibles incluyen peso, talla, temperatura,
+  presion arterial, frecuencia cardiaca, frecuencia respiratoria y saturacion
+  de oxigeno; tambien se guardan motivo y observaciones.
+- El flujo actual contempla marcar la cita como atendida y la gestion de los
+  registros relacionados.
+- Componentes relacionados: EnfermeriaHeader, EnfermeriaFiltros,
+  EnfermeriaCard, EnfermeriaModal y EnfermeriaPaginacion.
+
+3.9 Historial de enfermeria
+- Consulta registros de enfermeria ordenados por fecha.
+- Muestra la relacion del registro con paciente y usuario responsable.
+- Permite busqueda, filtro por fecha, paginacion y apertura del detalle.
+- Componentes relacionados: RegistroEnfermeriaFiltros,
+  RegistroEnfermeriaTabla, RegistroEnfermeriaPaginacion y
+  RegistroEnfermeriaDetalle.
+
+3.10 Expediente clinico
+- Lista pacientes activos y relaciona sus datos de identificacion con el
+  expediente clinico disponible.
+- El expediente contempla grupo sanguineo, alergias, medicamentos actuales,
+  enfermedades cronicas, antecedentes importantes y observaciones.
+- Permite buscar y distinguir pacientes con expediente y sin expediente,
+  consultar detalle y crear o actualizar la informacion del expediente.
+- Componentes relacionados: ExpedienteFiltros, ExpedienteTabla,
+  ExpedienteCard, ExpedienteModal y ExpedienteDetalle.
+
+3.11 Consultas medicas y atencion
+- La pantalla Consultas carga las citas del dia asociadas al especialista
+  autenticado, con busqueda, filtro por estado, paginacion y detalle.
+- La pantalla AtenderConsulta recibe el identificador de la cita y solo
+  permite el flujo cuando la cita tiene estado CONFIRMADA.
+- Antes de registrar la consulta, presenta informacion vinculada de paciente,
+  especialista, cita, signos vitales recientes, expediente y antecedentes.
+- El formulario de consulta incluye motivo, sintomas, diagnostico,
+  tratamiento, indicaciones y observaciones.
+- El registro se guarda en consultas y el flujo actualiza el estado de la
+  cita al completar la atencion.
+- Componentes relacionados: ConsultaHeader, ConsultaFiltros,
+  ConsultaCard, ConsultaPaginacion, ConsultaDetalle y ExpedienteDetalle.
+
+4. DATOS PRINCIPALES Y RELACIONES
+
+El codigo consultado interactua con las siguientes entidades de Supabase:
+- usuarios y roles: identidad del personal y asignacion de permisos.
+- pacientes: datos demograficos, contacto, procedencia y tutor.
+- especialistas y especialidades: perfiles profesionales y catalogo clinico.
+- horarios_especialistas: disponibilidad semanal de cada especialista.
+- citas: agenda y relacion entre paciente y especialista.
+- expedientes: informacion clinica resumida vinculada al paciente.
+- antecedentes_paciente: antecedentes ordenados por paciente y fecha.
+- registros_enfermeria: signos vitales y registro de atencion de enfermeria.
+- consultas: informacion medica documentada durante la consulta.
+
+Las relaciones se consultan desde la aplicacion mediante identificadores de
+paciente, especialista, usuario, rol y especialidad. La definicion completa
+del esquema, restricciones, politicas RLS y reglas de retencion depende de la
+configuracion del proyecto Supabase y no queda especificada completamente en
+los archivos de interfaz revisados.
+
+5. SEGURIDAD Y ACCESO OBSERVABLE
+
+- Las vistas de aplicacion, excepto el inicio de sesion, se envuelven en
+  ProtectedRoute y requieren una sesion autenticada.
+- AuthContext mantiene la sesion y carga el perfil del usuario.
+- La pantalla de usuarios comprueba el rol ADMINISTRADOR y la funcion
+  crear-usuario vuelve a verificar el rol en servidor.
+- El cliente usa una clave anonima publica a traves de variables de entorno.
+- La proteccion detallada de cada registro debe configurarse y validarse en
+  Supabase (por ejemplo, con politicas RLS); no se puede certificar a partir
+  del codigo de interfaz por si solo.
+
+6. CONFIGURACION Y EJECUCION
+
+- Requiere un proyecto Supabase configurado y las variables
+  VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY en el entorno de ejecucion.
+- La funcion crear-usuario requiere SUPABASE_URL, SUPABASE_ANON_KEY y
+  SUPABASE_SERVICE_ROLE_KEY configuradas en el entorno seguro de Supabase.
+- Comandos del proyecto: npm run dev (desarrollo), npm run build
+  (compilacion), npm run preview (vista previa) y npm run lint (analisis
+  estatico).
+- Los datos dependen de la disponibilidad, esquema y permisos del proyecto
+  Supabase asociado.
+
+7. PRODUCTO MINIMO VIABLE (MVP)
+
+Definicion: Primera version funcional y de alcance reducido del sistema,
+orientada a validar con usuarios reales los flujos esenciales de gestion
+clinica antes de ampliar el producto.
+
+Alcance funcional del MVP implementado en el codigo:
+- Acceso del personal con cuenta autenticada y proteccion de las pantallas
+  internas.
+- Administracion de usuarios y roles para cuentas con permisos de
+  administrador.
+- Registro y consulta de pacientes.
+- Administracion de especialistas, especialidades y horarios.
+- Creacion y consulta de citas, incluyendo seleccion de paciente,
+  especialista, fecha y horario disponible.
+- Registro de signos vitales y atencion inicial de enfermeria.
+- Consulta del expediente clinico y registro de la atencion medica vinculada
+  a una cita confirmada.
+
+Validacion inicial que permite realizar:
+- Comprobar con personal administrativo si los datos de pacientes,
+  especialistas y usuarios son suficientes para la operacion cotidiana.
+- Validar con pacientes de prueba el recorrido desde la programacion de una
+  cita hasta su atencion por enfermeria y especialista.
+- Verificar que horarios y citas existentes se reflejen correctamente al
+  seleccionar disponibilidad.
+- Recoger observaciones de los perfiles administrativo, medico y de
+  enfermeria sobre claridad de pantallas, busquedas y pasos de trabajo.
+
+Condiciones y limites del MVP:
+- Para una prueba funcional se necesita conectar el sistema a un proyecto
+  Supabase con esquema, cuentas, datos de prueba y permisos configurados.
+- La funcionalidad visible en el codigo no demuestra por si sola que la
+  instancia de backend este desplegada ni que todos los flujos hayan sido
+  validados con usuarios.
+- El panel principal aun utiliza cifras fijas; por tanto, no forma parte de
+  la validacion de indicadores reales.
+- Antes de usar datos clinicos reales deben verificarse las politicas de
+  acceso, privacidad, respaldos y manejo de informacion sensible.
+
+8. ALCANCE Y CONSIDERACIONES DEL ESTADO ACTUAL
+
+- La ficha describe las funcionalidades visibles en el codigo fuente
+  revisado; no constituye certificacion de despliegue, disponibilidad,
+  cumplimiento normativo ni validacion de politicas de base de datos.
+- Las cifras del panel principal son marcadores fijos y no reflejan conteos
+  reales.
+- No se incluyen en este repositorio documentos completos de esquema o
+  migraciones que permitan especificar todas las restricciones de base de
+  datos.
+- La configuracion de produccion debe revisar las variables de entorno, CORS
+  de la Edge Function, politicas de acceso a datos, respaldos y manejo de
+  informacion clinica sensible.

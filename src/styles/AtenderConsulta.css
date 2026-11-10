@@ -1,0 +1,1191 @@
+:root {
+  --milan-fucsia: #C6006F;
+  --milan-fucsia-dark: #a8005d;
+
+  --milan-azul: #002855;
+  --milan-turquesa: #00A89C;
+  --milan-turquesa-dark: #008f86;
+
+  --milan-lila: #9063A6;
+  --milan-amarillo: #F2C100;
+
+  --milan-blanco: #ffffff;
+  --milan-fondo: #f5f7fa;
+  --milan-gris: #6c757d;
+  --milan-gris-claro: #e9ecef;
+  --milan-borde: #dee2e6;
+
+  --milan-texto: #263238;
+}
+
+
+/* =========================================================
+   CONTENEDOR PRINCIPAL
+   ========================================================= */
+
+.atender-consulta-page {
+  min-height: 100vh;
+  background: var(--milan-fondo);
+  color: var(--milan-texto);
+}
+
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.atender-consulta-loading {
+  min-height: 70vh;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 15px;
+
+  color: var(--milan-gris);
+}
+
+.atender-consulta-loading .spinner-border {
+  color: var(--milan-fucsia);
+}
+
+.atender-consulta-loading p {
+  margin: 0;
+  font-size: 15px;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.atender-consulta-header {
+  min-height: 90px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 25px;
+
+  padding: 18px 30px;
+
+  background: var(--milan-blanco);
+
+  border-bottom: 1px solid var(--milan-borde);
+
+  position: sticky;
+  top: 0;
+
+  z-index: 100;
+}
+
+
+/* BOTÓN VOLVER */
+
+.atender-volver {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 8px;
+
+  border: none;
+  background: transparent;
+
+  color: var(--milan-gris);
+
+  font-size: 14px;
+  font-weight: 600;
+
+  padding: 8px 10px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.atender-volver:hover {
+  color: var(--milan-fucsia);
+  background: #fff1f8;
+}
+
+
+/* TÍTULO */
+
+.atender-header-titulo {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  flex: 1;
+}
+
+.atender-header-icon {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: #fce4f0;
+  color: var(--milan-fucsia);
+
+  font-size: 22px;
+}
+
+.atender-header-titulo h1 {
+  margin: 0;
+
+  color: var(--milan-azul);
+
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.atender-header-titulo p {
+  margin: 3px 0 0;
+
+  color: var(--milan-gris);
+
+  font-size: 13px;
+}
+
+
+/* ESTADO */
+
+.atender-header-estado {
+  padding: 8px 14px;
+
+  border-radius: 20px;
+
+  background: #e6f7f5;
+  color: var(--milan-turquesa);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  letter-spacing: 0.4px;
+}
+
+
+/* =========================================================
+   CONTENIDO
+   ========================================================= */
+
+.atender-consulta-contenido {
+  width: 100%;
+
+  max-width: 1600px;
+
+  margin: 0 auto;
+
+  padding: 25px 30px 40px;
+}
+
+
+/* =========================================================
+   SECCIONES
+   ========================================================= */
+
+.atender-seccion {
+  background: var(--milan-blanco);
+
+  border: 1px solid var(--milan-borde);
+
+  border-radius: 14px;
+
+  padding: 22px;
+
+  margin-bottom: 20px;
+
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.035);
+}
+
+
+/* =========================================================
+   PACIENTE PRINCIPAL
+   ========================================================= */
+
+.paciente-principal {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.atender-paciente-identidad {
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+}
+
+.atender-paciente-avatar {
+  width: 64px;
+  height: 64px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #fce4f0;
+  color: var(--milan-fucsia);
+
+  font-size: 25px;
+}
+
+.atender-label {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: var(--milan-gris);
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 0.8px;
+}
+
+.atender-paciente-identidad h2 {
+  margin: 0;
+
+  color: var(--milan-azul);
+
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.atender-paciente-datos {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 15px;
+
+  margin-top: 7px;
+
+  color: var(--milan-gris);
+
+  font-size: 13px;
+}
+
+.atender-paciente-datos strong {
+  margin-left: 4px;
+
+  color: var(--milan-texto);
+}
+
+
+/* BOTÓN EXPEDIENTE */
+
+.btn-ver-expediente {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 10px 16px;
+
+  border: 1px solid var(--milan-fucsia);
+
+  border-radius: 8px;
+
+  background: white;
+
+  color: var(--milan-fucsia);
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.btn-ver-expediente:hover {
+  background: var(--milan-fucsia);
+  color: white;
+}
+
+
+/* =========================================================
+   LAYOUT
+   ========================================================= */
+
+.atender-layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    340px;
+
+  gap: 20px;
+
+  align-items: start;
+}
+
+.atender-columna-principal {
+  min-width: 0;
+}
+
+.atender-columna-lateral {
+  min-width: 0;
+}
+
+
+/* =========================================================
+   HEADER DE SECCIÓN
+   ========================================================= */
+
+.atender-seccion-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 20px;
+}
+
+.atender-seccion-header > div {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+.atender-seccion-icon {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 10px;
+
+  background: #e6f7f5;
+  color: var(--milan-turquesa);
+
+  font-size: 17px;
+}
+
+.atender-seccion-header h3 {
+  margin: 0;
+
+  color: var(--milan-azul);
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.atender-seccion-header p {
+  margin: 3px 0 0;
+
+  color: var(--milan-gris);
+
+  font-size: 12px;
+}
+
+
+/* SOLO LECTURA */
+
+.solo-lectura {
+  padding: 6px 10px;
+
+  border-radius: 6px;
+
+  background: #f1f3f5;
+
+  color: var(--milan-gris);
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   SIGNOS VITALES
+   ========================================================= */
+
+.signos-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.signo-card {
+  min-height: 105px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+  justify-content: center;
+
+  gap: 5px;
+
+  padding: 14px;
+
+  border: 1px solid #e4e7eb;
+
+  border-radius: 10px;
+
+  background: #fafbfc;
+}
+
+.signo-card svg {
+  margin-bottom: 3px;
+
+  color: var(--milan-turquesa);
+
+  font-size: 17px;
+}
+
+.signo-card span {
+  color: var(--milan-gris);
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.signo-card strong {
+  color: var(--milan-azul);
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+
+/* SIN SIGNOS */
+
+.sin-signos {
+  min-height: 100px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 20px;
+
+  border: 1px dashed var(--milan-borde);
+
+  border-radius: 10px;
+
+  color: var(--milan-gris);
+
+  text-align: center;
+}
+
+.sin-signos svg {
+  color: var(--milan-turquesa);
+
+  font-size: 25px;
+}
+
+.sin-signos p {
+  margin: 0;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   INFORMACIÓN DE CITA
+   ========================================================= */
+
+.cita-info-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+.cita-info-grid > div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+
+  padding-bottom: 12px;
+
+  border-bottom: 1px solid #f0f1f3;
+}
+
+.cita-info-grid span {
+  color: var(--milan-gris);
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.cita-info-grid strong {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: var(--milan-texto);
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.cita-info-grid strong svg {
+  color: var(--milan-fucsia);
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   FORMULARIO MÉDICO
+   ========================================================= */
+
+.atender-formulario {
+  margin: 0;
+}
+
+.campo-consulta {
+  margin-bottom: 18px;
+}
+
+.campo-consulta:last-child {
+  margin-bottom: 0;
+}
+
+.campo-consulta label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: var(--milan-azul);
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.campo-consulta label span {
+  margin-left: 3px;
+
+  color: var(--milan-fucsia);
+}
+
+.campo-consulta textarea {
+  width: 100%;
+
+  min-height: 100px;
+
+  resize: vertical;
+
+  padding: 12px 14px;
+
+  border: 1px solid var(--milan-borde);
+
+  border-radius: 9px;
+
+  background: #fff;
+
+  color: var(--milan-texto);
+
+  font-size: 13px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.campo-consulta textarea::placeholder {
+  color: #adb5bd;
+}
+
+.campo-consulta textarea:focus {
+  border-color: var(--milan-fucsia);
+
+  box-shadow:
+    0 0 0 3px rgba(198, 0, 111, 0.09);
+}
+
+
+/* =========================================================
+   FOOTER FORMULARIO
+   ========================================================= */
+
+.atender-formulario-footer {
+  display: flex;
+
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  padding: 5px 0 25px;
+}
+
+.btn-atender-cancelar,
+.btn-atender-guardar {
+  min-height: 43px;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 10px 18px;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.btn-atender-cancelar {
+  border: 1px solid var(--milan-borde);
+
+  background: white;
+
+  color: var(--milan-gris);
+}
+
+.btn-atender-cancelar:hover {
+  background: #f1f3f5;
+
+  color: var(--milan-texto);
+}
+
+.btn-atender-guardar {
+  border: 1px solid var(--milan-fucsia);
+
+  background: var(--milan-fucsia);
+
+  color: white;
+}
+
+.btn-atender-guardar:hover {
+  border-color: var(--milan-fucsia-dark);
+
+  background: var(--milan-fucsia-dark);
+}
+
+.btn-atender-guardar:disabled,
+.btn-atender-cancelar:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.atender-lateral-card {
+  margin-bottom: 20px;
+
+  padding: 18px;
+
+  border: 1px solid var(--milan-borde);
+
+  border-radius: 14px;
+
+  background: white;
+
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.035);
+}
+
+.lateral-card-header {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  padding-bottom: 13px;
+
+  margin-bottom: 15px;
+
+  border-bottom: 1px solid #edf0f2;
+
+  color: var(--milan-azul);
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.lateral-card-header svg {
+  color: var(--milan-fucsia);
+}
+
+
+/* DATOS */
+
+.lateral-datos {
+  display: flex;
+  flex-direction: column;
+
+  gap: 13px;
+}
+
+.lateral-datos > div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.lateral-datos span {
+  color: var(--milan-gris);
+
+  font-size: 11px;
+}
+
+.lateral-datos strong {
+  color: var(--milan-texto);
+
+  font-size: 12px;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   EXPEDIENTE
+   ========================================================= */
+
+.expediente-resumen {
+  display: flex;
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+.expediente-resumen > div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.expediente-resumen span {
+  color: var(--milan-gris);
+
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.expediente-resumen strong {
+  color: var(--milan-azul);
+
+  font-size: 13px;
+}
+
+.expediente-resumen p {
+  margin: 0;
+
+  color: var(--milan-texto);
+
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   SIN EXPEDIENTE
+   ========================================================= */
+
+.sin-expediente {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 15px 5px;
+
+  color: var(--milan-gris);
+
+  text-align: center;
+}
+
+.sin-expediente svg {
+  color: var(--milan-lila);
+
+  font-size: 24px;
+}
+
+.sin-expediente p {
+  margin: 0;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   ANTECEDENTES
+   ========================================================= */
+
+.antecedentes-lista {
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+}
+
+.antecedente-item {
+  padding: 11px;
+
+  border-left: 3px solid var(--milan-lila);
+
+  border-radius: 0 7px 7px 0;
+
+  background: #f8f6fa;
+}
+
+.antecedente-item strong {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: var(--milan-azul);
+
+  font-size: 12px;
+}
+
+.antecedente-item p {
+  margin: 0 0 5px;
+
+  color: var(--milan-texto);
+
+  font-size: 12px;
+
+  line-height: 1.45;
+}
+
+.antecedente-item small {
+  color: var(--milan-gris);
+
+  font-size: 10px;
+}
+
+.sin-antecedentes {
+  padding: 15px;
+
+  border-radius: 8px;
+
+  background: #f8f9fa;
+
+  color: var(--milan-gris);
+
+  font-size: 12px;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+  .atender-layout {
+    grid-template-columns:
+      minmax(0, 1fr)
+      300px;
+  }
+
+  .signos-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .cita-info-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* =========================================================
+   TABLET PEQUEÑA
+   ========================================================= */
+
+@media (max-width: 992px) {
+
+  .atender-consulta-header {
+    flex-wrap: wrap;
+
+    padding: 15px 20px;
+  }
+
+  .atender-volver {
+    order: 1;
+  }
+
+  .atender-header-titulo {
+    order: 2;
+
+    flex: 1;
+  }
+
+  .atender-header-estado {
+    order: 3;
+  }
+
+  .atender-consulta-contenido {
+    padding: 20px;
+  }
+
+  .atender-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .atender-columna-lateral {
+    display: grid;
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+  }
+
+  .atender-lateral-card {
+    margin-bottom: 0;
+  }
+
+}
+
+
+/* =========================================================
+   MÓVIL
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .atender-consulta-header {
+    position: relative;
+
+    gap: 12px;
+
+    padding: 14px 15px;
+  }
+
+  .atender-volver {
+    width: 100%;
+
+    justify-content: flex-start;
+
+    padding-left: 0;
+  }
+
+  .atender-header-titulo {
+    width: 100%;
+  }
+
+  .atender-header-icon {
+    width: 42px;
+    height: 42px;
+
+    font-size: 18px;
+  }
+
+  .atender-header-titulo h1 {
+    font-size: 18px;
+  }
+
+  .atender-header-titulo p {
+    font-size: 11px;
+  }
+
+  .atender-header-estado {
+    position: absolute;
+
+    top: 16px;
+    right: 15px;
+
+    font-size: 10px;
+  }
+
+
+  .atender-consulta-contenido {
+    padding: 15px;
+  }
+
+
+  .paciente-principal {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .atender-paciente-identidad {
+    align-items: flex-start;
+  }
+
+  .atender-paciente-avatar {
+    width: 52px;
+    height: 52px;
+
+    font-size: 20px;
+  }
+
+  .atender-paciente-identidad h2 {
+    font-size: 18px;
+  }
+
+  .atender-paciente-datos {
+    flex-direction: column;
+
+    gap: 5px;
+  }
+
+  .btn-ver-expediente {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+
+  .atender-seccion {
+    padding: 16px;
+
+    border-radius: 11px;
+  }
+
+
+  .atender-seccion-header {
+    align-items: flex-start;
+  }
+
+  .atender-seccion-header h3 {
+    font-size: 15px;
+  }
+
+
+  .signos-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 8px;
+  }
+
+  .signo-card {
+    min-height: 95px;
+
+    padding: 11px;
+  }
+
+  .signo-card strong {
+    font-size: 15px;
+  }
+
+
+  .cita-info-grid {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+  }
+
+
+  .atender-columna-lateral {
+    grid-template-columns: 1fr;
+  }
+
+
+  .atender-formulario-footer {
+    flex-direction: column-reverse;
+
+    align-items: stretch;
+  }
+
+  .btn-atender-cancelar,
+  .btn-atender-guardar {
+    width: 100%;
+  }
+
+}
+
+
+/* =========================================================
+   MÓVIL PEQUEÑO
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  .atender-consulta-contenido {
+    padding: 10px;
+  }
+
+  .atender-seccion {
+    padding: 14px;
+  }
+
+  .atender-paciente-identidad {
+    gap: 10px;
+  }
+
+  .atender-paciente-avatar {
+    width: 46px;
+    height: 46px;
+  }
+
+  .atender-paciente-identidad h2 {
+    font-size: 16px;
+  }
+
+  .signos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .solo-lectura {
+    display: none;
+  }
+
+  .atender-seccion-header > div {
+    gap: 8px;
+  }
+
+}

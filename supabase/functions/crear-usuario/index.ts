@@ -606,100 +606,8 @@ Deno.serve(async (req: Request) => {
 
     if (esEspecialista) {
       // ---------------------------------------------------
-      // GENERAR CÓDIGO PROFESIONAL
+      // CÓDIGO MINSA OBTENIDO DEL REQUEST
       // ---------------------------------------------------
-
-      const anio =
-        new Date().getFullYear();
-
-      const prefijo =
-        `ESP-${anio}-`;
-
-      const {
-        data: ultimoEspecialista,
-        error:
-          codigoConsultaError,
-      } = await supabaseAdmin
-        .from("especialistas")
-        .select(
-          "codigo_profesional"
-        )
-        .like(
-          "codigo_profesional",
-          `${prefijo}%`
-        )
-        .order(
-          "codigo_profesional",
-          {
-            ascending: false,
-          }
-        )
-        .limit(1);
-
-      if (codigoConsultaError) {
-        console.error(
-          "Error consultando códigos:",
-          codigoConsultaError
-        );
-
-        // Rollback
-        await supabaseAdmin
-          .from("usuarios")
-          .delete()
-          .eq(
-            "id_usuario",
-            nuevoUsuarioId
-          );
-
-        await supabaseAdmin.auth.admin.deleteUser(
-          nuevoUsuarioId
-        );
-
-        return responder(
-          {
-            error:
-              "No se pudo generar el código profesional.",
-            detalle:
-              codigoConsultaError.message,
-          },
-          500
-        );
-      }
-
-      let siguiente = 1;
-
-      if (
-        ultimoEspecialista &&
-        ultimoEspecialista.length > 0
-      ) {
-        const ultimoCodigo =
-          ultimoEspecialista[0]
-            .codigo_profesional;
-
-        if (ultimoCodigo) {
-          const numero =
-            parseInt(
-              ultimoCodigo.replace(
-                prefijo,
-                ""
-              ),
-              10
-            );
-
-          if (
-            !Number.isNaN(numero)
-          ) {
-            siguiente =
-              numero + 1;
-          }
-        }
-      }
-
-      const codigoProfesional =
-        codigo_profesional ||
-        `${prefijo}${String(
-          siguiente
-        ).padStart(3, "0")}`;
 
       // ---------------------------------------------------
       // CREAR REGISTRO ESPECIALISTA
@@ -723,9 +631,6 @@ Deno.serve(async (req: Request) => {
 
           apellidos,
 
-          codigo_profesional:
-            codigoProfesional,
-
           codigo_minsa:
             codigo_minsa || null,
 
@@ -743,7 +648,6 @@ Deno.serve(async (req: Request) => {
           id_especialidad,
           nombres,
           apellidos,
-          codigo_profesional,
           codigo_minsa,
           telefono,
           correo,

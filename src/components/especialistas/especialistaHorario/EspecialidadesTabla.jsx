@@ -69,12 +69,14 @@ const EspecialidadesTabla = ({
                                     <div className="d-flex justify-content-end gap-2">      
                                         <button
                                             className="btn btn-sm btn-primary"
+                                            aria-label={`Ver ${especialidad.nombre}`}
                                             onClick={() => onVer(especialidad)}
                                         >
                                             <FaEye />
                                         </button>
                                         <button
                                             className="btn btn-sm btn-warning"
+                                            aria-label={`Editar ${especialidad.nombre}`}
                                             onClick={() => onEditar(especialidad)}
                                         >
                                             <FaEdit />
@@ -85,6 +87,11 @@ const EspecialidadesTabla = ({
                                                     ? "btn-danger"
                                                     : "btn-success"
                                             }`}
+                                            aria-label={`${
+                                                especialidad.estado === "Activo"
+                                                    ? "Desactivar"
+                                                    : "Activar"
+                                            } ${especialidad.nombre}`}
                                             onClick={() => onCambiarEstado(especialidad)}
                                         >
                                             <FaPowerOff />

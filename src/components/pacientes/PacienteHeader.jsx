@@ -1,6 +1,6 @@
 import React from "react";
 import { FaUserInjured, FaPlus } from "react-icons/fa";
-import "../../styles/pacientes.css";
+import "../../styles/Pacientes.css";
 
 const PacienteHeader = ({ onNuevoPaciente }) => {
   return (

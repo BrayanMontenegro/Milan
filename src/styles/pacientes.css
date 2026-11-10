@@ -1524,6 +1524,11 @@
 ========================================================= */
 
 .procedencia-modal {
+  position: relative;
+  inset: auto;
+  margin: 0;
+  padding: 0;
+  color: inherit;
   width: 100%;
   max-width: 500px;
   max-height: 90vh;

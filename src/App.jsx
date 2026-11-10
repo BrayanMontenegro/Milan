@@ -15,9 +15,18 @@ import Inicio from "./views/Inicio";
 import Usuarios from "./views/Usuarios";
 import Pacientes from "./views/Pacientes";
 import Especialistas from "./views/Especialistas";
+import Expedientes from "./views/Expedientes";
+import Enfermeria from "./views/Enfermeria";
 import EspecialistaHorario from "./views/EspecialistaHorario";
+import RegistrosEnfermeria from "./views/RegistrosEnfermeria";
+import MisProcedimientos from "./views/MisProcedimientos";
+import Caja from "./views/Caja";
+import ReportesFinancieros from "./views/ReportesFinancieros";
 import CrearCita from "./views/CrearCita";
 import Citas from "./views/Citas";
+import CitasDoctor from "./views/CitasDoctor";
+import Consultas from "./views/Consultas";
+import AtenderConsulta from "./views/AtenderConsulta";
 import Encabezado from "./components/Encabezado";
 import ProtectedRoute from "./assets/routes/ProtectedRoute";
 
@@ -74,6 +83,72 @@ const App = () => {
           />
 
           <Route
+            path="/mis-procedimientos"
+            element={
+              <ProtectedRoute>
+                <div className="p-4">
+                  <MisProcedimientos />
+                </div>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/caja"
+            element={
+              <ProtectedRoute roles={["ADMINISTRADOR", "RECEPCION"]}>
+                <div className="p-4">
+                  <Caja />
+                </div>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/reportes-financieros"
+            element={
+              <ProtectedRoute roles={["ADMINISTRADOR"]}>
+                <div className="p-4">
+                  <ReportesFinancieros />
+                </div>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/citas-doctor"
+            element={
+              <ProtectedRoute>
+                <div className="p-4">
+                  <CitasDoctor />
+                </div>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/consultas"
+            element={
+              <ProtectedRoute>
+                <div className="p-4">
+                  <Consultas />
+                </div>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path ="/consultas/atender/:id_cita"
+            element={
+              <ProtectedRoute>
+                <div className="p-4">
+                  <AtenderConsulta />
+                </div>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
             path="/especialista-horario"
             element={
               <ProtectedRoute>
@@ -111,8 +186,18 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <div className="p-4">
-                  <h2>Enfermería</h2>
-                  <p>Módulo en desarrollo.</p>
+                  <Enfermeria />
+                </div>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/registros-enfermeria"
+            element={
+              <ProtectedRoute>
+                <div className="p-4">
+                  <RegistrosEnfermeria />
                 </div>
               </ProtectedRoute>
             }
@@ -142,24 +227,11 @@ const App = () => {
           />
 
           <Route
-            path="/especialidades"
-            element={
-              <ProtectedRoute>
-                <div className="p-4">
-                  <h2>Especialidades</h2>
-                  <p>Módulo en desarrollo.</p>
-                </div>
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
             path="/expedientes"
             element={
               <ProtectedRoute>
                 <div className="p-4">
-                  <h2>Expedientes</h2>
-                  <p>Módulo en desarrollo.</p>
+                  <Expedientes />
                 </div>
               </ProtectedRoute>
             }

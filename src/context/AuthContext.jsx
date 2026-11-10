@@ -1,7 +1,11 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { supabase } from "../database/supabase";
-
-const AuthContext = createContext();
+import { AuthContext } from "./AuthContextValue";
 
 export const AuthProvider = ({ children }) => {
   const [usuario, setUsuario] = useState(null);
@@ -71,7 +75,7 @@ export const AuthProvider = ({ children }) => {
     return () => subscription.unsubscribe();
   }, []);
 
-  const cerrarSesion = async () => {
+  const cerrarSesion = useCallback(async () => {
     const { error } = await supabase.auth.signOut();
 
     if (error) {
@@ -81,20 +85,23 @@ export const AuthProvider = ({ children }) => {
 
     setUsuario(null);
     setPerfil(null);
-  };
+  }, []);
+
+  const valorContexto = useMemo(
+    () => ({
+      usuario,
+      perfil,
+      cargando,
+      cerrarSesion,
+    }),
+    [usuario, perfil, cargando, cerrarSesion]
+  );
 
   return (
     <AuthContext.Provider
-      value={{
-        usuario,
-        perfil,
-        cargando,
-        cerrarSesion,
-      }}
+      value={valorContexto}
     >
       {children}
     </AuthContext.Provider>
   );
 };
-
-export const useAuth = () => useContext(AuthContext);

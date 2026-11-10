@@ -6,6 +6,7 @@ import { supabase } from "../database/supabase";
 import departamentosData from "../database/Departamentos.json";
 
 import PacienteHeader from "../components/pacientes/PacienteHeader";
+import PacienteEstadisticas from "../components/pacientes/PacienteEstadisticas";
 import PacienteFiltros from "../components/pacientes/PacienteFilters";
 import PacienteTabla from "../components/pacientes/PacienteTable";
 import PacienteCard from "../components/pacientes/PacienteCard";
@@ -83,6 +84,235 @@ const procedenciasNicaragua = [
 ].sort((a, b) => a.localeCompare(b));
 
 const Pacientes = () => {
+  const {
+    nuevoPaciente,
+    totalPacientes,
+    pacientesActivos,
+    menores,
+    pacientesInactivos,
+    busqueda,
+    setBusqueda,
+    procedencia,
+    setProcedencia,
+    estado,
+    setEstado,
+    procedencias,
+    limpiarFiltros,
+    cargando,
+    pacientesFiltrados,
+    verPaciente,
+    editarPaciente,
+    cambiarEstado,
+    eliminarPaciente,
+    pacienteSeleccionado,
+    mostrarPaciente,
+    cerrarPaciente,
+    mostrarModal,
+    setMostrarModal,
+    guardando,
+    formulario,
+    setFormulario,
+    guardarPaciente,
+    modoEdicion
+  } = usePacientesController();
+
+  return (
+    <div className="pacientes-page container-fluid px-3 px-md-4 py-3">
+
+      <PacienteHeader
+        onNuevoPaciente={
+          nuevoPaciente
+        }
+      />
+
+      <PacienteEstadisticas
+        total={totalPacientes}
+        activos={pacientesActivos}
+        menores={menores}
+        inactivos={pacientesInactivos}
+      />
+
+      <div className="pacientes-main-card">
+        <PacienteFiltros
+          busqueda={busqueda}
+          setBusqueda={setBusqueda}
+          procedencia={procedencia}
+          setProcedencia={setProcedencia}
+          estado={estado}
+          setEstado={setEstado}
+          procedencias={procedencias}
+          onLimpiar={limpiarFiltros}
+        />
+        <div className="px-3 px-md-4 py-3">
+
+          <div className="d-flex justify-content-between align-items-center">
+
+            <div>
+
+              <h5 className="mb-1 pacientes-section-title">
+                Registro de pacientes
+              </h5>
+
+              <small className="text-muted">
+
+                {cargando
+                  ? "Cargando pacientes..."
+                  : `${pacientesFiltrados.length} paciente${pacientesFiltrados.length !== 1 ? "s" : ""} encontrado${pacientesFiltrados.length !== 1 ? "s" : ""}`
+                }
+
+              </small>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        {cargando ? (
+
+          <div className="pacientes-loading">
+
+            <div
+              className="spinner-border"
+              role="status"
+            />
+
+            <p>
+              Cargando pacientes...
+            </p>
+
+          </div>
+
+        ) : (
+
+          <>
+
+              <PacienteTabla
+                pacientes={pacientesFiltrados}
+                onVer={verPaciente}
+                onEditar={editarPaciente}
+                onCambiarEstado={cambiarEstado}
+                onEliminar={eliminarPaciente}
+              />
+
+
+            <PacienteDetalle
+              paciente={pacienteSeleccionado}
+              mostrar={mostrarPaciente}
+              onCerrar={cerrarPaciente}
+            />
+
+            <div className="pacientes-mobile-list">
+
+              {pacientesFiltrados.length === 0 ? (
+
+                <div className="pacientes-mobile-empty">
+
+                  <FaUserInjured />
+
+                  <h5>
+                    No se encontraron pacientes
+                  </h5>
+
+                  <p>
+                    Intente cambiar los filtros
+                    de búsqueda.
+                  </p>
+
+                </div>
+
+              ) : (
+
+                pacientesFiltrados.map(
+                  (paciente) => (
+
+                    <PacienteCard
+                      key={
+                        paciente.id_paciente
+                      }
+
+                      paciente={
+                        paciente
+                      }
+
+                      onVer={
+                        verPaciente
+                      }
+
+                      onEditar={
+                        editarPaciente
+                      }
+
+                      onCambiarEstado={
+                        cambiarEstado
+                      }
+                    />
+
+                  )
+                )
+
+              )}
+
+            </div>
+
+          </>
+
+        )}
+
+      </div>
+
+      <PacienteModal
+        mostrar={
+          mostrarModal
+        }
+
+        onCerrar={() => {
+
+          if (!guardando) {
+
+            setMostrarModal(
+              false
+            );
+
+            limpiarFormulario();
+
+          }
+
+        }}
+
+        formulario={
+          formulario
+        }
+
+        setFormulario={
+          setFormulario
+        }
+
+        onSubmit={
+          guardarPaciente
+        }
+
+        guardando={
+          guardando
+        }
+
+        modoEdicion={
+          modoEdicion
+        }
+
+        procedencias={
+          procedencias
+        }
+
+      />
+
+    </div>
+  );
+};
+
+
+
+const usePacientesController = () => {
 
   const [
     pacienteSeleccionado,
@@ -309,25 +539,10 @@ const Pacientes = () => {
 
     try {
 
-      const {
-        data,
-        error
-      } = await supabase
+      const { data, error } = await supabase
         .from("pacientes")
-        .select(
-          "codigo_expediente"
-        )
-        .like(
-          "codigo_expediente",
-          `PAC-${anioActual}-%`
-        )
-        .order(
-          "codigo_expediente",
-          {
-            ascending: false
-          }
-        )
-        .limit(1);
+        .select("codigo_expediente")
+        .like("codigo_expediente", `PAC-${anioActual}-%`);
 
       if (error) {
         throw error;
@@ -335,38 +550,20 @@ const Pacientes = () => {
 
       let consecutivo = 1;
 
-      if (
-        data &&
-        data.length > 0 &&
-        data[0].codigo_expediente
-      ) {
+      if (data && data.length > 0) {
+        const validos = data
+          .map(p => p.codigo_expediente)
+          .map((code) => code?.split("-")[2])
+          .filter((consecutivo) => consecutivo?.length === 3)
+          .map((consecutivo) => parseInt(consecutivo, 10))
+          .filter(num => !Number.isNaN(num));
 
-        const partes =
-          data[0]
-            .codigo_expediente
-            .split("-");
-
-        const ultimoNumero =
-          parseInt(
-            partes[2],
-            10
-          );
-
-        if (
-          !Number.isNaN(
-            ultimoNumero
-          )
-        ) {
-
-          consecutivo =
-            ultimoNumero + 1;
+        if (validos.length > 0) {
+          consecutivo = Math.max(...validos) + 1;
         }
       }
 
-      return (
-        `PAC-${anioActual}-` +
-        `${String(consecutivo).padStart(3, "0")}`
-      );
+      return `PAC-${anioActual}-${String(consecutivo).padStart(3, "0")}`;
 
     } catch (error) {
 
@@ -1208,295 +1405,36 @@ const eliminarPaciente = async (paciente) => {
         )
     ).length;
 
-  return (
-    <div className="pacientes-page container-fluid px-3 px-md-4 py-3">
-
-      <PacienteHeader
-        onNuevoPaciente={
-          nuevoPaciente
-        }
-      />
-
-      <div className="row g-3 mb-4">
-
-        <div className="col-6 col-lg-3">
-
-          <div className="paciente-stat-card">
-
-            <div className="paciente-stat-icon purple">
-              <FaUserInjured />
-            </div>
-
-            <div>
-
-              <small>
-                Total pacientes
-              </small>
-
-              <h3>
-                {totalPacientes}
-              </h3>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div className="col-6 col-lg-3">
-
-          <div className="paciente-stat-card">
-
-            <div className="paciente-stat-icon turquoise">
-              <span>✓</span>
-            </div>
-
-            <div>
-
-              <small>
-                Pacientes activos
-              </small>
-
-              <h3>
-                {pacientesActivos}
-              </h3>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div className="col-6 col-lg-3">
-
-          <div className="paciente-stat-card">
-
-            <div className="paciente-stat-icon yellow">
-              <span>18</span>
-            </div>
-
-            <div>
-
-              <small>
-                Menores de edad
-              </small>
-
-              <h3>
-                {menores}
-              </h3>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div className="col-6 col-lg-3">
-
-          <div className="paciente-stat-card">
-
-            <div className="paciente-stat-icon fuchsia">
-              <span>!</span>
-            </div>
-
-            <div>
-
-              <small>
-                Inactivos
-              </small>
-
-              <h3>
-                {pacientesInactivos}
-              </h3>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <div className="pacientes-main-card">
-        <PacienteFiltros
-          busqueda={busqueda}
-          setBusqueda={setBusqueda}
-          procedencia={procedencia}
-          setProcedencia={setProcedencia}
-          estado={estado}
-          setEstado={setEstado}
-          procedencias={procedencias}
-          onLimpiar={limpiarFiltros}
-        />
-        <div className="px-3 px-md-4 py-3">
-
-          <div className="d-flex justify-content-between align-items-center">
-
-            <div>
-
-              <h5 className="mb-1 pacientes-section-title">
-                Registro de pacientes
-              </h5>
-
-              <small className="text-muted">
-
-                {cargando
-                  ? "Cargando pacientes..."
-                  : `${pacientesFiltrados.length} paciente${pacientesFiltrados.length !== 1 ? "s" : ""} encontrado${pacientesFiltrados.length !== 1 ? "s" : ""}`
-                }
-
-              </small>
-
-            </div>
-
-          </div>
-
-        </div>
-
-        {cargando ? (
-
-          <div className="pacientes-loading">
-
-            <div
-              className="spinner-border"
-              role="status"
-            />
-
-            <p>
-              Cargando pacientes...
-            </p>
-
-          </div>
-
-        ) : (
-
-          <>
-
-              <PacienteTabla
-                pacientes={pacientesFiltrados}
-                onVer={verPaciente}
-                onEditar={editarPaciente}
-                onCambiarEstado={cambiarEstado}
-                onEliminar={eliminarPaciente}
-              />
-
-
-            <PacienteDetalle
-              paciente={pacienteSeleccionado}
-              mostrar={mostrarPaciente}
-              onCerrar={cerrarPaciente}
-            />
-
-            <div className="pacientes-mobile-list">
-
-              {pacientesFiltrados.length === 0 ? (
-
-                <div className="pacientes-mobile-empty">
-
-                  <FaUserInjured />
-
-                  <h5>
-                    No se encontraron pacientes
-                  </h5>
-
-                  <p>
-                    Intente cambiar los filtros
-                    de búsqueda.
-                  </p>
-
-                </div>
-
-              ) : (
-
-                pacientesFiltrados.map(
-                  (paciente) => (
-
-                    <PacienteCard
-                      key={
-                        paciente.id_paciente
-                      }
-
-                      paciente={
-                        paciente
-                      }
-
-                      onVer={
-                        verPaciente
-                      }
-
-                      onEditar={
-                        editarPaciente
-                      }
-
-                      onCambiarEstado={
-                        cambiarEstado
-                      }
-                    />
-
-                  )
-                )
-
-              )}
-
-            </div>
-
-          </>
-
-        )}
-
-      </div>
-
-      <PacienteModal
-        mostrar={
-          mostrarModal
-        }
-
-        onCerrar={() => {
-
-          if (!guardando) {
-
-            setMostrarModal(
-              false
-            );
-
-            limpiarFormulario();
-
-          }
-
-        }}
-
-        formulario={
-          formulario
-        }
-
-        setFormulario={
-          setFormulario
-        }
-
-        onSubmit={
-          guardarPaciente
-        }
-
-        guardando={
-          guardando
-        }
-
-        modoEdicion={
-          modoEdicion
-        }
-
-        procedencias={
-          procedencias
-        }
-
-      />
-
-    </div>
-  );
+  return {
+    nuevoPaciente,
+    totalPacientes,
+    pacientesActivos,
+    menores,
+    pacientesInactivos,
+    busqueda,
+    setBusqueda,
+    procedencia,
+    setProcedencia,
+    estado,
+    setEstado,
+    procedencias,
+    limpiarFiltros,
+    cargando,
+    pacientesFiltrados,
+    verPaciente,
+    editarPaciente,
+    cambiarEstado,
+    eliminarPaciente,
+    pacienteSeleccionado,
+    mostrarPaciente,
+    cerrarPaciente,
+    mostrarModal,
+    setMostrarModal,
+    guardando,
+    formulario,
+    setFormulario,
+    guardarPaciente,
+    modoEdicion
+  };
 };
-
-
 export default Pacientes;

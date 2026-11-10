@@ -112,6 +112,11 @@ const EspecialistaCard = ({
               ? "btn-outline-danger"
               : "btn-outline-success"
           }`}
+          aria-label={
+            especialista.activo
+              ? `Desactivar a ${especialista.nombres} ${especialista.apellidos}`
+              : `Activar a ${especialista.nombres} ${especialista.apellidos}`
+          }
           onClick={() =>
             onCambiarEstado(especialista)
           }

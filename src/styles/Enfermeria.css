@@ -1,0 +1,984 @@
+/* =========================================================
+   ENFERMERÍA
+   ========================================================= */
+
+.enfermeria-page {
+  min-height: 100vh;
+  background: #f8f9fa;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.enfermeria-header {
+  background: linear-gradient(
+    135deg,
+    #00a89c 0%,
+    #008f86 55%,
+    #006f69 100%
+  );
+
+  color: #fff;
+  padding: 22px 0;
+  box-shadow: 0 4px 15px rgba(0, 168, 156, 0.15);
+}
+
+.enfermeria-header-icon {
+  width: 58px;
+  height: 58px;
+  min-width: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 16px;
+
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  font-size: 1.5rem;
+}
+
+.enfermeria-header h2 {
+  font-size: 1.7rem;
+  font-weight: 700;
+}
+
+.enfermeria-header p {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+
+/* =========================================================
+   FILTROS
+   ========================================================= */
+
+.enfermeria-filtros {
+  background: #fff;
+  border: 1px solid #e7ecef;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 25px;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+.enfermeria-filtros-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+
+  margin-bottom: 15px;
+}
+
+.enfermeria-filtros-title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  color: #002855;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.enfermeria-filtros-title svg {
+  color: #00a89c;
+}
+
+.enfermeria-resultados {
+  color: #6c757d;
+  font-size: 0.82rem;
+}
+
+.enfermeria-busqueda {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.enfermeria-busqueda > svg {
+  position: absolute;
+  left: 15px;
+  color: #8b9298;
+  z-index: 2;
+}
+
+.enfermeria-busqueda input {
+  width: 100%;
+  height: 46px;
+
+  border: 1px solid #dee2e6;
+  border-radius: 11px;
+
+  padding: 0 45px;
+
+  font-size: 0.9rem;
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.enfermeria-busqueda input:focus {
+  border-color: #00a89c;
+  box-shadow: 0 0 0 3px rgba(0, 168, 156, 0.1);
+}
+
+.enfermeria-limpiar {
+  position: absolute;
+  right: 12px;
+
+  width: 30px;
+  height: 30px;
+
+  border: 0;
+  background: transparent;
+
+  color: #8b9298;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.enfermeria-card {
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #fff;
+
+  border: 1px solid #e6eaed;
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.enfermeria-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.09);
+}
+
+
+/* HEADER CARD */
+
+.enfermeria-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  padding: 17px 18px;
+
+  background: #f8fcfb;
+
+  border-bottom: 1px solid #e9efed;
+}
+
+.enfermeria-card-hora {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.enfermeria-hora-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  background: rgba(0, 168, 156, 0.1);
+  color: #00a89c;
+}
+
+.enfermeria-card-hora strong {
+  display: block;
+
+  color: #002855;
+  font-size: 1rem;
+}
+
+.enfermeria-card-hora small {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #6c757d;
+  font-size: 0.76rem;
+}
+
+.enfermeria-estado {
+  padding: 5px 9px;
+
+  border-radius: 20px;
+
+  background: rgba(242, 193, 0, 0.15);
+  color: #8a6d00;
+
+  font-size: 0.68rem;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+
+/* PACIENTE */
+
+.enfermeria-paciente {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+
+  padding: 18px;
+}
+
+.enfermeria-paciente-avatar {
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background: linear-gradient(
+    135deg,
+    #00a89c,
+    #008f86
+  );
+
+  color: #fff;
+
+  font-size: 1.15rem;
+}
+
+.enfermeria-paciente-info span,
+.enfermeria-info-row span,
+.enfermeria-motivo span {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #7a8288;
+
+  font-size: 0.7rem;
+  font-weight: 600;
+
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.enfermeria-paciente-info strong {
+  display: block;
+
+  color: #002855;
+
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+.enfermeria-paciente-info small {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #00a89c;
+
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+
+/* INFORMACIÓN */
+
+.enfermeria-info-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 10px 18px;
+}
+
+.enfermeria-info-icon {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background: #f3f5f7;
+
+  color: #9063a6;
+
+  font-size: 0.85rem;
+}
+
+.enfermeria-info-row strong {
+  display: block;
+
+  color: #002855;
+
+  font-size: 0.86rem;
+}
+
+.enfermeria-info-row small {
+  display: block;
+
+  color: #6c757d;
+
+  font-size: 0.75rem;
+}
+
+
+/* MOTIVO */
+
+.enfermeria-motivo {
+  display: flex;
+  gap: 12px;
+
+  padding: 12px 18px;
+
+  flex: 1;
+}
+
+.enfermeria-motivo p {
+  margin: 0;
+
+  color: #495057;
+
+  font-size: 0.82rem;
+
+  line-height: 1.45;
+
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+}
+
+
+/* FOOTER */
+
+.enfermeria-card-footer {
+  padding: 15px 18px;
+
+  border-top: 1px solid #edf0f2;
+
+  margin-top: auto;
+}
+
+.enfermeria-btn-signos {
+  width: 100%;
+
+  padding: 10px 15px;
+
+  border: 0;
+  border-radius: 10px;
+
+  background: #00a89c;
+  color: #fff;
+
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.enfermeria-btn-signos:hover {
+  background: #008f86;
+  color: #fff;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   ESTADOS VACÍOS
+   ========================================================= */
+
+.enfermeria-estado-vacio {
+  min-height: 300px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  background: #fff;
+
+  border: 1px solid #e7ecef;
+  border-radius: 18px;
+
+  padding: 40px;
+}
+
+.enfermeria-vacio-icon {
+  width: 70px;
+  height: 70px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 18px;
+
+  border-radius: 50%;
+
+  background: rgba(0, 168, 156, 0.1);
+
+  color: #00a89c;
+
+  font-size: 1.7rem;
+}
+
+.enfermeria-estado-vacio h4 {
+  color: #002855;
+
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.enfermeria-estado-vacio p {
+  max-width: 520px;
+
+  margin: 0;
+
+  color: #6c757d;
+
+  font-size: 0.85rem;
+}
+
+
+/* =========================================================
+   PAGINACIÓN
+   ========================================================= */
+
+.enfermeria-paginacion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 25px;
+
+  margin-top: 30px;
+}
+
+.enfermeria-paginacion-info {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  color: #6c757d;
+
+  font-size: 0.85rem;
+}
+
+.enfermeria-paginacion-info strong {
+  color: #002855;
+}
+
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.enfermeria-modal-overlay {
+  position: fixed;
+  inset: 0;
+
+  z-index: 1060;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.enfermeria-modal {
+  width: 100%;
+  max-width: 850px;
+
+  max-height: calc(100vh - 40px);
+
+  display: flex;
+  flex-direction: column;
+
+  background: #fff;
+
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+
+/* MODAL HEADER */
+
+.enfermeria-modal-header {
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 18px 22px;
+
+  background: linear-gradient(
+    135deg,
+    #00a89c,
+    #008f86
+  );
+
+  color: #fff;
+}
+
+.enfermeria-modal-title {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.enfermeria-modal-icon {
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.15);
+
+  font-size: 1.2rem;
+}
+
+.enfermeria-modal-title h4 {
+  margin: 0;
+
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.enfermeria-modal-title p {
+  margin: 3px 0 0;
+
+  font-size: 0.76rem;
+
+  opacity: 0.9;
+}
+
+.enfermeria-modal-close {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 0;
+  border-radius: 9px;
+
+  background: rgba(255, 255, 255, 0.12);
+
+  color: #fff;
+
+  font-size: 1rem;
+
+  cursor: pointer;
+}
+
+.enfermeria-modal-close:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+
+/* MODAL BODY */
+
+.enfermeria-modal form {
+  display: flex;
+  flex-direction: column;
+
+  flex: 1;
+
+  min-height: 0;
+}
+
+.enfermeria-modal-body {
+  flex: 1;
+
+  min-height: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding: 22px;
+}
+
+
+/* RESUMEN */
+
+.enfermeria-cita-resumen {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 15px;
+
+  margin-bottom: 22px;
+}
+
+.enfermeria-resumen-paciente,
+.enfermeria-resumen-especialista {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 15px;
+
+  background: #f8fafb;
+
+  border: 1px solid #e7ecef;
+
+  border-radius: 13px;
+}
+
+.enfermeria-resumen-avatar {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  background: rgba(0, 168, 156, 0.1);
+
+  color: #00a89c;
+}
+
+.enfermeria-resumen-especialista > svg {
+  width: 44px;
+  height: 44px;
+
+  padding: 12px;
+
+  border-radius: 11px;
+
+  background: rgba(144, 99, 166, 0.1);
+
+  color: #9063a6;
+}
+
+.enfermeria-resumen-paciente span,
+.enfermeria-resumen-especialista span {
+  display: block;
+
+  color: #7a8288;
+
+  font-size: 0.68rem;
+
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.enfermeria-resumen-paciente strong,
+.enfermeria-resumen-especialista strong {
+  display: block;
+
+  color: #002855;
+
+  font-size: 0.88rem;
+}
+
+.enfermeria-resumen-paciente small,
+.enfermeria-resumen-especialista small {
+  display: block;
+
+  color: #6c757d;
+
+  font-size: 0.74rem;
+}
+
+
+/* SECCIONES */
+
+.enfermeria-seccion {
+  margin-bottom: 22px;
+
+  padding: 18px;
+
+  background: #fff;
+
+  border: 1px solid #e7ecef;
+
+  border-radius: 14px;
+}
+
+.enfermeria-seccion-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-bottom: 17px;
+}
+
+.enfermeria-seccion-header > svg {
+  color: #00a89c;
+}
+
+.enfermeria-seccion-header h5 {
+  margin: 0;
+
+  color: #002855;
+
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.enfermeria-seccion-header span {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #7a8288;
+
+  font-size: 0.72rem;
+}
+
+
+/* LABELS */
+
+.enfermeria-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  margin-bottom: 7px;
+
+  color: #495057;
+
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.enfermeria-label svg {
+  color: #00a89c;
+}
+
+
+/* INPUTS */
+
+.enfermeria-seccion .form-control {
+  border-color: #dfe4e7;
+
+  border-radius: 9px;
+
+  font-size: 0.85rem;
+}
+
+.enfermeria-seccion .form-control:focus {
+  border-color: #00a89c;
+
+  box-shadow:
+    0 0 0 3px rgba(0, 168, 156, 0.1);
+}
+
+.enfermeria-seccion .input-group-text {
+  background: #f8f9fa;
+
+  border-color: #dfe4e7;
+
+  color: #6c757d;
+
+  font-size: 0.78rem;
+}
+
+
+/* FOOTER */
+
+.enfermeria-modal-footer {
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  padding: 15px 22px;
+
+  background: #fafafa;
+
+  border-top: 1px solid #e9ecef;
+}
+
+.enfermeria-btn-guardar {
+  background: #00a89c;
+  color: #fff;
+
+  border: 0;
+
+  padding: 9px 18px;
+
+  border-radius: 9px;
+
+  font-weight: 600;
+}
+
+.enfermeria-btn-guardar:hover {
+  background: #008f86;
+  color: #fff;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .enfermeria-cita-resumen {
+    grid-template-columns: 1fr;
+  }
+
+  .enfermeria-modal-overlay {
+    padding: 10px;
+  }
+
+  .enfermeria-modal {
+    max-height: calc(100vh - 20px);
+  }
+
+  .enfermeria-modal-body {
+    padding: 16px;
+  }
+
+  .enfermeria-modal-footer {
+    padding: 13px 16px;
+  }
+
+  .enfermeria-paginacion {
+    gap: 12px;
+  }
+
+}
+
+
+@media (max-width: 576px) {
+
+  .enfermeria-header {
+    padding: 17px 0;
+  }
+
+  .enfermeria-header-icon {
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+  }
+
+  .enfermeria-header h2 {
+    font-size: 1.35rem;
+  }
+
+  .enfermeria-header p {
+    font-size: 0.78rem;
+  }
+
+  .enfermeria-filtros {
+    padding: 15px;
+  }
+
+  .enfermeria-filtros-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .enfermeria-card-header {
+    padding: 14px;
+  }
+
+  .enfermeria-paciente {
+    padding: 15px;
+  }
+
+  .enfermeria-info-row,
+  .enfermeria-motivo {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .enfermeria-modal-title h4 {
+    font-size: 0.95rem;
+  }
+
+  .enfermeria-modal-title p {
+    font-size: 0.68rem;
+  }
+
+  .enfermeria-modal-footer {
+    flex-direction: column-reverse;
+  }
+
+  .enfermeria-modal-footer button {
+    width: 100%;
+  }
+
+  .enfermeria-paginacion {
+    justify-content: space-between;
+  }
+
+  .enfermeria-paginacion button {
+    font-size: 0.78rem;
+  }
+
+  .enfermeria-paginacion-info {
+    font-size: 0.75rem;
+  }
+
+}

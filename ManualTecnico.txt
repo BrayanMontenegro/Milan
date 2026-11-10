@@ -1,0 +1,745 @@
+# MANUAL TECNICO
+# Sistema de Gestion Clinica Milan
+
+======================================================================
+1. PROPOSITO Y ALCANCE
+======================================================================
+
+Este documento describe la arquitectura, instalacion, configuracion,
+modulos, flujos de trabajo, modelo de datos utilizado y operacion del
+frontend de MilanProyectWeb.
+
+La aplicacion permite gestionar pacientes, especialistas, citas,
+atenciones clinicas, expedientes, registros de enfermeria, procedimientos
+con precio y cobros en Caja. La autenticacion, persistencia, politicas de
+acceso a datos y una funcion de backend dependen del proyecto Supabase
+conectado.
+
+IMPORTANTE SOBRE EL ESTADO DE LA BASE DE DATOS
+
+- La aplicacion utiliza tablas que ya existen en el proyecto Supabase.
+- El repositorio no contiene actualmente un conjunto de migraciones de
+  base de datos que reproduzca ese esquema.
+- Ejecutar npm run build no modifica la base de datos.
+- No ejecutar scripts SQL, db push, db reset, ni eliminar tablas o datos
+  como parte de la instalacion de este frontend.
+- Antes de desplegar cambios de base de datos, verificar el esquema,
+  restricciones, triggers y politicas RLS directamente en el proyecto
+  Supabase autorizado, y contar con respaldo y aprobacion.
+
+======================================================================
+2. ARQUITECTURA Y TECNOLOGIAS
+======================================================================
+
+Tipo de aplicacion: SPA (Single Page Application).
+
+Frontend:
+- React 19.
+- Vite 8 y plugin de React para Vite.
+- React Router 7 para navegacion.
+- Supabase JavaScript Client 2 para autenticacion y acceso a datos.
+- Bootstrap 5, React-Bootstrap y Bootstrap Icons para interfaz.
+- React Icons para iconografia.
+- React Toastify para mensajes de estado.
+- Oxlint para analisis estatico.
+
+Backend y servicios:
+- Supabase Auth administra la sesion y las cuentas.
+- Supabase Postgres almacena los datos de la aplicacion.
+- Row Level Security (RLS) controla el acceso a filas en la base de
+  datos.
+- Una Supabase Edge Function llamada crear-usuario crea usuarios y, si
+  corresponde, el perfil de especialista.
+
+El frontend usa el cliente anonimo de Supabase y la sesion del usuario.
+No debe incluirse una clave service_role en el navegador. Las operaciones
+que requieren privilegios administrativos se realizan desde la Edge
+Function, usando secretos del entorno del servidor.
+
+Flujo de datos general:
+
+Navegador
+  -> React / React Router
+  -> cliente Supabase (URL y clave anonima publicas)
+  -> Supabase Auth y API de Postgres
+  -> politicas RLS, restricciones y triggers de Postgres
+
+Creacion de cuentas:
+
+Frontend de administracion
+  -> supabase.functions.invoke("crear-usuario")
+  -> Edge Function autentica la solicitud y valida el rol
+  -> Supabase Auth Admin y tablas usuarios/especialistas
+
+======================================================================
+3. ESTRUCTURA PRINCIPAL DEL REPOSITORIO
+======================================================================
+
+index.html
+  Documento HTML, idioma es, titulo de la clinica y favicon.
+
+src/main.jsx
+  Punto de entrada de React. Registra estilos comunes y monta App.
+
+src/App.jsx
+  Proveedor de autenticacion, router y definicion de rutas.
+
+src/context/
+  AuthContext.jsx y AuthContextValue.js mantienen y exponen la sesion,
+  el perfil asociado y la operacion de cierre de sesion.
+
+src/database/
+  supabase.js crea el cliente Supabase.
+  Departamentos.json contiene datos usados para procedencias en el
+  formulario de pacientes.
+
+src/assets/routes/ProtectedRoute.jsx
+  Protege rutas que requieren sesion y permite comprobar roles cuando
+  una ruta declara una lista de roles.
+
+src/components/
+  Componentes de navegacion, formularios, tablas, modales y detalles de
+  pacientes, citas, consultas, expedientes, especialistas, usuarios y
+  enfermeria.
+
+src/views/
+  Vistas de cada modulo y hooks/controladores de sus operaciones.
+
+src/styles/
+  Hojas CSS por vista o modulo.
+
+src/assets/logo-milan.svg
+  Logo usado en el encabezado, inicio de sesion y favicon.
+
+supabase/config.toml
+  Configuracion local de la Edge Function crear-usuario.
+
+supabase/functions/crear-usuario/
+  Codigo TypeScript/Deno de la Edge Function y su mapa de importaciones.
+
+ManualTecnico.txt
+  Este manual.
+
+package.json y package-lock.json
+  Dependencias, scripts y versiones resueltas de npm.
+
+======================================================================
+4. REQUISITOS E INSTALACION LOCAL
+======================================================================
+
+Requisitos:
+- Git.
+- Node.js compatible con Vite 8.
+- npm.
+- Acceso autorizado al proyecto Supabase usado por la aplicacion.
+
+Pasos:
+
+1. Abrir una terminal en la raiz del repositorio.
+2. Instalar las dependencias:
+
+   npm install
+
+3. Crear un archivo local .env en la raiz. No copiar aqui claves
+   administrativas ni secretos de servidor.
+4. Definir las variables publicas requeridas:
+
+   VITE_SUPABASE_URL=
+   VITE_SUPABASE_ANON_KEY=
+
+   Asignarles los valores publicos correspondientes al proyecto Supabase
+   autorizado. No documentar ni guardar los valores reales en Git.
+5. Iniciar el servidor de desarrollo:
+
+   npm run dev
+
+6. Abrir la URL local que indique Vite en la terminal.
+
+El cliente de src/database/supabase.js detiene la inicializacion y lanza
+un error si falta cualquiera de las dos variables.
+
+El archivo .gitignore excluye .env, .env.local y variantes comunes. Antes
+de publicar cambios, comprobar que ningun archivo de entorno o credencial
+quedo agregado al repositorio.
+
+======================================================================
+5. COMANDOS DE DESARROLLO, VALIDACION Y PUBLICACION
+======================================================================
+
+Scripts definidos en package.json:
+
+  npm run dev
+    Inicia el servidor de desarrollo de Vite.
+
+  npm run build
+    Genera la version de produccion en dist/.
+
+  npm run preview
+    Sirve localmente la compilacion existente para una comprobacion
+    manual. Ejecutar npm run build antes.
+
+  npm run lint
+    Ejecuta Oxlint sobre el proyecto.
+
+  npm run doctor
+    Ejecuta React Doctor para revisar diagnosticos del frontend.
+
+Publicacion del frontend:
+
+1. Configurar VITE_SUPABASE_URL y VITE_SUPABASE_ANON_KEY en el proveedor
+   de hosting, como variables de compilacion.
+2. Ejecutar npm run build.
+3. Publicar el contenido generado en dist/ en un hosting estatico que
+   soporte una SPA.
+4. Configurar el hosting para que las rutas de React Router se resuelvan
+   contra index.html.
+5. Configurar los origenes autorizados de Supabase Auth y de la Edge
+   Function para los dominios de desarrollo y produccion.
+
+La compilacion del frontend no despliega la Edge Function ni cambia el
+esquema de Postgres. La funcion se despliega por separado con la
+herramienta oficial de Supabase, despues de confirmar la cuenta y el
+proyecto destino. No desplegar funciones con credenciales de otro
+entorno.
+
+No se incluye una suite de pruebas automatizadas en los scripts actuales.
+Como minimo, ejecutar lint y build, probar manualmente los flujos
+afectados en un entorno no productivo y revisar los registros de errores
+del navegador y Supabase.
+
+======================================================================
+6. CONFIGURACION Y VARIABLES
+======================================================================
+
+Frontend (se pueden exponer al navegador):
+
+  VITE_SUPABASE_URL
+    URL del proyecto Supabase.
+
+  VITE_SUPABASE_ANON_KEY
+    Clave publica/anonima del proyecto. No sustituye RLS ni es una clave
+    administrativa.
+
+Edge Function (solo en el entorno seguro de Supabase):
+
+  SUPABASE_URL
+  SUPABASE_ANON_KEY
+  SUPABASE_SERVICE_ROLE_KEY
+
+La clave service role concede privilegios elevados. Mantenerla unicamente
+en secretos del servidor y limitar su acceso a operadores autorizados. No
+ponerla en archivos VITE_*, componentes React, repositorios, capturas o
+logs.
+
+La configuracion local declara crear-usuario con verify_jwt = false. La
+funcion valida por su cuenta el encabezado Authorization con
+supabase.auth.getUser() y comprueba que el perfil tenga rol
+ADMINISTRADOR. Ademas, el codigo CORS observado permite unicamente el
+origen http://localhost:5173. Antes de usar la funcion desde un sitio
+publicado, revisar y configurar el origen permitido para cada entorno y
+volver a comprobar la autenticacion y autorizacion.
+
+======================================================================
+7. AUTENTICACION, PERFILES Y AUTORIZACION
+======================================================================
+
+Inicio de sesion:
+- La vista Login usa signInWithPassword de Supabase Auth.
+- AuthContext recupera la sesion mediante getSession y escucha cambios
+  de autenticacion.
+- Para cada cuenta se consulta public.usuarios usando el UUID del usuario
+  de Auth y se obtiene su rol relacionado en public.roles.
+- El contexto expone usuario, perfil, estado de carga y cerrarSesion.
+- El cierre de sesion invoca supabase.auth.signOut().
+
+Roles que aparecen en la aplicacion:
+- ADMINISTRADOR
+- RECEPCION
+- ESPECIALISTA
+- ENFERMERIA
+
+La navegacion oculta o muestra opciones segun el rol. Esto mejora la
+interfaz, pero ocultar un enlace no es una barrera de seguridad.
+
+Proteccion observada:
+- La mayoria de las rutas requieren que exista una sesion.
+- /caja declara expresamente los roles ADMINISTRADOR y RECEPCION en
+  ProtectedRoute.
+- La vista Usuarios comprueba si el perfil es ADMINISTRADOR.
+- La Edge Function volvera a validar la identidad y el rol administrador
+  antes de crear una cuenta.
+- La base de datos debe proteger todas las operaciones mediante RLS,
+  restricciones y triggers. La validacion del navegador no sustituye
+  estos controles.
+
+Recomendacion operativa:
+Revisar periodicamente las politicas RLS en el proyecto Supabase
+productivo. Durante la inspeccion del esquema, las politicas de lectura
+de consultas y de procedimientos_consulta incluyeron expresiones true
+para el rol authenticated. Confirmar que este alcance amplio es
+intencional para los datos clinicos; si no lo es, limitarlo en la base de
+datos con una politica revisada por el responsable de Supabase.
+
+======================================================================
+8. RUTAS Y MODULOS DE LA APLICACION
+======================================================================
+
+Ruta                         Modulo / uso
+---------------------------  -----------------------------------------
+/                            Inicio de sesion.
+/inicio                      Panel principal.
+/pacientes                   Registro, busqueda y estado de pacientes.
+/usuarios                    Consulta y gestion de cuentas y roles.
+/especialistas               Gestion/consulta de especialistas.
+/expedientes                  Informacion medica del paciente.
+/citas                       Listado y gestion de citas.
+/crear-cita                  Creacion de citas.
+/citas-doctor                Agenda del especialista autenticado.
+/especialista-horario        Horario del especialista autenticado.
+/consultas                   Lista de atenciones/citas del dia.
+/consultas/atender/:id_cita  Registro de atencion clinica.
+/mis-procedimientos          Catalogo propio de procedimientos y precios.
+/enfermeria                  Registro de signos vitales de citas del dia.
+/registros-enfermeria        Busqueda e historial de registros.
+/caja                        Cobro y consulta de pagos.
+
+Descripcion funcional:
+
+Inicio
+- Muestra bienvenida, nombre del perfil y rol.
+- Incluye accesos rapidos a modulos.
+- Los contadores de pacientes, citas, consultas y especialistas estan
+  actualmente presentados como valores fijos de cero; no son indicadores
+  calculados desde la base de datos.
+
+Pacientes
+- Permite buscar, filtrar, consultar detalles, crear y editar pacientes.
+- Maneja informacion demografica y datos de tutor para menores.
+- Incluye datos de procedencia basados en el catalogo local de
+  departamentos y municipios.
+- Las operaciones se realizan en public.pacientes.
+
+Usuarios
+- Consulta usuarios y roles, ofrece filtros y permite activar/desactivar
+  perfiles y crear cuentas.
+- La creacion invoca la Edge Function crear-usuario.
+- La Edge Function no permite crear cuentas con rol ADMINISTRADOR.
+
+Especialistas
+- Consulta y modifica registros de especialistas y su especialidad.
+- La creacion de cuentas de especialista tambien usa crear-usuario.
+
+Citas y agenda
+- Crear cita permite seleccionar paciente, especialidad, especialista,
+  fecha y horario activo.
+- El algoritmo genera espacios de 30 minutos dentro de los horarios
+  definidos y compara las citas existentes para evitar solapamientos en
+  la interfaz.
+- Los estados CANCELADA y NO_ASISTIO se excluyen del calculo de
+  disponibilidad del formulario.
+- La agenda del especialista consulta las citas asociadas al usuario
+  especialista autenticado y permite filtrar/ver detalles.
+
+Horario del especialista
+- Permite consultar, crear, editar y desactivar horarios asociados al
+  especialista vinculado a la cuenta actual.
+
+Enfermeria
+- Presenta las citas PROGRAMADA del dia actual.
+- Permite capturar y guardar signos vitales y observaciones relacionados
+  con el paciente y el usuario que registra.
+- El historial permite buscar y filtrar registros por fecha y consultar
+  el detalle.
+
+Expedientes y antecedentes
+- Expedientes concentra grupo sanguineo, alergias, medicamentos,
+  enfermedades cronicas, antecedentes importantes y observaciones.
+- La atencion clinica consulta el expediente y los antecedentes del
+  paciente para mostrar contexto al especialista.
+
+Consultas y atencion
+- La lista de consultas muestra citas del dia del especialista actual.
+- La atencion requiere que la cita este en estado CONFIRMADA.
+- El formulario guarda motivo, sintomas, diagnostico, tratamiento,
+  indicaciones y observaciones.
+- Tambien permite agregar procedimientos activos del catalogo del
+  especialista, ajustar cantidad y revisar la informacion clinica
+  disponible del paciente.
+- Al completar la operacion, se inserta la consulta, se agregan sus
+  procedimientos y se intenta cambiar la cita a ATENDIDA.
+
+Procedimientos
+- Cada especialista crea y administra su propio catalogo en
+  /mis-procedimientos.
+- Cada registro tiene nombre, descripcion opcional, precio no negativo y
+  estado activo/inactivo.
+- La atencion solo muestra los procedimientos activos del especialista
+  de la cita.
+- Al guardar la atencion, cada linea conserva el nombre, descripcion,
+  cantidad y precio unitario aplicados. El precio historico de esa linea
+  no depende del precio futuro del catalogo.
+
+Caja
+- Solo ADMINISTRADOR y RECEPCION pueden entrar por la ruta de la
+  aplicacion.
+- Presenta saldo pendiente calculado por consulta a partir del total de
+  procedimientos menos los pagos registrados, con un minimo de cero.
+- Permite buscar pendientes por paciente, especialista o codigo de
+  expediente.
+- Registra pago en efectivo, tarjeta o transferencia; acepta referencia
+  opcional y muestra un comprobante con el codigo asignado por la base de
+  datos.
+- Los importes se presentan en cordobas nicaraguenses (NIO).
+- La vista consulta hasta 200 consultas y hasta 100 pagos por carga; no
+  constituye un reporte contable completo ni un libro ilimitado.
+
+======================================================================
+9. FLUJO CLINICO Y DE COBRO
+======================================================================
+
+1. Registrar o buscar al paciente.
+2. Mantener el horario del especialista.
+3. Crear la cita, seleccionando paciente, especialidad, especialista,
+   fecha y espacio disponible.
+4. Enfermeria registra signos vitales cuando corresponda.
+5. El especialista abre la cita confirmada desde Consultas.
+6. Revisa datos del paciente, signos vitales, expediente y antecedentes.
+7. Selecciona los procedimientos efectuados y las cantidades.
+8. Completa los campos clinicos y guarda la atencion.
+9. La aplicacion crea la consulta y sus lineas de procedimientos, y luego
+   intenta cambiar el estado de la cita a ATENDIDA.
+10. Caja vuelve a consultar las atenciones y presenta el saldo pendiente.
+11. Recepcion o administracion registra el pago y conserva el comprobante
+    asociado al paciente y a la consulta.
+
+Consideraciones de consistencia:
+- La consulta, las lineas de procedimientos y el cambio de estado de la
+  cita se realizan mediante varias solicitudes separadas desde el
+  frontend; no forman una unica transaccion de base de datos.
+- Si falla una solicitud intermedia, puede quedar una consulta guardada
+  sin sus lineas o con la cita sin actualizar. Revisar el mensaje de la
+  interfaz y los datos antes de reintentar para evitar duplicados.
+- El codigo actual registra el saldo completo en un solo pago. Aunque la
+  tabla de pagos admite importes positivos, la interfaz no ofrece un
+  flujo para abonos parciales.
+- No se observa un campo de estado de pago, anulacion o reembolso en el
+  flujo de Caja descrito. Un cobro se refleja por la existencia y suma
+  de registros de pagos; no se debe presentar como un mecanismo de
+  anulacion contable.
+- La ausencia de procedimientos en una consulta significa que el total
+  calculado por la vista Caja es cero; comprobar si ese caso debe ser
+  cobrable segun la operacion de la clinica.
+
+======================================================================
+10. MODELO DE DATOS UTILIZADO
+======================================================================
+
+Las siguientes tablas publicas fueron observadas en el proyecto
+Supabase conectado. Este inventario describe el uso que hace la
+aplicacion; no reemplaza el catalogo oficial del esquema, las
+restricciones, indices ni politicas vigentes.
+
+Identidad y personal:
+
+  roles
+    Catalogo de nombres de rol.
+
+  usuarios
+    Perfil asociado al identificador de Supabase Auth. Contiene nombres,
+    apellidos, telefono, rol, estado y marcas de tiempo.
+
+  especialidades
+    Catalogo de especialidades, con nombre, descripcion y estado activo.
+
+  especialistas
+    Datos profesionales y de contacto; enlaza el usuario, la
+    especialidad y los datos profesionales usados por el sistema.
+
+  horarios_especialistas
+    Dias y horas de disponibilidad de un especialista, con estado.
+
+Pacientes y actividad clinica:
+
+  pacientes
+    Identidad, contacto, datos demograficos, procedencia, tutor y estado.
+
+  citas
+    Relaciona paciente y especialista; guarda fecha, horas, tipo, motivo,
+    observaciones y estado operativo.
+
+  consultas
+    Relaciona paciente, especialista y cita; contiene el motivo, sintomas,
+    diagnostico, tratamiento, indicaciones y observaciones clinicas.
+
+  antecedentes_paciente
+    Registros historicos de antecedentes asociados a un paciente.
+
+  expedientes
+    Informacion medica longitudinal asociada a un paciente.
+
+  registros_enfermeria
+    Registros de signos vitales, observaciones y datos de la persona que
+    registra, asociados al paciente.
+
+Procedimientos y caja:
+
+  procedimientos_especialistas
+    Catalogo propio del especialista: id_procedimiento_especialista,
+    id_especialista, nombre, descripcion, precio, activo, created_at y
+    updated_at. La base define precio no negativo.
+
+  procedimientos_consulta
+    Lineas de procedimientos aplicados a una consulta. Incluye la
+    relacion con la consulta y el procedimiento de catalogo, nombre y
+    descripcion historicos, cantidad, precio_unitario y subtotal.
+    Cantidad debe ser positiva y el precio unitario no negativo segun las
+    restricciones observadas.
+
+  pagos_caja
+    Registros de pago relacionados con paciente y opcionalmente consulta.
+    Incluye cajero, monto, metodo, referencia, fecha y codigo de
+    comprobante.
+
+Relaciones principales usadas:
+
+  usuarios -> roles
+  especialistas -> usuarios y especialidades
+  horarios_especialistas -> especialistas
+  citas -> pacientes y especialistas
+  consultas -> citas, pacientes y especialistas
+  antecedentes_paciente -> pacientes
+  expedientes -> pacientes
+  registros_enfermeria -> pacientes y usuarios
+  procedimientos_especialistas -> especialistas
+  procedimientos_consulta -> consultas y procedimientos_especialistas
+  pagos_caja -> pacientes, consultas y usuarios/cajeros
+
+La lista anterior refleja joins y campos usados por el codigo. Para
+trabajos de mantenimiento de base de datos, confirmar cada FK, unicidad,
+tipo, valor por defecto y politica con el esquema actualizado de
+Supabase; no asumir que este resumen es un script de creacion.
+
+Restricciones y comportamiento de pagos observados:
+- id_pago es UUID.
+- codigo_comprobante es generado por la base de datos.
+- id_consulta puede ser nulo en la tabla.
+- id_cajero usa auth.uid() como valor por defecto.
+- monto debe ser mayor que cero.
+- metodo_pago admite EFECTIVO, TARJETA o TRANSFERENCIA.
+- referencia admite hasta 120 caracteres.
+- El trigger validar_pago_caja() valida el usuario cajero y que la
+  consulta, cuando se indica, corresponda al paciente.
+- Las politicas de pagos_caja consultadas permiten lectura e insercion
+  con la funcion de autorizacion de Caja, y exigen que el cajero sea el
+  usuario autenticado para insertar.
+
+======================================================================
+11. ROW LEVEL SECURITY Y PROTECCION DE DATOS
+======================================================================
+
+El cliente de navegador usa una clave anonima, por lo que la proteccion
+real de datos depende de las politicas RLS y de los permisos de las
+tablas. Toda tabla con datos de pacientes debe mantener RLS habilitado y
+politicas revisadas para SELECT, INSERT, UPDATE y DELETE segun el rol y
+la fila solicitada.
+
+Controles que se deben mantener:
+- No confiar unicamente en roles del menu o controles React.
+- Restringir por RLS la lectura y escritura de datos clinicos y personales.
+- Verificar que usuario y rol no se puedan falsificar desde el cliente.
+- Mantener triggers y constraints que validan pagos y relaciones.
+- No almacenar contrasenas en tablas propias; la autenticacion pertenece
+  a Supabase Auth.
+- No mostrar datos reales de pacientes en logs, capturas, manuales,
+  tickets publicos ni mensajes de depuracion.
+- No solicitar, copiar o compartir claves de proyecto. Usar el gestor
+  seguro de secretos correspondiente.
+- Restringir origenes CORS y URLs de redireccion de Auth a los dominios
+  necesarios.
+- Probar las politicas con cuentas de cada rol en un entorno controlado.
+
+La Edge Function crear-usuario usa una clave de servicio en el servidor.
+La funcion comprueba el token entrante con Auth, exige rol
+ADMINISTRADOR, valida datos obligatorios, correo y complejidad de
+contrasena, impide crear otro administrador y requiere especialidad
+activa para cuentas ESPECIALISTA. Si falla la creacion del perfil o del
+especialista, intenta eliminar los registros/cuenta creados.
+
+======================================================================
+12. EDGE FUNCTION crear-usuario
+======================================================================
+
+Ubicacion:
+
+  supabase/functions/crear-usuario/index.ts
+
+Configuracion:
+
+  supabase/config.toml
+
+Metodo:
+- Acepta POST y responde OPTIONS para preflight CORS.
+- Requiere encabezado Authorization y valida al usuario con
+  supabase.auth.getUser().
+- Consulta su perfil y acepta solo rol ADMINISTRADOR.
+- Valida nombres, apellidos, correo, contrasena y rol.
+- La contrasena debe tener al menos 8 caracteres, mayuscula, minuscula,
+  numero y caracter especial.
+- No permite asignar rol ADMINISTRADOR.
+- Para ESPECIALISTA requiere una especialidad existente y activa.
+- Crea el usuario en Supabase Auth usando el cliente administrativo.
+- Verifica el perfil public.usuarios generado por el trigger existente,
+  actualiza sus datos y, para especialistas, inserta el registro
+  correspondiente.
+- Si falla la creacion del perfil o especialista, intenta revertir
+  eliminando la cuenta y el perfil que haya creado.
+
+La funcion requiere en su entorno SUPABASE_URL, SUPABASE_ANON_KEY y
+SUPABASE_SERVICE_ROLE_KEY. Configurar estos valores como secretos en el
+entorno Supabase; nunca en .env del navegador ni en archivos del repo.
+
+Antes de desplegar:
+1. Confirmar proyecto y entorno destino.
+2. Revisar el origen CORS fijo actual (localhost:5173) y cambiarlo de
+   forma controlada para los dominios reales requeridos.
+3. Comprobar que la funcion siga validando token y rol incluso si
+   verify_jwt permanece desactivado en la configuracion.
+4. Confirmar secretos del entorno con el responsable del proyecto.
+5. Probar creacion de usuario, rechazo de rol no autorizado, fallo de
+   especialidad y limpieza ante error en un entorno no productivo.
+
+======================================================================
+13. OPERACION, RESPALDOS Y SOPORTE
+======================================================================
+
+Rutina sugerida:
+- Revisar que el frontend este compilado con la URL y clave anonima del
+  entorno correcto.
+- Comprobar que Supabase Auth tenga autorizados los origenes y URLs de
+  redireccion de ese entorno.
+- Supervisar logs de Edge Functions y errores de Postgres/RLS sin
+  registrar datos clinicos innecesarios.
+- Comprobar que los perfiles public.usuarios tengan un rol valido y que
+  los usuarios especialistas esten vinculados a su registro
+  especialistas.
+- Comprobar que cada especialista tenga procedimientos activos y
+  horarios cuando corresponda.
+- Revisar que Caja pueda leer consultas, lineas de procedimientos y
+  pagos con los roles autorizados.
+- Realizar y verificar respaldos de Postgres segun la politica de
+  retencion y recuperacion de la organizacion Supabase.
+
+La recuperacion de datos se realiza desde los respaldos/operacion
+administrativa de Supabase, no desde el frontend. Antes de restaurar,
+definir el punto de recuperacion y el alcance con el responsable de la
+base de datos.
+
+======================================================================
+14. DIAGNOSTICO DE PROBLEMAS
+======================================================================
+
+La aplicacion no inicia o informa variables de entorno faltantes:
+- Confirmar que .env esta en la raiz del proyecto.
+- Confirmar que los nombres empiezan exactamente con VITE_ para el
+  frontend.
+- Reiniciar npm run dev despues de cambiar variables.
+
+Fallo de conexion o errores de Supabase:
+- Confirmar URL y clave anonima del mismo proyecto.
+- Revisar conectividad, estado del servicio, sesion y permisos RLS.
+- Leer el mensaje de error en la consola del navegador y en los logs de
+  Supabase; no publicar tokens ni datos personales.
+
+No se puede cargar el perfil:
+- Confirmar que existe public.usuarios para el mismo UUID de Auth.
+- Confirmar que id_rol apunta a un rol valido y que la consulta de perfil
+  esta autorizada por RLS.
+
+El especialista no ve su agenda o sus procedimientos:
+- Confirmar que especialistas.id_usuario corresponda a la cuenta Auth.
+- Confirmar que el registro este activo y asociado a una especialidad.
+- Revisar RLS para horarios, citas y procedimientos.
+
+Caja no muestra consultas o no registra pagos:
+- Comprobar rol ADMINISTRADOR o RECEPCION.
+- Revisar RLS para consultas y pagos_caja.
+- Confirmar que la consulta tenga procedimientos_consulta con subtotal
+  mayor que los pagos ya registrados.
+- Revisar que el monto, metodo, paciente, consulta y usuario cajero
+  cumplan las restricciones y el trigger de pagos.
+
+crear-usuario responde error:
+- Comprobar token vigente, perfil ADMINISTRADOR y variables secretas del
+  servidor.
+- Verificar que la especialidad requerida exista y este activa.
+- Confirmar que el trigger de creacion de public.usuarios siga instalado.
+- Revisar los logs de la funcion, evitando compartir contrasenas o
+  credenciales.
+
+======================================================================
+15. LIMITACIONES Y PUNTOS PENDIENTES
+======================================================================
+
+Los siguientes puntos describen el estado observado del codigo y deben
+considerarse al planificar mejoras:
+
+- No hay migraciones versionadas en el repositorio para reproducir el
+  esquema Supabase actual.
+- Las estadisticas del panel Inicio son valores fijos y no datos reales.
+- La interfaz de Caja limita cada carga a 200 consultas y 100 pagos.
+- Caja registra el saldo restante en una sola operacion; no hay interfaz
+  para abonos, anulacion, reembolso o cambio de estado de pago.
+- La persistencia de consulta, procedimientos y estado de cita no usa una
+  unica transaccion.
+- La ruta de Caja esta restringida por rol en React; varias otras rutas
+  solo exigen sesion, aunque el menu y algunas vistas limiten la
+  navegacion. Verificar RLS para cada modulo.
+- El menu contiene accesos a /especialidades y /perfil, pero esas rutas
+  no aparecen registradas en App.jsx; la ruta comodin redirige a /.
+- App.jsx contiene dos declaraciones para /consultas; la primera es la
+  que presenta la vista de Consultas y la segunda declaracion duplicada
+  no debe considerarse una pantalla distinta.
+- Mis procedimientos identifica al especialista por el usuario
+  autenticado. Aunque el menu tambien presenta el enlace a
+  administradores, una cuenta administrativa sin registro especialista
+  asociado no puede operar el catalogo desde esa vista.
+- La Edge Function tiene CORS limitado al origen local en la
+  configuracion observada; revisar antes de invocarla desde produccion.
+- El esquema y las politicas pueden cambiar en Supabase sin que exista
+  una migracion local que refleje ese cambio. Mantener este manual
+  sincronizado con el proyecto real.
+
+======================================================================
+16. GLOSARIO
+======================================================================
+
+Auth
+  Servicio de autenticacion de Supabase.
+
+Edge Function
+  Funcion TypeScript ejecutada en el entorno de Supabase, fuera del
+  navegador.
+
+RLS
+  Row Level Security; politicas de Postgres que autorizan operaciones por
+  fila.
+
+SPA
+  Aplicacion de una sola pagina que cambia de vista usando rutas del
+  navegador sin recargar toda la pagina.
+
+Anon key
+  Clave publica del cliente Supabase. No otorga por si sola permiso para
+  omitir RLS.
+
+Service role key
+  Clave administrativa de Supabase. Es confidencial y solo se utiliza
+  en el servidor.
+
+Saldo pendiente
+  Total de lineas de procedimientos de una consulta menos sus pagos
+  asociados, con valor minimo cero.
+
+======================================================================
+FIN DEL MANUAL
+======================================================================

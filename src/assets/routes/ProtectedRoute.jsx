@@ -1,8 +1,15 @@
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/AuthContextValue";
 
-const ProtectedRoute = ({ children }) => {
-  const { usuario, cargando } = useAuth();
+const normalizarRol = (rol) =>
+  (rol || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim()
+    .toUpperCase();
+
+const ProtectedRoute = ({ children, roles }) => {
+  const { usuario, perfil, cargando } = useAuth();
 
   if (cargando) {
     return (
@@ -18,6 +25,13 @@ const ProtectedRoute = ({ children }) => {
 
   if (!usuario) {
     return <Navigate to="/" replace />;
+  }
+
+  if (
+    roles?.length &&
+    !roles.map(normalizarRol).includes(normalizarRol(perfil?.roles?.nombre))
+  ) {
+    return <Navigate to="/inicio" replace />;
   }
 
   return children;
